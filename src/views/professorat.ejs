@@ -17,21 +17,40 @@
     >
       <section>
         <h1 class="display-1">Professorat</h1>
-
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit excepturi
-          repellat quod perspiciatis nostrum ipsam blanditiis libero labore
-          placeat distinctio, ipsa sed, in consequatur enim maxime! Sapiente
-          neque autem aliquid! Esse repellat sint nam ipsum debitis quibusdam
-          nemo ipsam dicta nesciunt vero officia facilis laboriosam minima
-          suscipit, nihil amet doloremque saepe maiores a adipisci dolorum
-          eveniet enim? Unde cupiditate error quas doloremque, tempora
-          asperiores quibusdam ipsam enim sequi pariatur esse, tenetur
-          consequuntur autem! Ut, rem cupiditate ea dolorum ipsum quia animi
-          odit ipsa. Magni, modi minima. Velit assumenda culpa obcaecati sit,
-          ipsam praesentium facilis beatae illum nobis animi consequatur
-          perspiciatis?
-        </p>
+  </div>
+  <b-modal id="modal-ok" title="GestIB2Google" ok-only>
+    <p class="my-4">----------------------</p>
+  </b-modal>
+  <!-- Taula mostrar professorat -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Operació</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>Informació d'operació</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(log, index) in logs" v-bind:key="index">
+              <td>{{ log }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <button class="btn btn-primary" v-on:click="importDomini(true)" :disabled="loading || !logs.length">
+        Guardar informació d'operació a fitxer de text
+      </button>
+      <button class="btn btn-primary" v-on:click="saveLog()" :disabled="loading || !logs.length">
+        Guardar informació d'operació a fitxer de text
+      </button>
+    </div>
+  </div>
+  <!-- Fi taula mostrar professorat -->
+</div>
       </section>
     </main>
   </body>
