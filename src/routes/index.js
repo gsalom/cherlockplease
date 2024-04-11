@@ -18,5 +18,12 @@ router.get("/horaris", (req, res) => {
   res.render("horaris", { title: "Horaris de revisió" });
 });
 
+router.get("/carretons", (req, res) => {
+  res.render("carretons", { title: "Estat carretons" });
+});
+
+router.get("/professorat", (req, res) => {
+  res.render("professorat", { title: "Professorat" });
+});
 
 export default router;
