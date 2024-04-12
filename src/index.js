@@ -32,7 +32,7 @@ app.set("views", join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 // middlewares
-app.use(morgan("dev"));
+app.use(morgan("cherlock"));
 
 // routes
 app.use(indexRoutes);

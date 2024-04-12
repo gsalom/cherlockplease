@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon src",
+    "cherlock": "nodemon src",
     "start": "node src"
   },
   "keywords": [],
