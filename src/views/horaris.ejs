@@ -1,38 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= title %></title>
-    <%- include("partials/head") %>
-  </head>
-  <body>
-    <!-- HEADER -->
-    <%- include("partials/navigation") %>
 
-    <!-- My Content -->
-    <main
-      class="container pt-2 text-center d-flex justify-content-center align-items-center vh-100"
-    >
-      <section>
-        <h1 class="display-1">HORARIS DE REVISIÓ</h1>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <%- include("partials/head") %>
+</head>
 
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit excepturi
-          repellat quod perspiciatis nostrum ipsam blanditiis libero labore
-          placeat distinctio, ipsa sed, in consequatur enim maxime! Sapiente
-          neque autem aliquid! Esse repellat sint nam ipsum debitis quibusdam
-          nemo ipsam dicta nesciunt vero officia facilis laboriosam minima
-          suscipit, nihil amet doloremque saepe maiores a adipisci dolorum
-          eveniet enim? Unde cupiditate error quas doloremque, tempora
-          asperiores quibusdam ipsam enim sequi pariatur esse, tenetur
-          consequuntur autem! Ut, rem cupiditate ea dolorum ipsum quia animi
-          odit ipsa. Magni, modi minima. Velit assumenda culpa obcaecati sit,
-          ipsam praesentium facilis beatae illum nobis animi consequatur
-          perspiciatis?
-        </p>
-      </section>
-    </main>
-  </body>
+<body>
+  <!-- HEADER -->
+  <%- include("partials/navigation") %>
+  <!-- My Content -->
+  <main class="container pt-2 text-center justify-content-center align-items-center vh-100" style="auto">
+    <section>
+      <h2 class="display-1">Horari setmanal de revisions</h2>
+      <table class="table table-bordered" width="100%" cellspacing="0">
+        <tr>
+          <th>Llin1</th>
+          <th>Llin2</th>
+          <th>Nom</th>
+          <th>Crèdit</th>
+        </tr>
+        <% data.forEach(function(dat){ %>
+        <tr>
+          <td><%= dat.llin1 %></td>
+          <td><%= dat.llin2 %></td>
+          <td><%= dat.nom %></td>
+          <td><%= dat.credit %></td>
+          <%  }); %>
+        </tr>
+      </table>
+    </section>
+  </main>
+</body>
+
 </html>
