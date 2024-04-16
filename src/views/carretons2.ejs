@@ -1,0 +1,59 @@
+const express = require('express');
+const mysql = require('mysql');
+
+const app = express();
+const connection = mysql.createConnection({
+    database: 'mydb',
+    user: 'root',
+    password: 'password'
+});
+
+app.get('/carretons', async (req, res) => {
+    const query = 'SELECT * FROM carretons';
+    const [rows, fields] = await connection.query(query);
+
+    const html = `
+        <!DOCTYPE html>
+        <html lang="es">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Carretons</title>
+            <style>
+                table {
+                    border-collapse: collapse;
+                    width: 100%;
+                }
+
+                th, td {
+                    text-align: left;
+                    padding: 8px;
+                    border: 1px solid #ddd;
+                }
+            </style>
+        </head>
+        <body>
+            <h1>Carretons</h1>
+
+            <table>
+                <thead>
+                    <tr>
+                        ${fields.map(field => `<th>${field.name}</th>`).join('')}
+                    </tr>
+                </thead>
+                <tbody>
+                    ${rows.map(row => `
+                        <tr>
+                            ${row.map(value => `<td>${value}</td>`).join('')}
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        </body>
+        </html>
+    `;
+
+    res.send(html);
+});
+
+app.listen(3000, () => console.log('Server running on port 3000'));
