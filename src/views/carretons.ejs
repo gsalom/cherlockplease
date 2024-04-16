@@ -20,39 +20,31 @@
     </style>
 </head>
 <body>
-
     <!-- HEADER -->
     <%- include("partials/navigation") %>
-
     <!-- My Content -->
-    <main
-      class="container pt-2 text-center d-flex justify-content-center align-items-center vh-100"
-    >
-      <section>
-        <h1 class="display-5">Estat Carretons</h1>
-        <p>
-       <table>
-        <thead>
+        <main class="container pt-2 text-center justify-content-center align-items-center vh-100" style="auto">
+        <section>
+          <h2 class="display-1">Estat Carretons</h2>
+          <table class="table table-bordered" width="100%" cellspacing="0">
             <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Aula</th>
-                <th>Estat</th>
-                <th>Stock</th>
+              <th>Id</th>
+              <th>Nom</th>
+              <th>Aula</th>
+              <th>Estat</th>
+              <th>Stock</th>
             </tr>
-        </thead>
-        <tbody>
-                <tr>
-                    <td>carreton.id</td>
-                    <td>carreton.nom</td>
-                    <td>carreton.aula</td>
-                    <td>carreton.estat</td>
-                    <td>carreton.stock</td>
-                </tr>
-        </tbody>
-    </table>
-        </p>
-      </section>
-    </main> 
+            <% data.forEach(function(dat){ %>
+            <tr>
+              <td><%= dat.id_car %></td>
+              <td><%= dat.nom %></td>
+              <td><%= dat.nom_aula %></td>
+              <td><%= dat.estat %></td>
+              <td><%= dat.num_ord %></td>
+              <%  }); %>
+            </tr>
+          </table>
+        </section>
+      </main>
 </body>
 </html>

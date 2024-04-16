@@ -12,45 +12,26 @@
 <body>
   <!-- HEADER -->
   <%- include("partials/navigation") %>
-
   <!-- My Content -->
-  <main class="container pt-2 text-center d-flex justify-content-center align-items-center vh-100">
+  <main class="container pt-2 text-center justify-content-center align-items-center vh-100" style="auto">
     <section>
-      <h1 class="display-1">Professorat</h1>
-      </div>
-      <b-modal id="modal-ok" title="GestIB2Google" ok-only>
-        <p class="my-4">----------------------</p>
-      </b-modal>
-      <!-- Taula mostrar professorat -->
-      <div class="card shadow mb-4">
-        <div class="card-header py-3">
-          <h6 class="m-0 font-weight-bold text-primary">Operació</h6>
-        </div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table table-bordered" width="100%" cellspacing="0">
-              <thead>
-                <tr>
-                  <th>Informació d'operació</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(log, index) in logs" v-bind:key="index">
-                  <td>{{ log }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <button class="btn btn-primary" v-on:click="importDomini(true)" :disabled="loading || !logs.length">
-            Guardar informació d'operació a fitxer de text
-          </button>
-          <button class="btn btn-primary" v-on:click="saveLog()" :disabled="loading || !logs.length">
-            Guardar informació d'operació a fitxer de text
-          </button>
-        </div>
-      </div>
-      <!-- Fi taula mostrar professorat -->
-      </div>
+      <h2 class="display-1">Professorat</h2>
+      <table class="table table-bordered" width="100%" cellspacing="0">
+        <tr>
+          <th>Llin1</th>
+          <th>Llin2</th>
+          <th>Nom</th>
+          <th>Crèdit</th>
+        </tr>
+        <% data.forEach(function(dat){ %>
+        <tr>
+          <td><%= dat.llin1 %></td>
+          <td><%= dat.llin2 %></td>
+          <td><%= dat.nom %></td>
+          <td><%= dat.credit %></td>
+          <%  }); %>
+        </tr>
+      </table>
     </section>
   </main>
 </body>
