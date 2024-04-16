@@ -7,6 +7,11 @@
 -- Versión del servidor: 10.7.8-MariaDB-1:10.7.8+maria~ubu2004
 -- Versión de PHP: 8.2.14
 
+-- DROP DATABASE IF EXISTS cherlock;
+-- CREATE DATABASE cherlock;
+
+USE cherlock;
+
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
