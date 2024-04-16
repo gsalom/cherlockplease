@@ -11,7 +11,7 @@ var con = mysql.createConnection({
 
 con.connect(function(err) {
   if (err) throw err;
-     
+
 });
 
 const router = Router();
@@ -26,10 +26,6 @@ router.get("/about", (req, res) => {
 
 router.get("/contact", (req, res) => {
   res.render("contact", { title: "Contacte" });
-});
-
-router.get("/horaris", (req, res) => {
-  res.render("horaris", { title: "Horaris de revisió" });
 });
 
 router.get("/carretons", (req, res) => {
@@ -53,6 +49,18 @@ con.query('SELECT * FROM professorat', (error, results) => {
   }
   // Send the fetched data as a response
   res.render("professorat", {  title: "Professorat", data: results });
+});
+});
+
+router.get('/horaris', (req, res) => {
+  // Fetch professorat from the database
+con.query('SELECT c.nom as cicle, a.nom as aula, concat(p.llin2," ",p.llin1,", ",p.nom) as profe, h.dia, h.hora, h.realitzada, h.tipus FROM cherlock.horaris h, cherlock.professorat p, cherlock.cicles c, cherlock.aules a  where h.id_cicle=c.codi and h.id_prof=p.codi and h.id_aula=a.codi', (error, results) => {
+    if (error) {
+        console.error('Error fetching horaris from the database: ' + error.stack);
+        return res.status(500).json({ error: 'Failed to fetch horaris' });
+  }
+  // Send the fetched data as a response
+  res.render("horaris", {  title: "Horaris", data: results });
 });
 });
 

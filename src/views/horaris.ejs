@@ -18,17 +18,23 @@
       <h2 class="display-1">Horari setmanal de revisions</h2>
       <table class="table table-bordered" width="100%" cellspacing="0">
         <tr>
-          <th>Llin1</th>
-          <th>Llin2</th>
-          <th>Nom</th>
-          <th>Crèdit</th>
+          <th>Cicle</th>
+          <th>Aula</th>
+          <th>Professor//a</th>
+          <th>Dia setmana</th>
+          <th>Hora</th>
+          <th>Realitzada</th>
+          <th>Tipus</th>
         </tr>
         <% data.forEach(function(dat){ %>
         <tr>
-          <td><%= dat.llin1 %></td>
-          <td><%= dat.llin2 %></td>
-          <td><%= dat.nom %></td>
-          <td><%= dat.credit %></td>
+          <td><%= dat.cicle %></td>
+          <td><%= dat.aula %></td>
+          <td><%= dat.profe %></td>
+          <td><%= dat.dia %></td>
+          <td><%= dat.hora %></td>
+          <td><%= dat.realitzada %></td>
+          <td><%= dat.tipus %></td>
           <%  }); %>
         </tr>
       </table>

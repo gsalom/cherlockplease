@@ -1,0 +1,3 @@
+-- SELECT * FROM cherlock.horaris where id_aula not in (select codi_aula from carretons);
+-- SELECT h.id_aula, a.nom, a.codi horarisFROM cherlock.horaris h, cherlock.aules a where a.codi=h.id_aula;
+SELECT c.nom as cicle, a.nom as aula, concat(p.llin2," ",p.llin1,",",p.nom) as profe, h.dia, h.hora, h.realitzada, h.tipus FROM cherlock.horaris h, cherlock.professorat p, cherlock.cicles c, cherlock.aules a  where h.id_cicle=c.codi and h.id_prof=p.codi and h.id_aula=a.codi;
