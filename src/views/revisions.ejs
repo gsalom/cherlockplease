@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <%- include("partials/head") %>
+</head>
+
+<body>
+  <!-- HEADER -->
+  <%- include("partials/navigation") %>
+  <!-- My Content -->
+  <main class="container pt-2 text-center justify-content-center align-items-center vh-100" style="auto">
+    <section>
+      <h2 class="display-1">Revisions realitzades</h2>
+      <table class="table table-bordered" width="100%" cellspacing="0">
+        <tr>
+          <th>Data</th>
+          <th>Hora</th>
+          <th>Professor//a</th>
+          <th>Aula</th>
+          <th>Carreto</th>
+          <th>Estat</th>
+          <th>Comentaris</th>
+        </tr>
+        <% data.forEach(function(dat){ %>
+        <tr>
+          <td><%= dat.dia %></td>
+          <td><%= dat.hora_rev %></td>
+          <td><%= dat.profe %></td>
+          <td><%= dat.aula %></td>
+          <td><%= dat.carreto %></td>
+          <td><%= dat.estat %></td>
+          <td><%= dat.comentaris %></td>
+          <%  }); %>
+        </tr>
+      </table>
+    </section>
+  </main>
+</body>
+
+</html>
