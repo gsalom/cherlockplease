@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <%- include("partials/head") %>
+</head>
+
+<body>
+  <!-- HEADER -->
+  <%- include("partials/navigation") %>
+  <!-- My Content -->
+  <main class="container pt-2 text-center justify-content-center align-items-center vh-100" style="auto">
+    <section>
+      <h2 class="display-1">Consulta entre dates</h2>
+      <form action="/emails" method="get">
+        <input type="date" name="dataini" >
+        <input type="date" name="datafin" >
+        <input type="submit" value="inspeciona">
+      </form>
+    </section>
+  </main>
+</body>
+</html>

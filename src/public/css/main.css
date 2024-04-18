@@ -18,6 +18,13 @@ header img {
 }
 
 .fons{
-  background-color:rgb(233, 233, 152);
+  background-color:rgb(80, 134, 233);
   font-size: x-large;
+  border: 2px solid rgb(233, 233, 152);
+  border-collapse: collapse;
+  color:rgb(233, 233, 152);
+}
+
+tr:nth-child(odd) {
+  background-color:rgb(101, 146, 231);
 }
