@@ -25,23 +25,29 @@
     <!-- My Content -->
         <main class="container pt-2 text-center justify-content-center align-items-center vh-100" style="auto">
         <section>
-          <h2 class="display-1">Estat Carretons</h2>
+          <h2 class="display-1">Grups</h2>
           <table class="table table-bordered" width="100%" cellspacing="0">
             <tr>
               <th>Id</th>
+              <th>Codi</th>
               <th>Nom</th>
+              <th>Cicle</th>
+              <th>Descripcio</th>
               <th>Aula</th>
-              <th>Estat</th>
-              <th>Stock</th>
+              <th>Tutor1</th>
+              <th>Tutor2</th>
             </tr>
             <% data.forEach(function(dat){ %>
             <tr>
-              <td><%= dat.id_car %></td>
+              <td><%= dat.id_grup %></td>
+              <td><%= dat.codi %></td>
               <td><%= dat.nom %></td>
-              <td><%= dat.nom_aula %></td>
-              <td><%= dat.estat %></td>
-              <td><%= dat.num_ord %></td>
-              <%  }); %>
+              <td><%= dat.id_cicle %></td>
+              <td><%= dat.descripcio %></td>
+              <td><%= dat.descripcio %></td>
+              <td><%= dat.id_tutor %></td>
+              <td><%= dat.id_tutor2 %></td>
+               <%  }); %>
             </tr>
           </table>
         </section>

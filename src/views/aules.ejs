@@ -25,22 +25,22 @@
     <!-- My Content -->
         <main class="container pt-2 text-center justify-content-center align-items-center vh-100" style="auto">
         <section>
-          <h2 class="display-1">Estat Carretons</h2>
+          <h2 class="display-1">Aules</h2>
           <table class="table table-bordered" width="100%" cellspacing="0">
             <tr>
               <th>Id</th>
+              <th>Codi</th>
               <th>Nom</th>
-              <th>Aula</th>
-              <th>Estat</th>
-              <th>Stock</th>
+              <th>Bloc</th>
+              <th>Pis</th>
             </tr>
             <% data.forEach(function(dat){ %>
             <tr>
-              <td><%= dat.id_car %></td>
+              <td><%= dat.id_aula %></td>
+              <td><%= dat.codi %></td>
               <td><%= dat.nom %></td>
-              <td><%= dat.nom_aula %></td>
-              <td><%= dat.estat %></td>
-              <td><%= dat.num_ord %></td>
+              <td><%= dat.bloc %></td>
+              <td><%= dat.pis %></td>
               <%  }); %>
             </tr>
           </table>

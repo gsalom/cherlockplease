@@ -19,9 +19,11 @@ con.connect(function (err) {
 const router = Router();
 
 router.get("/", (req, res) => {
-  res.render("index", {
-    title: "CherLock Please"
-  });
+  res.render("index", { title: "CherLock Please" });
+});
+
+router.get("/backend", (req, res) => {
+  res.render("backend", { title: "CherLock Back End" });
 });
 
 router.get("/about", (req, res) => {
@@ -55,20 +57,63 @@ router.get("/carretons", (req, res) => {
 
 router.get('/professorat', (req, res) => {
   // Fetch professorat from the database
-  con.query('SELECT * FROM professorat', (error, results) => {
+con.query('SELECT * FROM professorat', (error, results) => {
     if (error) {
-      console.error('Error fetching professorat from the database: ' + error.stack);
-      return res.status(500).json({
-        error: 'Failed to fetch professorat'
-      });
-    }
-    // Send the fetched data as a response
-    res.render("professorat", {
-      title: "Professorat",
-      data: results
-    });
-  });
+        console.error('Error fetching professorat from the database: ' + error.stack);
+        return res.status(500).json({ error: 'Failed to fetch professorat' });
+  }
+  // Send the fetched data as a response
+  res.render("professorat", {  title: "Professorat", data: results });
 });
+});
+
+router.get('/departaments', (req, res) => {
+  // Fetch departaments from the database
+con.query('SELECT * FROM departaments', (error, results) => {
+    if (error) {
+        console.error('Error fetching professorat from the database: ' + error.stack);
+        return res.status(500).json({ error: 'Failed to fetch professorat' });
+  }
+  // Send the fetched data as a response
+  res.render("departaments", {  title: "Departaments", data: results });
+});
+});
+
+router.get('/cicles', (req, res) => {
+  // Fetch cicles from the database
+con.query('SELECT * FROM cicles', (error, results) => {
+    if (error) {
+        console.error('Error fetching cicles from the database: ' + error.stack);
+        return res.status(500).json({ error: 'Failed to fetch cicles' });
+  }
+  // Send the fetched data as a response
+  res.render("cicles", {  title: "Cicles", data: results });
+});
+});
+
+router.get('/aules', (req, res) => {
+  // Fetch aules from the database
+con.query('SELECT * FROM aules', (error, results) => {
+    if (error) {
+        console.error('Error fetching aules from the database: ' + error.stack);
+        return res.status(500).json({ error: 'Failed to fetch aules' });
+  }
+  // Send the fetched data as a response
+  res.render("aules", {  title: "Aules", data: results });
+});
+});
+router.get('/grups', (req, res) => {
+  // Fetch grups from the database
+con.query('SELECT * FROM grups', (error, results) => {
+    if (error) {
+        console.error('Error fetching grups from the database: ' + error.stack);
+        return res.status(500).json({ error: 'Failed to fetch grups' });
+  }
+  // Send the fetched data as a response
+  res.render("grups", {  title: "Grups", data: results });
+});
+});
+
 
 router.get('/horaris', (req, res) => {
   // Fetch professorat from the database
@@ -90,19 +135,14 @@ router.get('/horaris', (req, res) => {
 
 router.get('/revisions', (req, res) => {
   // Fetch revisions from the database
-  con.query('SELECT date_format(r.data_rev, "%d /%m/%y") as dia, r.hora_rev, concat(p.llin2," ",p.llin1,", ",p.nom) as profe, r.aula, c.nom as carreto, r.estat, r.comentaris FROM cherlock.revisions r, cherlock.professorat p, cherlock.carretons c where r.email = p.email and r.id_aula = c.codi_aula', (error, results) => {
+con.query('SELECT date_format(r.data_rev, "%d/%m/%y") as dia, r.hora_rev, concat(p.llin2," ",p.llin1,", ",p.nom) as profe, r.aula, c.nom as carreto, r.estat, r.comentaris FROM cherlock.revisions r, cherlock.professorat p, cherlock.carretons c where r.email=p.email and r.id_aula=c.codi_aula', (error, results) => {
     if (error) {
-      console.error('Error fetching revisions from the database: ' + error.stack);
-      return res.status(500).json({
-        error: 'Failed to fetch revisions'
-      });
-    }
-    // Send the fetched data as a response
-    res.render("revisions", {
-      title: "revisions",
-      data: results
-    });
-  });
+        console.error('Error fetching revisions from the database: ' + error.stack);
+        return res.status(500).json({ error: 'Failed to fetch revisions' });
+  }
+  // Send the fetched data as a response
+  res.render("revisions", {  title: "Revisions", data: results });
+});
 });
 
 export default router;
