@@ -1,0 +1,1 @@
+SELECT * FROM cherlock.horaris where  hora="14:30:00" order by id_aula, hora;
