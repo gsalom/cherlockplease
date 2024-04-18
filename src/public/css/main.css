@@ -16,3 +16,8 @@ body {
 header img {
   width: 60%;
 }
+
+.fons{
+  background-color:rgb(233, 233, 152);
+  font-size: x-large;
+}

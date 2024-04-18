@@ -1,0 +1,1 @@
+SELECT * FROM cherlock.horaris where email="tribot@cifpfbmoll.eu";

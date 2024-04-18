@@ -117,7 +117,7 @@ con.query('SELECT * FROM grups', (error, results) => {
 
 router.get('/horaris', (req, res) => {
   // Fetch professorat from the database
-  con.query('SELECT c.nom as cicle, a.nom as aula, concat(p.llin2," ",p.llin1,", ",p.nom) as profe, h.dia, h.hora, h.realitzada, h.tipus FROM cherlock.horaris h, cherlock.professorat p, cherlock.cicles c, cherlock.aules a  where h.id_cicle=c.codi and h.id_prof=p.codi and h.id_aula=a.codi', (error, results) => {
+  con.query('SELECT c.nom as cicle, a.nom as aula, concat(p.llin1," ",p.llin2,", ",p.nom) as profe, h.dia, h.hora, h.realitzada, h.tipus FROM cherlock.horaris h, cherlock.professorat p, cherlock.cicles c, cherlock.aules a  where h.id_cicle=c.codi and h.id_prof=p.codi and h.id_aula=a.codi', (error, results) => {
     if (error) {
       console.error('Error fetching horaris from the database: ' + error.stack);
       return res.status(500).json({
@@ -135,13 +135,26 @@ router.get('/horaris', (req, res) => {
 
 router.get('/revisions', (req, res) => {
   // Fetch revisions from the database
-con.query('SELECT date_format(r.data_rev, "%d/%m/%y") as dia, r.hora_rev, concat(p.llin2," ",p.llin1,", ",p.nom) as profe, r.aula, c.nom as carreto, r.estat, r.comentaris FROM cherlock.revisions r, cherlock.professorat p, cherlock.carretons c where r.email=p.email and r.id_aula=c.codi_aula', (error, results) => {
+con.query('SELECT date_format(r.data_rev, "%d/%m/%y") as dia, r.hora_rev, concat(p.llin1," ",p.llin2,", ",p.nom) as profe, r.aula, c.nom as carreto, r.estat, r.comentaris FROM cherlock.revisions r, cherlock.professorat p, cherlock.carretons c where r.email=p.email and r.id_aula=c.codi_aula', (error, results) => {
     if (error) {
         console.error('Error fetching revisions from the database: ' + error.stack);
         return res.status(500).json({ error: 'Failed to fetch revisions' });
   }
   // Send the fetched data as a response
   res.render("revisions", {  title: "Revisions", data: results });
+});
+});
+
+
+router.get('/emails', (req, res) => {
+  // Fetch revisions from the database
+con.query('WITH recursive Date_Ranges AS (select "2024-04-08" as dia union all select dia + interval 1 day from Date_Ranges where dia < "2024-04-18") select d.dia as data_rev, p.* from Date_Ranges d, (select p.email, concat(p.llin1," ",p.llin2,", ",p.nom) as profe, h.dia, h.hora, a.nom from cherlock.professorat p, cherlock.horaris h, cherlock.aules a where h.tipus=1 and h.email=p.email and h.id_aula=a.codi and not exists (select 1 from cherlock.revisions r where r.email=h.email and DAYOFWEEK(r.data_rev)-1=h.dia)) p where dayofweek(d.dia)-1 = p.dia', (error, results) => {
+    if (error) {
+        console.error('Error fetching revisions from the database: ' + error.stack);
+        return res.status(500).json({ error: 'Failed to fetch revisions' });
+  }
+  // Send the fetched data as a response
+  res.render("emails", {  title: "Emails", dataini:"08-04-2024" ,datafi: "18-04-2024",data: results });
 });
 });
 
