@@ -15,28 +15,31 @@
   <!-- My Content -->
   <main class="container pt-2 text-center justify-content-center align-items-center vh-100" style="auto">
     <section>
-      <h2 class="display-1">Revisions no realitzades</h2>
+      <h2 class="display-1">Revisions amb incidències</h2>
       <h1 class="display-5"><%= dataini.toLocaleDateString('es-ES') %> -- <%= datafi.toLocaleDateString('es-ES') %></h1>
       <table class="table table-bordered fons" width="100%" cellspacing="0">
         <tr>
           <th>Data</th>
           <th>Hora</th>
-          <th>Aula</th>
           <th>Professor//a</th>
-          <th>Email</th>
+          <th>Aula</th>
+          <th>Carreto</th>
+          <th>Estat</th>
+          <th>Comentaris</th>
         </tr>
         <% data.forEach(function(dat){ %>
         <tr>
-          <td><%= dat.data_rev %></td>
-          <td><%= dat.hora %></td>
-          <td><%= dat.nom %></td>
+          <td><%= dat.dia %></td>
+          <td><%= dat.hora_rev %></td>
           <td><%= dat.profe %></td>
-          <td><%= dat.email %></td>
+          <td><%= dat.aula %></td>
+          <td><%= dat.carreto %></td>
+          <td><%= dat.estat %></td>
+          <td><%= dat.comentaris %></td>
           <%  }); %>
         </tr>
       </table>
     </section>
   </main>
 </body>
-
 </html>

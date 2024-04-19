@@ -1,0 +1,1 @@
+SELECT g.*, a.nom as aula FROM cherlock.grups g, aules a where g.aula=a.codi;

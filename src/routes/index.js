@@ -128,7 +128,7 @@ router.get('/aules', (req, res) => {
 });
 router.get('/grups', (req, res) => {
   // Fetch grups from the database
-  con.query('SELECT * FROM grups', (error, results) => {
+  con.query('SELECT g.*, a.nom as aula FROM cherlock.grups g, aules a where g.aula=a.codi', (error, results) => {
     if (error) {
       console.error('Error fetching grups from the database: ' + error.stack);
       return res.status(500).json({
@@ -174,11 +174,31 @@ router.get('/revisions', (req, res) => {
     // Send the fetched data as a response
     res.render("revisions", {
       title: "Revisions",
+      dataini: new Date(req.query.dataini),
+      datafi: new Date(req.query.datafin),
       data: results
     });
   });
 });
 
+router.get('/incidencies', (req, res) => {
+  // Fetch revisions from the database
+  con.query('SELECT date_format(r.data_rev, "%d/%m/%y") as dia, r.hora_rev, concat(p.llin1," ",p.llin2,", ",p.nom) as profe, r.aula, c.nom as carreto, r.estat, r.comentaris FROM cherlock.revisions r, cherlock.professorat p, cherlock.carretons c where r.email=p.email and r.id_aula=c.codi_aula and r.estat<>"OK"', (error, results) => {
+    if (error) {
+      console.error('Error fetching revisions from the database: ' + error.stack);
+      return res.status(500).json({
+        error: 'Failed to fetch revisions'
+      });
+    }
+    // Send the fetched data as a response
+    res.render("incidencies", {
+      title: "Incideències",
+      dataini: new Date(req.query.dataini),
+      datafi: new Date(req.query.datafin),
+      data: results
+    });
+  });
+});
 
 router.get('/emails', (req, res) => {
 
@@ -192,9 +212,9 @@ router.get('/emails', (req, res) => {
     }
     // Send the fetched data as a response
     res.render("emails", {
-      title: "Emails",
-      dataini: req.query.dataini,
-      datafi: req.query.datafin,
+      title: "Revisions no fetes",
+      dataini: new Date(req.query.dataini),
+      datafi: new Date(req.query.datafin),
       data: results
     });
   });
