@@ -225,7 +225,7 @@ router.get('/consulta', (req, res) => {
 
 // Send the fetched data as a response
 res.render("consulta", {
-  title: "Consulta"
+  title: "Consulta revisions"
 });
 });
 
