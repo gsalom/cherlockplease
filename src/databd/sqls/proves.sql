@@ -49,7 +49,8 @@ select
     Date_Ranges d,
 (SELECT r.*, concat(p.llin1," ",p.llin2,", ",p.nom) as profe, c.nom as carreto FROM cherlock.revisions r, cherlock.professorat p, cherlock.carretons c where r.email=p.email and r.id_aula=c.codi_aula) rev
 where
-    d.dia=rev.data_rev;
+    d.dia=rev.data_rev
+order by d.dia, rev.hora_rev;
     
 -- junta
 

@@ -4,5 +4,6 @@
 4) Repassar els horaris falten tipus 1 pq n'hi ha d'haber 5 per dia-aula
 5) Fer carrega db des de GestIB
 6) Fer formularis de modificacions als backend
-7) ordenar per data hora les revisions
+7) ordenar per data hora les revisions fet
 8) autonatitzar la carrega de revisions
+9) a taula grups ficar nom tutors

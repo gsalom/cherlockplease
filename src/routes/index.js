@@ -128,7 +128,7 @@ router.get('/aules', (req, res) => {
 });
 router.get('/grups', (req, res) => {
   // Fetch grups from the database
-  con.query('SELECT g.*, a.nom as aula FROM cherlock.grups g, aules a where g.aula=a.codi', (error, results) => {
+  con.query('SELECT g.*, a.nom as aula, concat(p.llin1," ",p.llin2,", ",p.nom) as tutor1 FROM cherlock.grups g, cherlock.aules a , cherlock.professorat p where g.aula=a.codi and g.id_tutor=p.codi', (error, results) => {
     if (error) {
       console.error('Error fetching grups from the database: ' + error.stack);
       return res.status(500).json({
@@ -164,7 +164,7 @@ router.get('/horaris', (req, res) => {
 
 router.get('/revisions', (req, res) => {
   // Fetch revisions from the database
-  con.query('WITH recursive Date_Ranges AS (select "'+req.query.dataini+'" as dia union all select dia + interval 1 day from Date_Ranges where dia < "'+req.query.datafin+'") select date_format(d.dia, "%d/%m/%y") as dia, rev.* from Date_Ranges d, (SELECT r.*, concat(p.llin1," ",p.llin2,", ",p.nom) as profe, c.nom as carreto FROM cherlock.revisions r, cherlock.professorat p, cherlock.carretons c where r.email=p.email and r.id_aula=c.codi_aula) rev where d.dia=rev.data_rev', (error, results) => {
+  con.query('WITH recursive Date_Ranges AS (select "'+req.query.dataini+'" as dia union all select dia + interval 1 day from Date_Ranges where dia < "'+req.query.datafin+'") select date_format(d.dia, "%d/%m/%y") as dia, rev.* from Date_Ranges d, (SELECT r.*, concat(p.llin1," ",p.llin2,", ",p.nom) as profe, c.nom as carreto FROM cherlock.revisions r, cherlock.professorat p, cherlock.carretons c where r.email=p.email and r.id_aula=c.codi_aula) rev where d.dia=rev.data_rev order by d.dia, rev.hora_rev', (error, results) => {
      if (error) {
       console.error('Error fetching revisions from the database: ' + error.stack);
       return res.status(500).json({
@@ -185,7 +185,7 @@ router.get('/incidencies', (req, res) => {
   // Fetch revisions from the database
 
 
-  con.query('WITH recursive Date_Ranges AS (select "'+req.query.dataini+'" as dia union all select dia + interval 1 day from Date_Ranges where dia < "'+req.query.datafin+'") select date_format(d.dia, "%d/%m/%y") as dia, ko.* from Date_Ranges d, (select r.*, concat(p.llin1," ",p.llin2,", ",p.nom) as profe, c.nom as carreto from cherlock.revisions r, cherlock.professorat p, cherlock.carretons c where r.estat<>"OK" and r.email=p.email and r.id_aula=c.codi_aula) ko where d.dia=ko.data_rev', (error, results) => {
+  con.query('WITH recursive Date_Ranges AS (select "'+req.query.dataini+'" as dia union all select dia + interval 1 day from Date_Ranges where dia < "'+req.query.datafin+'") select date_format(d.dia, "%d/%m/%y") as dia, ko.* from Date_Ranges d, (select r.*, concat(p.llin1," ",p.llin2,", ",p.nom) as profe, c.nom as carreto from cherlock.revisions r, cherlock.professorat p, cherlock.carretons c where r.estat<>"OK" and r.email=p.email and r.id_aula=c.codi_aula) ko where d.dia=ko.data_rev order by d.dia, ko.hora_rev', (error, results) => {
     if (error) {
       console.error('Error fetching revisions from the database: ' + error.stack);
       return res.status(500).json({
