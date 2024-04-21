@@ -6,4 +6,4 @@
 6) Fer formularis de modificacions als backend
 7) ordenar per data hora les revisions fet
 8) autonatitzar la carrega de revisions
-9) a taula grups ficar nom tutors
+9) a taula grups ficar nom tutors podiem llevar tutor2 de taula grups

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>
+    <%= title %>
+  </title>
+  <%- include("partials/head") %>
+</head>
+
+<body>
+  <!-- HEADER -->
+  <%- include("partials/navigation") %>
+    <!-- My Content -->
+    <main class="container pt-2 text-center justify-content-center align-items-center vh-100" style="auto">
+      <section>
+        <h2 class="display-1">Formulari Alta Professorat</h2>
+        <form action="/revisions" method="post">
+          <label for="fname">First name:</label><br>
+          <input type="text" id="fname" name="fname" value="John" required><br>
+          <label for="lname">Last name:</label><br>
+          <input type="text" id="lname" name="lname" value="Doe" required><br><br>
+          <input type="submit" value="Submit">
+        </form>
+      </section>
+    </main>
+</body>
+</html>

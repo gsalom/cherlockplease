@@ -4,6 +4,12 @@ import {
 
 import mysql from "mysql";
 
+// inici proves nous forms
+
+const { body, validationResult } = require("express-validator");
+
+// fi proves nous forms
+
 var con = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -230,6 +236,7 @@ res.render("consulta", {
   title: "Consulta revisions"
 });
 });
+
 
 
 
