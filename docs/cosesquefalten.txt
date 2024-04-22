@@ -1,11 +1,14 @@
-1) Consultar per dates totes les revisions OK FET
-2) Consultar per dates revisions amb incidencies OK FET
-3) Crear full google amb l'assignació per ordinador per aula/carreto
-4) Repassar els horaris falten tipus 1 pq n'hi ha d'haber 5 per dia-aula
-5) Fer carrega db des de GestIB
-6) Fer formularis de modificacions als backend
-7) ordenar per data hora les revisions OK FET
-8) autonatitzar la carrega de revisions
-9) a taula grups ficar nom tutors podiem llevar tutor2 de taula grups OK FET
-10) Crear docker amb es programa
-11) llevar username de professorat
+Consultar per dates totes les revisions OK FET
+Consultar per dates revisions amb incidencies OK FET
+ordenar per data hora les revisions OK FET
+llevar username de professorat OK FET
+a taula grups ficar nom tutors podiem llevar tutor2 de taula grups OK FET
+
+1) Crear full google amb l'assignació per ordinador per aula/carreto
+2) Repassar els horaris falten tipus 1 pq n'hi ha d'haber 5 per dia-aula
+3) Fer carrega db des de GestIB
+4) Fer formularis de modificacions als backend
+5) autonatitzar la carrega de revisions
+6) Crear docker amb es programa
+7) Ficar a taula horaris el nom del grup IFC32A p.e. y ordenar per aquest i dia, hora
+ 

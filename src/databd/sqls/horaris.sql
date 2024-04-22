@@ -25,3 +25,6 @@ select distinct h.email, concat(p.llin1," ",p.llin2,", ",p.nom) as profe from ch
  
 select p.email, concat(p.llin1," ",p.llin2,", ",p.nom) as profe, h.dia from cherlock.professorat p, cherlock.horaris h where h.tipus=1 and h.email=p.email
  and not exists (select 1 from cherlock.revisions r where r.email=h.email and DAYOFWEEK(r.data_rev)-1=h.dia);
+ 
+ SELECT * FROM cherlock.horaris where dia=3 and email='tgaya@cifpfbmoll.eu';
+SELECT * FROM cherlock.horaris where id_grup='598381' and hora='17:20:00';
