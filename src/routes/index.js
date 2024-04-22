@@ -4,12 +4,6 @@ import {
 
 import mysql from "mysql";
 
-// inici proves nous forms
-
-const { body, validationResult } = require("express-validator");
-
-// fi proves nous forms
-
 var con = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -47,6 +41,21 @@ router.get("/contact", (req, res) => {
     title: "Contacte"
   });
 });
+
+// proves amb forms 
+
+router.get("/prof_forms", (req, res) => {
+  res.render("prof_forms", {
+    title: "Form Professorat"
+  });
+});
+
+router.post("/profController", (req, res)=> {
+  // codi 
+  res.send('Add a profe');
+});
+
+// fi de proves amb forms
 
 router.get("/carretons", (req, res) => {
   // Fetch professorat from the database

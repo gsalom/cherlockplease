@@ -17,14 +17,58 @@ header img {
   width: 60%;
 }
 
-.fons{
-  background-color:rgb(80, 134, 233);
+.fons {
+  background-color: rgb(80, 134, 233);
   font-size: x-large;
   border: 2px solid rgb(233, 233, 152);
   border-collapse: collapse;
-  color:rgb(233, 233, 152);
+  color: rgb(233, 233, 152);
 }
 
 tr:nth-child(odd) {
-  background-color:rgb(101, 146, 231);
+  background-color: rgb(101, 146, 231);
+}
+
+form {
+  /* Define el ancho del formulario */
+  width: 500px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+label {
+  /* Aumenta el tamaño de la fuente de las etiquetas */
+  font-size: 16px;
+  display: block;
+  justify-items: start;
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+  /* Tamaño y estilo de los campos de texto */
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 14px;
+}
+
+textarea {
+  /* Aumenta la altura del textarea */
+  height: 100px;
+}
+
+input[type="submit"] {
+  /* Estilo del botón */
+  background-color: #1970e2;
+  /* verde */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }

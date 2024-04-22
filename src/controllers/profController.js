@@ -1,3 +1,10 @@
+// inici proves nous forms
+
+const { body, validationResult } = require("express-validator");
+
+// fi proves nous forms
+
+
 // Display Author create form on GET.
 exports.author_create_get = (req, res, next) => {
     res.render("prof_form", { title: "Crear Professorat" });
@@ -56,7 +63,7 @@ exports.author_create_post = [
         // Save author.
         await author.save();
         // Redirect to new author record.
-        res.redirect(author.url);
+        res.redirect(professorat.ejs);
       }
     }),
   ];
