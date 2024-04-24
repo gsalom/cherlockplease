@@ -3,6 +3,7 @@ import {
 } from "express";
 
 import mysql from "mysql";
+import { consultaCarretons } from "../models/carretons.js";
 
 var con = mysql.createConnection({
   host: "localhost",
@@ -50,7 +51,7 @@ router.get("/prof_forms", (req, res) => {
   });
 });
 
-router.post("/profController", (req, res)=> {
+router.post("/profController", (req, res) => {
   // codi 
   res.send('Add a profe');
 });
@@ -58,21 +59,15 @@ router.post("/profController", (req, res)=> {
 // fi de proves amb forms
 
 router.get("/carretons", (req, res) => {
-  // Fetch professorat from the database
-  con.query('SELECT id_car,c.nom,a.nom as nom_aula,c.estat, c.num_ord FROM cherlock.carretons c, cherlock.aules a WHERE c.codi_aula=a.codi order by a.nom', (error, results) => {
-    if (error) {
-      console.error('Error fetching carretons from the database: ' + error.stack);
-      return res.status(500).json({
-        error: 'Failed to fetch carretons'
-      });
-    }
-    // Send the fetched data as a response
-    res.render("carretons", {
-      title: "Estat carretons",
-      data: results
-    });
-  });
+// Fetch professorat from the database
+console.log(consultaCarretons(con));
+// Send the fetched data as a response
+res.render("carretons", {
+  title: "Estat carretons",
+  data: consultaCarretons(con)
 });
+});
+
 
 router.get('/professorat', (req, res) => {
   // Fetch professorat from the database
@@ -179,8 +174,8 @@ router.get('/horaris', (req, res) => {
 
 router.get('/revisions', (req, res) => {
   // Fetch revisions from the database
-  con.query('WITH recursive Date_Ranges AS (select "'+req.query.dataini+'" as dia union all select dia + interval 1 day from Date_Ranges where dia < "'+req.query.datafin+'") select date_format(d.dia, "%d/%m/%y") as dia, rev.* from Date_Ranges d, (SELECT r.*, concat(p.llin1," ",p.llin2,", ",p.nom) as profe, c.nom as carreto FROM cherlock.revisions r, cherlock.professorat p, cherlock.carretons c where r.email=p.email and r.id_aula=c.codi_aula) rev where d.dia=rev.data_rev order by d.dia, rev.hora_rev', (error, results) => {
-     if (error) {
+  con.query('WITH recursive Date_Ranges AS (select "' + req.query.dataini + '" as dia union all select dia + interval 1 day from Date_Ranges where dia < "' + req.query.datafin + '") select date_format(d.dia, "%d/%m/%y") as dia, rev.* from Date_Ranges d, (SELECT r.*, concat(p.llin1," ",p.llin2,", ",p.nom) as profe, c.nom as carreto FROM cherlock.revisions r, cherlock.professorat p, cherlock.carretons c where r.email=p.email and r.id_aula=c.codi_aula) rev where d.dia=rev.data_rev order by d.dia, rev.hora_rev', (error, results) => {
+    if (error) {
       console.error('Error fetching revisions from the database: ' + error.stack);
       return res.status(500).json({
         error: 'Failed to fetch revisions'
@@ -200,7 +195,7 @@ router.get('/incidencies', (req, res) => {
   // Fetch revisions from the database
 
 
-  con.query('WITH recursive Date_Ranges AS (select "'+req.query.dataini+'" as dia union all select dia + interval 1 day from Date_Ranges where dia < "'+req.query.datafin+'") select date_format(d.dia, "%d/%m/%y") as dia, ko.* from Date_Ranges d, (select r.*, concat(p.llin1," ",p.llin2,", ",p.nom) as profe, c.nom as carreto from cherlock.revisions r, cherlock.professorat p, cherlock.carretons c where r.estat<>"OK" and r.email=p.email and r.id_aula=c.codi_aula) ko where d.dia=ko.data_rev order by d.dia, ko.hora_rev', (error, results) => {
+  con.query('WITH recursive Date_Ranges AS (select "' + req.query.dataini + '" as dia union all select dia + interval 1 day from Date_Ranges where dia < "' + req.query.datafin + '") select date_format(d.dia, "%d/%m/%y") as dia, ko.* from Date_Ranges d, (select r.*, concat(p.llin1," ",p.llin2,", ",p.nom) as profe, c.nom as carreto from cherlock.revisions r, cherlock.professorat p, cherlock.carretons c where r.estat<>"OK" and r.email=p.email and r.id_aula=c.codi_aula) ko where d.dia=ko.data_rev order by d.dia, ko.hora_rev', (error, results) => {
     if (error) {
       console.error('Error fetching revisions from the database: ' + error.stack);
       return res.status(500).json({
@@ -220,7 +215,7 @@ router.get('/incidencies', (req, res) => {
 router.get('/emails', (req, res) => {
 
   // Fetch revisions from the database
-  con.query('WITH recursive Date_Ranges AS (select "'+req.query.dataini+'" as dia union all select dia + interval 1 day from Date_Ranges where dia < "'+req.query.datafin+'") select date_format(d.dia, "%d/%m/%y") as data_rev, p.* from Date_Ranges d, (select p.email, concat(p.llin1," ",p.llin2,", ",p.nom) as profe, h.dia, h.hora, g.nom as grup, a.nom from cherlock.professorat p, cherlock.horaris h, cherlock.aules a, cherlock.grups g where h.id_grup=g.codi and h.tipus=1 and h.email=p.email and h.id_aula=a.codi and not exists (select 1 from cherlock.revisions r where r.email=h.email and DAYOFWEEK(r.data_rev)-1=h.dia)) p where dayofweek(d.dia)-1 = p.dia', (error, results) => {
+  con.query('WITH recursive Date_Ranges AS (select "' + req.query.dataini + '" as dia union all select dia + interval 1 day from Date_Ranges where dia < "' + req.query.datafin + '") select date_format(d.dia, "%d/%m/%y") as data_rev, p.* from Date_Ranges d, (select p.email, concat(p.llin1," ",p.llin2,", ",p.nom) as profe, h.dia, h.hora, g.nom as grup, a.nom from cherlock.professorat p, cherlock.horaris h, cherlock.aules a, cherlock.grups g where h.id_grup=g.codi and h.tipus=1 and h.email=p.email and h.id_aula=a.codi and not exists (select 1 from cherlock.revisions r where r.email=h.email and DAYOFWEEK(r.data_rev)-1=h.dia)) p where dayofweek(d.dia)-1 = p.dia', (error, results) => {
     if (error) {
       console.error('Error fetching revisions from the database: ' + error.stack);
       return res.status(500).json({
@@ -238,12 +233,12 @@ router.get('/emails', (req, res) => {
 });
 
 router.get('/consulta', (req, res) => {
-// Fetch revisions from the database
+  // Fetch revisions from the database
 
-// Send the fetched data as a response
-res.render("consulta", {
-  title: "Consulta revisions"
-});
+  // Send the fetched data as a response
+  res.render("consulta", {
+    title: "Consulta revisions"
+  });
 });
 
 

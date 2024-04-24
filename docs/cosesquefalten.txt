@@ -11,4 +11,5 @@ a taula grups ficar nom tutors podiem llevar tutor2 de taula grups OK FET
 5) autonatitzar la carrega de revisions
 6) Crear docker amb es programa
 7) Ficar a taula horaris el nom del grup IFC32A p.e. y ordenar per aquest i dia, hora
+8) Crear una pag que surti per carretor amb un semafor
  
