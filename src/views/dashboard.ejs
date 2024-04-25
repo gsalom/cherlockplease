@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <%- include("partials/head") %>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body onload="pinta()">
+  <!-- HEADER -->
+  <%- include("partials/navigation") %>
+  <!-- My Content -->
+  <canvas id="MiGrafica" width="400" height="200"></canvas>
+  <script>
+    function pinta(){
+    let miCanvas = document.getElementById("MiGrafica").getContext("2d");
+    var chart = new Chart(miCanvas, {
+      type: "bar",
+      data: {
+        labels: ["A fer", "Fetes", "OK", "Incidencies"],
+        datasets: [{
+          label: "Mi grafica de revisions",
+          backgroundColor: "rgb(0,0,0)",
+          bordercolor: "rgb(255,255,255)",
+          data: [12, 10, 8, 2]
+        }]
+      }
+    })
+  }
+  </script>
+</body>
+
+
+</html>

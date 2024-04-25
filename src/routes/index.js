@@ -3,7 +3,12 @@ import {
 } from "express";
 
 import mysql from "mysql";
-import { consultaCarretons } from "../models/carretons.js";
+import {
+  consultaCarretons
+} from "../models/carretons.js";
+import {
+  Chart
+} from "Chart.js";
 
 var con = mysql.createConnection({
   host: "localhost",
@@ -28,6 +33,12 @@ router.get("/", (req, res) => {
 router.get("/backend", (req, res) => {
   res.render("backend", {
     title: "CherLock Back End"
+  });
+});
+
+router.get("/dashboard", (req, res) => {
+  res.render("dashboard", {
+    title: "Panel d'Estat"
   });
 });
 
@@ -59,13 +70,20 @@ router.post("/profController", (req, res) => {
 // fi de proves amb forms
 
 router.get("/carretons", (req, res) => {
-// Fetch professorat from the database
-console.log(consultaCarretons(con));
-// Send the fetched data as a response
-res.render("carretons", {
-  title: "Estat carretons",
-  data: consultaCarretons(con)
-});
+  // Fetch professorat from the database
+  con.query('SELECT id_car,c.nom,a.nom as nom_aula,c.estat, c.num_ord FROM cherlock.carretons c, cherlock.aules a WHERE c.codi_aula=a.codi order by a.nom', (error, results) => {
+    if (error) {
+      console.error('Error fetching carretons from the database: ' + error.stack);
+      return res.status(500).json({
+        error: 'Failed to fetch carretons'
+      });
+    }
+    // Send the fetched data as a response
+    res.render("carretons", {
+      title: "Carretons",
+      data: results
+    });
+  });
 });
 
 
