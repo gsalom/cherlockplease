@@ -59,8 +59,8 @@ router.get("/contact", (req, res) => {
 });
 
 router.get("/mail", (req, res) => {
-  go(req.query.email);
-
+  // console.log(req.query.email+', '+req.query.data+', '+req.query.hora+', '+req.query.aula+', '+req.query.grup);
+  go(req.query.email, req.query.data, req.query.hora, req.query.aula, req.query.grup);
   res.redirect('/about');
 
 });

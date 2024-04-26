@@ -9,13 +9,14 @@ const mailTransport = nodemailer.createTransport({
   },
 })
 
-async function go(email) {
+async function go(email,data,hora,aula,grup) {
   try {
     const result = await mailTransport.sendMail({
       from: '"Cherlock Please" <cherlock@cifpfbmoll.eu>',
       to: 'gsalom@cifpfbmoll.eu',
-      subject: 'No has revisat el carretó!',
-      text: "Te hem llevat un punt per no haver revisat el carrertó de l'aula A000. Seguim Controlant!!!!" + email,
+      // to: email,
+      subject: 'No has fet la revisió del carretó de la '+aula+'!!!',
+      text: "El dia "+ data +" a la hora "+ hora +" no has revisat el carretó de la "+ aula +" del "+ grup + "Email: "+ email,
     })
     console.log('mail sent successfully: ', result)
   } catch (err) {

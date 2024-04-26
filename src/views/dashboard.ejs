@@ -14,12 +14,12 @@
   <!-- HEADER -->
   <%- include("partials/navigation") %>
   <!-- My Content -->
-  <div style="width:400; height:200">
-    <canvas id="MiGrafica"></canvas>
+  <div style="width:800; height:400">
+    <canvas id="RevGrafica"></canvas>
   </div>
   <script>
     function pinta() {
-      let miCanvas = document.getElementById("MiGrafica").getContext("2d");
+      let miCanvas = document.getElementById("RevGrafica").getContext("2d");
       var chart = new Chart(miCanvas, {
         type: "bar",
         options: {
@@ -29,9 +29,9 @@
         data: {
           labels: ["A fer", "Fetes", "OK", "Incidencies"],
           datasets: [{
-            label: "Mi grafica de revisions",
-            backgroundColor: "rgb(0,0,0)",
-            bordercolor: "rgb(255,255,255)",
+            label: "Gràfica de revisions",
+            backgroundColor: "#1970e2",
+            bordercolor: "#1970e2",
             data: [<%=dat1 %>,<%=dat2%>, <%=dat3%>, <%=dat4%>]
           }]
         }
@@ -39,6 +39,4 @@
     }
   </script>
 </body>
-
-
 </html>
