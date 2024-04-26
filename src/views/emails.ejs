@@ -33,7 +33,7 @@
           <td><%= dat.nom %></td>
           <th><%= dat.grup %></th>
           <td><%= dat.profe %></td>
-          <td><%= dat.email %></td>
+          <td><a href=<%= "./mail?email="+dat.email %>><%= dat.email %></a></td>
           <%  }); %>
         </tr>
       </table>

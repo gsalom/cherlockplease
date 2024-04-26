@@ -6,9 +6,9 @@ import mysql from "mysql";
 import {
   consultaCarretons
 } from "../models/carretons.js";
-import {
-  Chart
-} from "Chart.js";
+
+import go from "../envsmtp.js";
+
 
 var con = mysql.createConnection({
   host: "localhost",
@@ -38,7 +38,11 @@ router.get("/backend", (req, res) => {
 
 router.get("/dashboard", (req, res) => {
   res.render("dashboard", {
-    title: "Panel d'Estat"
+    title: "Panel d'Estat",
+    dat1: 10,
+    dat2: 5,
+    dat3: 4,
+    dat4: 1
   });
 });
 
@@ -52,6 +56,10 @@ router.get("/contact", (req, res) => {
   res.render("contact", {
     title: "Contacte"
   });
+});
+
+router.get("/mail", (req, res) => {
+  go(req.query.email);
 });
 
 // proves amb forms 
