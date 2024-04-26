@@ -60,6 +60,9 @@ router.get("/contact", (req, res) => {
 
 router.get("/mail", (req, res) => {
   go(req.query.email);
+
+  res.redirect('/about');
+
 });
 
 // proves amb forms 
