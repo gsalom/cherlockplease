@@ -1,0 +1,1 @@
+insert into cherlock.revisionsnofetes (email, aula, dia, hora, grup, professorat) values ('jvallespirferragut@cifpfbmoll.eu','A000','26/04/24','20:35:00','IFC11B','VALLESPIR FERRAGUT, JUAN');

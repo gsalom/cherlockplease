@@ -3,18 +3,17 @@ import {
 } from "express";
 
 import mysql from "mysql";
-import {
-  consultaCarretons
-} from "../models/carretons.js";
+//import {consultaCarretons} from "../models/carretons.js";
 
 import go from "../envsmtp.js";
 
+import credentials from "../credentials.cjs";
 
 var con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "diouxx",
-  database: "cherlock"
+  host: credentials.basededades.host,
+  user: credentials.basededades.user,
+  password: credentials.basededades.password,
+  database: credentials.basededades.database
 });
 
 con.connect(function (err) {
@@ -61,8 +60,9 @@ router.get("/contact", (req, res) => {
 router.get("/mail", (req, res) => {
   // console.log(req.query.email+', '+req.query.data+', '+req.query.hora+', '+req.query.aula+', '+req.query.grup);
   go(req.query.email, req.query.data, req.query.hora, req.query.aula, req.query.grup);
-  res.redirect('/about');
-
+  res.render("emailenviat", {
+    title: "Email Enviat",
+  });
 });
 
 // proves amb forms 

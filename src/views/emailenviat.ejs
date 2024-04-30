@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <%- include("partials/head") %>
+    <script>
+      function tanca() {
+        window.close();
+      }
+
+      function programa(segons){
+        setTimeout(tanca,segons*1000 );
+      }
+
+    </script>
+  </head>
+  <body onload="programa(3)">
+    <!-- HEADER -->
+    <%- include("partials/navigation") %>
+
+    <!-- My Content -->
+    <main
+      class="container pt-2 text-center d-flex justify-content-center align-items-center vh-100"
+    >
+      <section>
+        <img
+        src="/img/sherlock-2.svg"
+        class="w-50 m-auto animated bounceIn"
+        alt="Website Logo"
+      />
+        <h1 class="display-1">Email Enviat</h1>
+      </section>
+    </main>
+    <!-- FOOTER -->
+    <%- include("partials/footer") %>
+  </body>
+</html>
