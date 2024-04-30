@@ -34,7 +34,7 @@
           <th><%= dat.grup %></th>
           <td><%= dat.profe %></td>
           <!--<td><a href=<%= "./mail?email="+dat.email %>><%= dat.email %></a></td> -->
-          <td><a target="_blank" href=<%= "./mail?email="+dat.email %>+<%= "&data="+dat.data_rev %>+<%="&hora="+dat.hora %>+<%="&aula="+dat.nom %>+<%="&grup="+dat.grup %>><%= dat.email %></a></td>
+          <td><a target="_blank" href=<%= "./mail?email="+dat.email %>+<%= "&data="+dat.data_rev %>+<%="&hora="+dat.hora %>+<%="&aula="+dat.nom %>+<%="&grup="+dat.grup %>+<%="&profe="+encodeURI(dat.profe) %>><%= dat.email %></a></td>
            <%  }); %>
         </tr>
       </table>
