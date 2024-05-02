@@ -31,11 +31,17 @@
           <td><%= dat.data_rev %></td>
           <td><%= dat.hora %></td>
           <td><%= dat.nom %></td>
-          <th><%= dat.grup %></th>
+          <td><%= dat.grup %></td>
           <td><%= dat.profe %></td>
-          <!--<td><a href=<%= "./mail?email="+dat.email %>><%= dat.email %></a></td> -->
-          <td><a target="_blank" href=<%= "./mail?email="+dat.email %>+<%= "&data="+dat.data_rev %>+<%="&hora="+dat.hora %>+<%="&aula="+dat.nom %>+<%="&grup="+dat.grup %>+<%="&profe="+encodeURI(dat.profe) %>><%= dat.email %></a></td>
-           <%  }); %>
+          <%
+          if (notgo(dat.email,dat.data_rev,dat.hora,dat.nom)==0) { %>
+          <td><a target="_blank" href=<%= "./mail?email="+dat.email %>+<%= "&data="+dat.data_rev %>+<%="&hora="+dat.hora %>+<%="&aula="+dat.nom %>+<%="&grup="+dat.grup %>+<%="&profe="+encodeURI(dat.profe) %>><%= dat.email %></a>
+          </td>
+          <%}
+          else { %>
+          <td><%= dat.email %></td>
+          <%} 
+        }) %>
         </tr>
       </table>
     </section>

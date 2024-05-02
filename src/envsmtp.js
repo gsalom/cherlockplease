@@ -31,10 +31,8 @@ async function go(email, data, hora, aula, grup, profe) {
     const result = await mailTransport.sendMail({
       from: '"Cherlock Please" <cherlock@cifpfbmoll.eu>',
       to: 'gsalom@cifpfbmoll.eu',
-
       //to: email,
       //cc:  'cap.dept.informatica@cifpfbmoll.eu',
-      // to: email,
       subject: 'No has fet la revisió del carretó de la ' + aula + ' ' + '(' + data + ' - ' + hora + ') !!!',
       text: "El dia " + data + " a la hora " + hora + " no has revisat el carretó de la " + aula + " del " + grup + " Email: " + email
     });

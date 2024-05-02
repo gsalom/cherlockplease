@@ -1,40 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= title %></title>
-    <%- include("partials/head") %>
-    <script>
-      function tanca() {
-        window.close();
-      }
 
-      function programa(segons){
-        setTimeout(tanca,segons*1000 );
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <%- include("partials/head") %>
+  <script>
+    function tanca() {
+      window.close();
+    }
 
-    </script>
-  </head>
-  <body onload="programa(3)">
-    <!-- HEADER -->
-    <%- include("partials/navigation") %>
+    function programa(segons) {
+      setTimeout(tanca, segons * 1000);
+    }
+  </script>
+</head>
 
-    <!-- My Content -->
-    <main
-      class="container pt-2 text-center d-flex justify-content-center align-items-center vh-100"
-    >
-      <section>
-        <img
-        src="/img/sherlock-2.svg"
-        class="w-50 m-auto animated bounceIn"
-        alt="Website Logo"
-      />
-        <h1 class="display-1">Email Enviat</h1>
-      </section>
-    </main>
-    <!-- FOOTER -->
-    <%- include("partials/footer") %>
-  </body>
+<body onload="programa(3)">
+  <!-- HEADER -->
+  <%- include("partials/navigation") %>
+
+  <!-- My Content -->
+  <header class="container vh-100 d-flex justify-content-center align-items-center">
+    <div class="d-flex flex-column justify-content-center align-items-center">
+      <h2 class="display-1">Email Enviat</h2>
+      <img src="/img/sherlock-2.svg" class="w-50 m-auto animated bounceIn" alt="Website Logo" />
+      <h2 class="display-5"><%= datemail %> (<%= datprofe %>)</h2>
+        <!--<h1 class="display-1">Revisió no feta a: <%= dataula %> - <%= datdata %> - <%= dathora %> - <%= dataula %>></h3> -->
+    </div>
+  </header>
+  <!-- FOOTER -->
+  <%- include("partials/footer") %>
+  <!-- JAVASCRIPT CDNS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
 </html>

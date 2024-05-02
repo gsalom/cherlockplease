@@ -8,6 +8,9 @@ import mysql from "mysql";
 import go from "../envsmtp.js";
 
 import credentials from "../credentials.cjs";
+import notgo from "../noenvsmtp.js";
+
+
 
 var con = mysql.createConnection({
   host: credentials.basededades.host,
@@ -58,10 +61,15 @@ router.get("/contact", (req, res) => {
 });
 
 router.get("/mail", (req, res) => {
-  // console.log(req.query.email+', '+req.query.data+', '+req.query.hora+', '+req.query.aula+', '+req.query.grup);
   go(req.query.email, req.query.data, req.query.hora, req.query.aula, req.query.grup, decodeURI(req.query.profe));
   res.render("emailenviat", {
     title: "Email Enviat",
+    datemail: req.query.email,
+    datdata: req.query.data,
+    dathora: req.query.hora,
+    dataula: req.query.aula,
+    datgrup: req.query.grup,
+    datprofe: req.query.profe
   });
 });
 
@@ -251,14 +259,16 @@ router.get('/emails', (req, res) => {
         error: 'Failed to fetch revisions'
       });
     }
-    // Send the fetched data as a response
-    res.render("emails", {
-      title: "Revisions no fetes",
-      dataini: new Date(req.query.dataini),
-      datafi: new Date(req.query.datafin),
-      data: results
-    });
+          // Send the fetched data as a response
+          res.render("emails", {
+            title: "Revisions no fetes",
+            dataini: new Date(req.query.dataini),
+            datafi: new Date(req.query.datafin),
+            data: results,
+            notgo: notgo
+          });
   });
+
 });
 
 router.get('/consulta', (req, res) => {

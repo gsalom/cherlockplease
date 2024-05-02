@@ -4,3 +4,6 @@ insert into cherlock.revisionsnofetes (email, aula, dia, hora, grup, professorat
 
 UPDATE cherlock.professorat SET credit=credit-1 WHERE email="restarellasmatas@cifpfbmoll.eu";
 SELECT * FROM cherlock.professorat where email="restarellasmatas@cifpfbmoll.eu";
+
+
+SELECT * FROM cherlock.revisionsnofetes where email='jramont@cifpfbmoll.eu' and aula='A208'  and dia='2024-05-22' and hora='20:35:00' and grup='IFC32A'
