@@ -3,14 +3,10 @@ import {
 } from "express";
 
 import mysql from "mysql";
-//import {consultaCarretons} from "../models/carretons.js";
 
 import go from "../envsmtp.js";
 
 import credentials from "../credentials.cjs";
-import notgo from "../noenvsmtp.js";
-
-
 
 var con = mysql.createConnection({
   host: credentials.basededades.host,
@@ -252,7 +248,10 @@ router.get('/incidencies', (req, res) => {
 router.get('/emails', (req, res) => {
 
   // Fetch revisions from the database
-  con.query('WITH recursive Date_Ranges AS (select "' + req.query.dataini + '" as dia union all select dia + interval 1 day from Date_Ranges where dia < "' + req.query.datafin + '") select date_format(d.dia, "%d/%m/%y") as data_rev, p.* from Date_Ranges d, (select p.email, concat(p.llin1," ",p.llin2,", ",p.nom) as profe, h.dia, h.hora, g.nom as grup, a.nom from cherlock.professorat p, cherlock.horaris h, cherlock.aules a, cherlock.grups g where h.id_grup=g.codi and h.tipus=1 and h.email=p.email and h.id_aula=a.codi and not exists (select 1 from cherlock.revisions r where r.email=h.email and DAYOFWEEK(r.data_rev)-1=h.dia)) p where dayofweek(d.dia)-1 = p.dia', (error, results) => {
+  //con.query('WITH recursive Date_Ranges AS (select "' + req.query.dataini + '" as dia union all select dia + interval 1 day from Date_Ranges where dia < "' + req.query.datafin + '") select date_format(d.dia, "%d/%m/%y") as data_rev, p.* from Date_Ranges d, (select p.email, concat(p.llin1," ",p.llin2,", ",p.nom) as profe, h.dia, h.hora, g.nom as grup, a.nom from cherlock.professorat p, cherlock.horaris h, cherlock.aules a, cherlock.grups g where h.id_grup=g.codi and h.tipus=1 and h.email=p.email and h.id_aula=a.codi and not exists (select 1 from cherlock.revisions r where r.email=h.email and DAYOFWEEK(r.data_rev)-1=h.dia)) p where dayofweek(d.dia)-1 = p.dia', (error, results) => {
+    
+    con.query('select pnc.*, (select IF(count(*)>0, 1, 0) from revisionsnofetes rnf where rnf.email=pnc.email and pnc.data_rev=date_format(rnf.dia, "%d/%m/%y") and pnc.hora=rnf.hora) as hies from (WITH recursive Date_Ranges AS (select "' + req.query.dataini + '" as dia union all select dia + interval 1 day from Date_Ranges where dia < "' + req.query.datafin + '") select date_format(d.dia, "%d/%m/%y") as data_rev, p.* from Date_Ranges d, (select p.email, concat(p.llin1," ",p.llin2,", ",p.nom) as profe, h.dia, h.hora, g.nom as grup, a.nom from cherlock.professorat p, cherlock.horaris h, cherlock.aules a, cherlock.grups g where h.id_grup=g.codi and h.tipus=1 and h.email=p.email and h.id_aula=a.codi and not exists (select 1 from cherlock.revisions r where r.email=h.email and DAYOFWEEK(r.data_rev)-1=h.dia)) p where dayofweek(d.dia)-1 = p.dia) pnc', (error, results) => {
+
     if (error) {
       console.error('Error fetching revisions from the database: ' + error.stack);
       return res.status(500).json({
@@ -265,7 +264,6 @@ router.get('/emails', (req, res) => {
             dataini: new Date(req.query.dataini),
             datafi: new Date(req.query.datafin),
             data: results,
-            notgo: notgo
           });
   });
 
@@ -280,7 +278,14 @@ router.get('/consulta', (req, res) => {
   });
 });
 
+router.get('/config', (req, res) => {
+  // Fetch revisions from the database
 
+  // Send the fetched data as a response
+  res.render("configuracio", {
+    title: "Configuració"
+  });
+});
 
 
 

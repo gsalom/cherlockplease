@@ -5,11 +5,12 @@ llevar username de professorat OK FET
 a taula grups ficar nom tutors podiem llevar tutor2 de taula grups OK FET
 
 1) Crear full google amb l'assignació per ordinador per aula/carreto
-2) Repassar els horaris falten tipus 1 pq n'hi ha d'haber 5 per dia-aula
+2) Repassar els horaris falten tipus 1 pq n'hi ha d'haber 5 per dia-aula OK FET
 3) Fer carrega db des de GestIB
 4) Fer formularis de modificacions als backend
-5) autonatitzar la carrega de revisions
+5) autonatitzar la carrega de revisions 1/2 OK
 6) Crear docker amb es programa
 7) Ficar a taula horaris el nom del grup IFC32A p.e. y ordenar per aquest i dia, hora
 8) Crear una pag que surti per carretor amb un semafor
+9) Enviar email revisions no fetes OK FET
  

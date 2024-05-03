@@ -33,15 +33,13 @@
           <td><%= dat.nom %></td>
           <td><%= dat.grup %></td>
           <td><%= dat.profe %></td>
-          <%
-          if (notgo(dat.email,dat.data_rev,dat.hora,dat.nom)==0) { %>
-          <td><a target="_blank" href=<%= "./mail?email="+dat.email %>+<%= "&data="+dat.data_rev %>+<%="&hora="+dat.hora %>+<%="&aula="+dat.nom %>+<%="&grup="+dat.grup %>+<%="&profe="+encodeURI(dat.profe) %>><%= dat.email %></a>
+          <% if (dat.hies==0) { %>
+          <td><a target="_blank"
+              href=<%= "./mail?email="+dat.email %>+<%= "&data="+dat.data_rev %>+<%="&hora="+dat.hora %>+<%="&aula="+dat.nom %>+<%="&grup="+dat.grup %>+<%="&profe="+encodeURI(dat.profe) %>><%= dat.email %></a>
           </td>
-          <%}
-          else { %>
+          <%} else { %>
           <td><%= dat.email %></td>
-          <%} 
-        }) %>
+          <%}}) %>
         </tr>
       </table>
     </section>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <%- include("partials/head") %>
+</head>
+
+<body>
+  <!-- HEADER -->
+  <%- include("partials/navigation") %>
+  <!-- My Content -->
+  <main class="container pt-2 text-center justify-content-center align-items-center vh-100" style="auto">
+    <section>
+      <h2 class="display-1">Configuració Cherlock</h2></br>
+      <table class="table table-bordered fons" width="100%" cellspacing="0">
+        <tr>
+          <th>Acció</th>
+          <th>Consulta</th>
+          <th>Run</th>
+        </tr>
+        <tr>
+          <form action="/carregarevisions" method="get">
+            <th>Carregar noves revisions</th>
+            <th><input type="file" id="myfile" name="myfile" value="*.sql"></th>
+            <th><input type="submit" value="Carregar"></th>
+          </form>
+        </tr>
+    </section>
+  </main>
+</body>
+
+</html>

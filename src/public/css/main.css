@@ -61,7 +61,8 @@ textarea {
   height: 100px;
 }
 
-input[type="submit"] {
+
+input[type="submit"], [type="file"] {
   /* Estilo del botón */
   background-color: #1970e2;
   /* verde */
@@ -71,3 +72,4 @@ input[type="submit"] {
   border-radius: 5px;
   cursor: pointer;
 }
+
