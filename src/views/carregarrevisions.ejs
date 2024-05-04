@@ -9,20 +9,34 @@
     <%= title %>
   </title>
   <%- include("partials/head") %>
+  <script>
+    function leerFichero(fitxer) {
+      const fileInput = document.getElementById(fitxer);
+      const file = fileInput.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const output = document.getElementById('output');
+          output.textContent = e.target.result;
+        };
+        reader.readAsText(file);
+      } else {
+        alert('Selecciona un fichero');
+      }
+    }
+  </script>
 </head>
 
-<body>
+<body onload="leerFichero(fitxer)">
   <!-- HEADER -->
   <%- include("partials/navigationbackend") %>
 
     <!-- My Content -->
     <main class="container pt-2 text-center d-flex justify-content-center align-items-center vh-100">
       <section>
-        <img src="/img/cifpfbmoll.png" class="w-50 m-auto animated bounceIn" alt="Website Logo" />
-        <h1 class="display-1">About</h1>
-        <p>
-          Carrergar revisions desde fitxer *.sql
-        </p>
+        <h3>Contenido del archivo:</h3>
+        <pre id="output"></pre>
+        <p>Carrergar revisions desde fitxer *.sql</p>
         <button class="buttonSal" onclick="window.close()">Tancar</button>
       </section>
     </main>

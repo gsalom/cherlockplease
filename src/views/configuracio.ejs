@@ -7,6 +7,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title><%= title %></title>
   <%- include("partials/head") %>
+  <script>
+    function leerFichero() {
+      const fileInput = document.getElementById('fitxer');
+      const file = fileInput.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const output = document.getElementById('output');
+          output.textContent = e.target.result;
+        };
+        reader.readAsText(file);
+      } else {
+        alert('Selecciona un fichero');
+      }
+    }
+  </script>
 </head>
 
 <body>
@@ -20,17 +36,22 @@
         <tr>
           <th>Acció</th>
           <th>Consulta</th>
+          <th>Veure</th>
           <th>Analitzar</th>
           <th>Actualitzar</th>
         </tr>
         <tr>
           <form target="_blank" action="/load?apply="+accio method="get">
             <th>Carregar noves revisions</th>
-            <th><input type="file" id="fitxer" name="fitxer" value="*.sql"></th>
+            <th><input type="file" id="fitxer" name="fitxer" accept=".sql"></th>
+            <th></th>
             <th><input type="submit" name="accio" value="Provar"></th>
             <th><input type="submit" name="accio" value="Carregar"></th>
-          </form>
-        </tr>
+          </form>  
+        </tr>    
+      </table>
+      <h3>Contingut del fitxer:</h3><button onclick="leerFichero()">Veure</button>
+        <pre id="output"></pre>
     </section>
   </main>
 </body>

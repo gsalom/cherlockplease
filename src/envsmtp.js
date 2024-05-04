@@ -28,15 +28,16 @@ const mailTransport = nodemailer.createTransport({
 async function go(email, data, hora, aula, grup, profe) {
   //console.log(credentials.sendgrid.user+', '+credentials.sendgrid.password);
   try {
+    /*
     const result = await mailTransport.sendMail({
       from: '"Cherlock Please" <cherlock@cifpfbmoll.eu>',
-      to: 'gsalom@cifpfbmoll.eu',
-      //to: email,
-      //cc:  'cap.dept.informatica@cifpfbmoll.eu',
+      //to: 'gsalom@cifpfbmoll.eu',
+      to: email,
+      cc:  'cap.dept.informatica@cifpfbmoll.eu',
       subject: 'No has fet la revisió del carretó de la ' + aula + ' ' + '(' + data + ' - ' + hora + ') !!!',
       text: "El dia " + data + " a la hora " + hora + " no has revisat el carretó de la " + aula + " del " + grup + " Email: " + email
     });
-
+*/
     //Insert a record in the "revisionsnofetes" table:
     var sql = "insert into cherlock.revisionsnofetes (email, aula, dia, hora, grup, professorat) values ('"+email+"','"+aula+"',STR_TO_DATE('"+data+"','%d/%m/%Y'),'"+hora+"','"+grup+"','"+profe+"')";
     con.query(sql, function (err, result) {
