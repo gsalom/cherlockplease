@@ -11,7 +11,7 @@
 
 <body>
   <!-- HEADER -->
-  <%- include("partials/navigation") %>
+  <%- include("partials/navigationbackend") %>
   <!-- My Content -->
   <main class="container pt-2 text-center justify-content-center align-items-center vh-100" style="auto">
     <section>
@@ -20,13 +20,15 @@
         <tr>
           <th>Acció</th>
           <th>Consulta</th>
-          <th>Run</th>
+          <th>Analitzar</th>
+          <th>Actualitzar</th>
         </tr>
         <tr>
-          <form action="/carregarevisions" method="get">
+          <form target="_blank" action="/load?apply="+accio method="get">
             <th>Carregar noves revisions</th>
-            <th><input type="file" id="myfile" name="myfile" value="*.sql"></th>
-            <th><input type="submit" value="Carregar"></th>
+            <th><input type="file" id="fitxer" name="fitxer" value="*.sql"></th>
+            <th><input type="submit" name="accio" value="Provar"></th>
+            <th><input type="submit" name="accio" value="Carregar"></th>
           </form>
         </tr>
     </section>

@@ -62,7 +62,7 @@ textarea {
 }
 
 
-input[type="submit"], [type="file"] {
+input[type="submit"], [type="file"], button {
   /* Estilo del botón */
   background-color: #1970e2;
   /* verde */

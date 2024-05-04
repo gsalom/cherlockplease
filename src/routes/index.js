@@ -69,6 +69,16 @@ router.get("/mail", (req, res) => {
   });
 });
 
+router.get("/load", (req, res) => {
+  
+  res.render("carregarrevisions", {
+    title: "Carrega de revisions",
+    fitxer: req.query.fitxer,
+    apply : req.query.apply,
+  });
+});
+
+
 // proves amb forms 
 
 router.get("/prof_forms", (req, res) => {

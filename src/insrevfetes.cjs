@@ -28,5 +28,3 @@ con.query(sql, function (err, result) {
   console.log(result.affectedRows + " record(s) updated")
 })
 });
-
-//<%= "./mail?email="+dat.email %>+<%= "&data="+dat.data_rev %>+<%="&hora="+dat.hora %>+<%="&aula="+dat.nom %>+<%="&grup="+dat.grup %>><%= dat.email %>
