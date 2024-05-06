@@ -13,19 +13,21 @@ var con = mysql.createConnection({
 
 http.createServer(function (req, res) {
     var data;
-    fs.readFile('rev.sql', function(err, data) {
+    fs.readFile('rev.sql', function(err, data) {      
     con.connect(function(err) {
             if (err) throw err;
-            console.log("Connected!"+data);
-            con.query(data, function (err, result) {
+            console.log("Connected!$"+data+"$");
+
+            con.query(data.toString(), function (err, result) {
               if (err) throw err;
-              console.log("1 file sql executed.");
+              console.log("Result:");
+              console.log(result);
             });
-            con.end();
+
             console.log("DisConnected!");
           });
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    res.write(data);
+               res.writeHead(200, {'Content-Type': 'text/html'});
+            res.write(result);
     return res.end()
   })
 console.log("Connectat al port 3000")

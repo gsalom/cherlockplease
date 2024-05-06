@@ -41,16 +41,16 @@
           <th>Actualitzar</th>
         </tr>
         <tr>
-          <form target="_blank" action="/load?apply="+accio method="get">
+          <form target="_blank" action="/load" method="post" enctype="multipart/form-data">
             <th>Carregar noves revisions</th>
             <th><input type="file" id="fitxer" name="fitxer" accept=".sql"></th>
-            <th></th>
+            <th><button type="button" onclick="leerFichero()">Veure</button></th>
             <th><input type="submit" name="accio" value="Provar"></th>
             <th><input type="submit" name="accio" value="Carregar"></th>
           </form>  
         </tr>    
       </table>
-      <h3>Contingut del fitxer:</h3><button onclick="leerFichero()">Veure</button>
+      <h3>Contingut del fitxer:</h3>
         <pre id="output"></pre>
     </section>
   </main>

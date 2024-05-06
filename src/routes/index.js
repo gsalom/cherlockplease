@@ -8,6 +8,8 @@ import go from "../envsmtp.js";
 
 import credentials from "../credentials.cjs";
 
+import * as formidable from 'formidable';
+
 var con = mysql.createConnection({
   host: credentials.basededades.host,
   user: credentials.basededades.user,
@@ -69,12 +71,27 @@ router.get("/mail", (req, res) => {
   });
 });
 
-router.get("/load", (req, res) => {
+router.post("/load", (req, res) => {
   
+
+  const form = new formidable.IncomingForm();
+  form.parse(req, function (err, fields, files) {
+
+      let oldPath = files.profilePic.filepath;
+      let newPath = path.join(__dirname, 'uploads')
+          + '/' + files.profilePic.name
+      let rawData = fs.readFileSync(oldPath)
+
+      fs.writeFile(newPath, rawData, function (err) {
+          if (err) console.log(err)
+          return res.send("Successfully uploaded")
+      })
+  })
+
   res.render("carregarrevisions", {
     title: "Carrega de revisions",
     fitxer: req.query.fitxer,
-    apply : req.query.apply,
+    apply : req.query.accio
   });
 });
 

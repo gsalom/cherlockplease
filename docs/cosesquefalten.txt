@@ -3,14 +3,19 @@ Consultar per dates revisions amb incidencies OK FET
 ordenar per data hora les revisions OK FET
 llevar username de professorat OK FET
 a taula grups ficar nom tutors podiem llevar tutor2 de taula grups OK FET
+Repassar els horaris falten tipus 1 pq n'hi ha d'haber 5 per dia-aula OK FET
+Enviar email revisions no fetes OK FET
+Ficar a taula horaris el nom del grup IFC32A p.e. y ordenar per aquest i dia, hora OK FET
 
 1) Crear full google amb l'assignació per ordinador per aula/carreto
-2) Repassar els horaris falten tipus 1 pq n'hi ha d'haber 5 per dia-aula OK FET
-3) Fer carrega db des de GestIB
-4) Fer formularis de modificacions als backend
-5) autonatitzar la carrega de revisions 1/2 OK
-6) Crear docker amb es programa
-7) Ficar a taula horaris el nom del grup IFC32A p.e. y ordenar per aquest i dia, hora
-8) Crear una pag que surti per carretor amb un semafor
-9) Enviar email revisions no fetes OK FET
+2) Fer carrega db des de GestIB
+3) Fer formularis de modificacions als backend
+4) Autonatitzar la carrega de revisions per un fitxer *.sql 1/2 OK
+5) Crear docker amb es programa 
+6) Crear una pag que surti per carretor amb un semafor
+7) Continuar el panell dashboard
+8) Mirar on s'ha de tancar les connexions a la BD amb con.end()
+9) Omplir pàgina about i contacte
+10)Fer el readme de git hub
+11) etc ...
  

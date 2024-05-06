@@ -2,12 +2,12 @@ SELECT * FROM cherlock.revisions;
 
 UPDATE cherlock.revisions r SET r.id_aula = a.codi FROM cherlock.aules a WHERE r.aula=a.nom;
 
-UPDATE cherlock.revisions r INNER JOIN cherlock.aules a on  r.aula=a.nom SET r.id_aula = a.codi;carretons
+UPDATE cherlock.revisions r INNER JOIN cherlock.aules a on  r.aula=a.nom SET r.id_aula = a.codi;
 
 UPDATE cherlock.revisions r SET r.id_aula="133747" WHERE r.aula="C401 CIBER";
 
 SELECT date_format(r.data_rev, "%d/%m/%y") as dia, r.hora_rev, concat(p.llin2," ",p.llin1,", ",p.nom) as profe, r.aula, c.nom as carreto, r.estat, r.comentaris 
-FROM cherlock.revisions r, cherlock.professorat p, cherlock.carretons c where r.email=p.email and r.id_aula=c.codi_aula
+FROM cherlock.revisions r, cherlock.professorat p, cherlock.carretons c where r.email=p.email and r.id_aula=c.codi_aula;
 
 select email, dayofweek(data_rev)-1, data_rev, hora_rev from cherlock.revisions where id_aula=133753;
  

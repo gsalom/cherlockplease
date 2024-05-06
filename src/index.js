@@ -1,14 +1,10 @@
-import express from "express";
+import express, { urlencoded } from "express";
 import morgan from "morgan";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
  
 // Routes
 import indexRoutes from "./routes/index.js";
-
-
-
-
 
 // Initialize express
 const app = express();
@@ -27,6 +23,10 @@ app.use(indexRoutes);
 
 // static files
 app.use(express.static(join(__dirname, "public")));
+
+
+
+//enctype='multipart/form-data'
 
 // listening the Server
 app.listen(app.get("port"));
