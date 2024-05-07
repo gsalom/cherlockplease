@@ -31,11 +31,11 @@ tr:nth-child(odd) {
 
 form {
   /* Define el ancho del formulario */
-  width: 500px;
-  margin: 20px auto;
+  width: 100%;
   padding: 20px;
+  /*margin: 20px auto;*
   border: 1px solid #ddd;
-  border-radius: 5px;
+  border-radius: 5px;*/
 }
 
 label {
@@ -50,17 +50,12 @@ input[type="email"],
 textarea {
   /* Tamaño y estilo de los campos de texto */
   width: 100%;
+  height: 300px;
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
+  /*border: 1px solid #ccc;
+  border-radius: 3px;*/
   font-size: 14px;
 }
-
-textarea {
-  /* Aumenta la altura del textarea */
-  height: 100px;
-}
-
 
 input[type="submit"], [type="file"], button {
   /* Estilo del botón */

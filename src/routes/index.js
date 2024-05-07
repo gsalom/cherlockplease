@@ -19,7 +19,7 @@ var con = mysql.createConnection({
 
 con.connect(function (err) {
   if (err) throw err;
-
+  console.log("Connected! Router");
 });
 
 const router = Router();
@@ -71,27 +71,37 @@ router.get("/mail", (req, res) => {
   });
 });
 
-router.post("/load", (req, res) => {
-  
-
-  const form = new formidable.IncomingForm();
-  form.parse(req, function (err, fields, files) {
-
-      let oldPath = files.profilePic.filepath;
-      let newPath = path.join(__dirname, 'uploads')
-          + '/' + files.profilePic.name
-      let rawData = fs.readFileSync(oldPath)
-
-      fs.writeFile(newPath, rawData, function (err) {
-          if (err) console.log(err)
-          return res.send("Successfully uploaded")
-      })
-  })
+router.get("/load", (req, res) => {
+      
+    //Insert a record in the "revisions fetes" table:
+    var sql = req.query.codi;
+    var errors ="";
+    var results="";
+    con.query(sql, function (err, result) {
+      if (err) throw err;
+      errors=errors+err;
+      console.log(errors);
+      console.log("Number of records inserted: " + result.affectedRows);
+      results=results+result.affectedRows;
+      console.log(results);
+    });
+    
+    //Update el codi de l'aula dins les revisions fetes
+    var sql = "UPDATE cherlock.revisions r INNER JOIN cherlock.aules a on  r.aula=a.nom SET r.id_aula = a.codi";
+    con.query(sql, function (err, result) {
+      if (err) throw err;
+      errors=errors+err;
+      console.log(result.affectedRows + " record(s) updated")
+      results=results+result.affectedRows;
+    })
 
   res.render("carregarrevisions", {
     title: "Carrega de revisions",
     fitxer: req.query.fitxer,
-    apply : req.query.accio
+    codi: req.query.codi,
+    apply : req.query.accio,
+    //errors : errors,
+    //results : results
   });
 });
 

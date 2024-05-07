@@ -5,55 +5,56 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title><%= title %></title>
+  <title>
+    <%= title %>
+  </title>
   <%- include("partials/head") %>
-  <script>
-    function leerFichero() {
-      const fileInput = document.getElementById('fitxer');
-      const file = fileInput.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          const output = document.getElementById('output');
-          output.textContent = e.target.result;
-        };
-        reader.readAsText(file);
-      } else {
-        alert('Selecciona un fichero');
+    <script>
+      function leerFichero() {
+        const fileInput = document.getElementById('fitxer');
+        const file = fileInput.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            const output = document.getElementById('codi');
+            output.textContent = e.target.result;
+          };
+          reader.readAsText(file);
+        } else {
+          alert('Selecciona un fitxer *.sql');
+        }
       }
-    }
-  </script>
+    </script>
 </head>
 
 <body>
   <!-- HEADER -->
   <%- include("partials/navigationbackend") %>
-  <!-- My Content -->
-  <main class="container pt-2 text-center justify-content-center align-items-center vh-100" style="auto">
-    <section>
-      <h2 class="display-1">Configuració Cherlock</h2></br>
-      <table class="table table-bordered fons" width="100%" cellspacing="0">
-        <tr>
-          <th>Acció</th>
-          <th>Consulta</th>
-          <th>Veure</th>
-          <th>Analitzar</th>
-          <th>Actualitzar</th>
-        </tr>
-        <tr>
-          <form target="_blank" action="/load" method="post" enctype="multipart/form-data">
-            <th>Carregar noves revisions</th>
-            <th><input type="file" id="fitxer" name="fitxer" accept=".sql"></th>
-            <th><button type="button" onclick="leerFichero()">Veure</button></th>
-            <th><input type="submit" name="accio" value="Provar"></th>
-            <th><input type="submit" name="accio" value="Carregar"></th>
-          </form>  
-        </tr>    
-      </table>
-      <h3>Contingut del fitxer:</h3>
-        <pre id="output"></pre>
-    </section>
-  </main>
+    <!-- My Content -->
+    <main class="container pt-2 text-center justify-content-center align-items-center vh-100">   
+        <h2 class="display-1">Configuració Cherlock</h2>
+        <form target="_blank" action="/load" method="get" enctype="multipart/form-data">
+          <table class="table table-bordered fons" width="100%" cellspacing="0">
+            <tr>
+              <th>Acció</th>
+              <th>Consulta</th>
+              <th>Veure</th>
+              <th>Analitzar</th>
+              <th>Actualitzar</th>
+            </tr>
+            <tr>
+                <th>Carregar noves revisions</th>
+                <th><input type="file" id="fitxer" name="fitxer" accept=".sql"></th>
+                <th><button type="button" onclick="leerFichero()">Veure</button></th>
+                <th><input type="submit" name="accio" value="Provar"></th>
+                <th><input type="submit" name="accio" value="Carregar"></th>
+            </tr>
+            <tr>
+              <th COLSPAN=5><h3>Contingut del fitxer:</h3><textarea id="codi" name="codi"></textarea></th>
+            </tr>
+        </table>
+      </form>    
+    </main>
 </body>
 
 </html>

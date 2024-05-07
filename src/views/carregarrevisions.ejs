@@ -10,24 +10,14 @@
   </title>
   <%- include("partials/head") %>
   <script>
-    function leerFichero(fitxer) {
-      const fileInput = document.getElementById(fitxer);
-      const file = fileInput.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          const output = document.getElementById('output');
-          output.textContent = e.target.result;
-        };
-        reader.readAsText(file);
-      } else {
-        alert('Selecciona un fichero');
-      }
+    function pintarResultats(){
+        const output = document.getElementById('output');
+        output.textContent = "hola"+codi.toString();
     }
   </script>
 </head>
 
-<body onload="leerFichero(fitxer)">
+<body>
   <!-- HEADER -->
   <%- include("partials/navigationbackend") %>
 
@@ -35,8 +25,9 @@
     <main class="container pt-2 text-center d-flex justify-content-center align-items-center vh-100">
       <section>
         <h3>Contenido del archivo:</h3>
-        <pre id="output"></pre>
-        <p>Carrergar revisions desde fitxer *.sql</p>
+        <pre id="output" name="output">Resultats</pre>
+        <button class="buttonSal" onclick="pintarResultats()">Resultats</button>
+        <p>Carrergar revisions desde <%=fitxer %></p>
         <button class="buttonSal" onclick="window.close()">Tancar</button>
       </section>
     </main>
