@@ -8,14 +8,27 @@ import go from "../envsmtp.js";
 
 import credentials from "../credentials.cjs";
 
-import * as formidable from 'formidable';
+//import * as formidable from 'formidable';
 
 var con = mysql.createConnection({
   host: credentials.basededades.host,
   user: credentials.basededades.user,
   password: credentials.basededades.password,
-  database: credentials.basededades.database
+  database: credentials.basededades.database,
+  multipleStatements: true
 });
+
+/*
+//var config = require("./config.json") ;
+import mysqlSync from "mysql-libmysqlclient";
+var conSync = mysqlSync.createConnectionSync(credentials.basededades.host, credentials.basededades.user, credentials.basededades.password, credentials.basededades.database);
+
+var query = "SELECT * FROM professorat;";
+var handle = conSync.querySync(query);
+var results = handle.fetchAllSync();
+
+console.log(JSON.stringify(results)); 
+*/
 
 con.connect(function (err) {
   if (err) throw err;
@@ -72,36 +85,40 @@ router.get("/mail", (req, res) => {
 });
 
 router.get("/load", (req, res) => {
-      
-    //Insert a record in the "revisions fetes" table:
-    var sql = req.query.codi;
-    var errors ="";
-    var results="";
+
+  //Insert a record in the "revisions fetes" table:
+  var sql = req.query.codi;
+  var errors = "e->";
+  var results = "r->";
+  if (sql) {
     con.query(sql, function (err, result) {
+      errors = errors + ":" + err;
+      //console.log(errors);
       if (err) throw err;
-      errors=errors+err;
-      console.log(errors);
-      console.log("Number of records inserted: " + result.affectedRows);
-      results=results+result.affectedRows;
-      console.log(results);
+      //console.log("Number of records inserted: " + result.affectedRows);
+      results = results + ":" + result.affectedRows;
+      //console.log(results);
     });
-    
+
     //Update el codi de l'aula dins les revisions fetes
-    var sql = "UPDATE cherlock.revisions r INNER JOIN cherlock.aules a on  r.aula=a.nom SET r.id_aula = a.codi";
+    var sql = "UPDATE cherlock.revisions r INNER JOIN cherlock.aules a on  r.aula=a.nom and r.id_aula is null SET r.id_aula = a.codi";
     con.query(sql, function (err, result) {
+      errors = errors + ":" + err;
+      //console.log(errors);
       if (err) throw err;
-      errors=errors+err;
-      console.log(result.affectedRows + " record(s) updated")
-      results=results+result.affectedRows;
+      //console.log(result.affectedRows + " record(s) updated");
+      results = results + ":" + result.affectedRows;
+      //console.log(results);
     })
+  }
 
   res.render("carregarrevisions", {
     title: "Carrega de revisions",
     fitxer: req.query.fitxer,
     codi: req.query.codi,
-    apply : req.query.accio,
-    //errors : errors,
-    //results : results
+    apply: req.query.accio,
+    errors: errors,
+    results: results
   });
 });
 
@@ -286,8 +303,8 @@ router.get('/emails', (req, res) => {
 
   // Fetch revisions from the database
   //con.query('WITH recursive Date_Ranges AS (select "' + req.query.dataini + '" as dia union all select dia + interval 1 day from Date_Ranges where dia < "' + req.query.datafin + '") select date_format(d.dia, "%d/%m/%y") as data_rev, p.* from Date_Ranges d, (select p.email, concat(p.llin1," ",p.llin2,", ",p.nom) as profe, h.dia, h.hora, g.nom as grup, a.nom from cherlock.professorat p, cherlock.horaris h, cherlock.aules a, cherlock.grups g where h.id_grup=g.codi and h.tipus=1 and h.email=p.email and h.id_aula=a.codi and not exists (select 1 from cherlock.revisions r where r.email=h.email and DAYOFWEEK(r.data_rev)-1=h.dia)) p where dayofweek(d.dia)-1 = p.dia', (error, results) => {
-    
-    con.query('select pnc.*, (select IF(count(*)>0, 1, 0) from revisionsnofetes rnf where rnf.email=pnc.email and pnc.data_rev=date_format(rnf.dia, "%d/%m/%y") and pnc.hora=rnf.hora) as hies from (WITH recursive Date_Ranges AS (select "' + req.query.dataini + '" as dia union all select dia + interval 1 day from Date_Ranges where dia < "' + req.query.datafin + '") select date_format(d.dia, "%d/%m/%y") as data_rev, p.* from Date_Ranges d, (select p.email, concat(p.llin1," ",p.llin2,", ",p.nom) as profe, h.dia, h.hora, g.nom as grup, a.nom from cherlock.professorat p, cherlock.horaris h, cherlock.aules a, cherlock.grups g where h.id_grup=g.codi and h.tipus=1 and h.email=p.email and h.id_aula=a.codi and not exists (select 1 from cherlock.revisions r where r.email=h.email and DAYOFWEEK(r.data_rev)-1=h.dia)) p where dayofweek(d.dia)-1 = p.dia) pnc', (error, results) => {
+
+  con.query('select pnc.*, (select IF(count(*)>0, 1, 0) from revisionsnofetes rnf where rnf.email=pnc.email and pnc.data_rev=date_format(rnf.dia, "%d/%m/%y") and pnc.hora=rnf.hora) as hies from (WITH recursive Date_Ranges AS (select "' + req.query.dataini + '" as dia union all select dia + interval 1 day from Date_Ranges where dia < "' + req.query.datafin + '") select date_format(d.dia, "%d/%m/%y") as data_rev, p.* from Date_Ranges d, (select p.email, concat(p.llin1," ",p.llin2,", ",p.nom) as profe, h.dia, h.hora, g.nom as grup, a.nom from cherlock.professorat p, cherlock.horaris h, cherlock.aules a, cherlock.grups g where h.id_grup=g.codi and h.tipus=1 and h.email=p.email and h.id_aula=a.codi and not exists (select 1 from cherlock.revisions r where r.email=h.email and DAYOFWEEK(r.data_rev)-1=h.dia)) p where dayofweek(d.dia)-1 = p.dia) pnc', (error, results) => {
 
     if (error) {
       console.error('Error fetching revisions from the database: ' + error.stack);
@@ -295,13 +312,13 @@ router.get('/emails', (req, res) => {
         error: 'Failed to fetch revisions'
       });
     }
-          // Send the fetched data as a response
-          res.render("emails", {
-            title: "Revisions no fetes",
-            dataini: new Date(req.query.dataini),
-            datafi: new Date(req.query.datafin),
-            data: results,
-          });
+    // Send the fetched data as a response
+    res.render("emails", {
+      title: "Revisions no fetes",
+      dataini: new Date(req.query.dataini),
+      datafi: new Date(req.query.datafin),
+      data: results,
+    });
   });
 
 });

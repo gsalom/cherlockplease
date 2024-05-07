@@ -10,29 +10,29 @@
   </title>
   <%- include("partials/head") %>
   <script>
-    function pintarResultats(){
-        const output = document.getElementById('output');
-        output.textContent = "hola"+codi.toString();
+    function myFunction(text) {
+      //document.getElementById("demo").innerHTML = text;
+      document.getElementById("demo").value = text
     }
   </script>
 </head>
 
-<body>
+<body onload="myFunction('Hola soy Juan \n tengo una bicicleta \n y me voy con mis amigos a jugar \n al futbol')">
   <!-- HEADER -->
   <%- include("partials/navigationbackend") %>
 
-    <!-- My Content -->
-    <main class="container pt-2 text-center d-flex justify-content-center align-items-center vh-100">
-      <section>
-        <h3>Contenido del archivo:</h3>
-        <pre id="output" name="output">Resultats</pre>
-        <button class="buttonSal" onclick="pintarResultats()">Resultats</button>
-        <p>Carrergar revisions desde <%=fitxer %></p>
-        <button class="buttonSal" onclick="window.close()">Tancar</button>
-      </section>
-    </main>
-    <!-- FOOTER -->
-    <%- include("partials/footer") %>
+  <!-- My Content -->
+  <main class="container pt-2 text-center justify-content-center align-items-center vh-100">
+    <h2 class="display-1">Càrrega de Revisions</h2></br>
+    <div class="d-flex flex-column justify-content-center align-items-center">
+      <textarea id="codi" name="codi" rows="4"
+        cols="50">Carregades revisions desde fitxer: <%=fitxer %> <%= codi %> Resultats i errors:(<%= results %>) -- (<%= errors %>)</textarea>
+      <button id="btnSurt" name="btnSurt" type="button" onclick="window.close()">Tancar</button>
+      <textarea id="demo"></textarea>
+    </div>
+  </main>
+  <!-- FOOTER -->
+  <%- include("partials/footer") %>
 </body>
 
 </html>

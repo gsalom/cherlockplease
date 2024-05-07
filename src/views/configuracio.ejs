@@ -33,24 +33,22 @@
     <!-- My Content -->
     <main class="container pt-2 text-center justify-content-center align-items-center vh-100">   
         <h2 class="display-1">Configuració Cherlock</h2>
-        <form target="_blank" action="/load" method="get" enctype="multipart/form-data">
+        <form target="_blank" action="/load" method="get">
           <table class="table table-bordered fons" width="100%" cellspacing="0">
             <tr>
               <th>Acció</th>
               <th>Consulta</th>
               <th>Veure</th>
-              <th>Analitzar</th>
               <th>Actualitzar</th>
             </tr>
             <tr>
                 <th>Carregar noves revisions</th>
                 <th><input type="file" id="fitxer" name="fitxer" accept=".sql"></th>
                 <th><button type="button" onclick="leerFichero()">Veure</button></th>
-                <th><input type="submit" name="accio" value="Provar"></th>
                 <th><input type="submit" name="accio" value="Carregar"></th>
             </tr>
             <tr>
-              <th COLSPAN=5><h3>Contingut del fitxer:</h3><textarea id="codi" name="codi"></textarea></th>
+              <th COLSPAN=4><h3>Contingut del fitxer:</h3><textarea id="codi" name="codi"></textarea></th>
             </tr>
         </table>
       </form>    
