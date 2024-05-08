@@ -7,6 +7,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title><%= title %></title>
   <%- include("partials/head") %>
+ <script>
+    function obrir(id){
+        window.open("./prof_forms?id="+id, '_blank');
+    }
+</script>
+
 </head>
 
 <body>
@@ -22,6 +28,7 @@
           <th>Llin2</th>
           <th>Nom</th>
           <th>Crèdit</th>
+          <th>Edició</th>
         </tr>
         <% data.forEach(function(dat){ %>
         <tr>
@@ -29,6 +36,7 @@
           <td><%= dat.llin2 %></td>
           <td><%= dat.nom %></td>
           <td><%= dat.credit %></td>
+          <td><button type="button" onclick="obrir(<%= dat.id_prof %>)">Editar</button></td>
           <%  }); %>
         </tr>
       </table>

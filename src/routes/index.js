@@ -8,8 +8,6 @@ import go from "../envsmtp.js";
 
 import credentials from "../credentials.cjs";
 
-//import * as formidable from 'formidable';
-
 var con = mysql.createConnection({
   host: credentials.basededades.host,
   user: credentials.basededades.user,
@@ -17,18 +15,6 @@ var con = mysql.createConnection({
   database: credentials.basededades.database,
   multipleStatements: true
 });
-
-/*
-//var config = require("./config.json") ;
-import mysqlSync from "mysql-libmysqlclient";
-var conSync = mysqlSync.createConnectionSync(credentials.basededades.host, credentials.basededades.user, credentials.basededades.password, credentials.basededades.database);
-
-var query = "SELECT * FROM professorat;";
-var handle = conSync.querySync(query);
-var results = handle.fetchAllSync();
-
-console.log(JSON.stringify(results)); 
-*/
 
 con.connect(function (err) {
   if (err) throw err;
@@ -123,21 +109,6 @@ router.get("/load", (req, res) => {
 });
 
 
-// proves amb forms 
-
-router.get("/prof_forms", (req, res) => {
-  res.render("prof_forms", {
-    title: "Form Professorat"
-  });
-});
-
-router.post("/profController", (req, res) => {
-  // codi 
-  res.send('Add a profe');
-});
-
-// fi de proves amb forms
-
 router.get("/carretons", (req, res) => {
   // Fetch professorat from the database
   con.query('SELECT id_car,c.nom,a.nom as nom_aula,c.estat, c.num_ord FROM cherlock.carretons c, cherlock.aules a WHERE c.codi_aula=a.codi order by a.nom', (error, results) => {
@@ -155,6 +126,33 @@ router.get("/carretons", (req, res) => {
   });
 });
 
+
+// proves amb forms 
+
+router.get("/prof_forms", (req, res) => {
+  // Fetch professorat from the database
+  var sql = "SELECT * FROM professorat where id_prof=" + req.query.id;
+  con.query(sql, (error, results) => {
+    if (error) {
+      console.error('Error fetching professorat from the database: ' + error.stack);
+      return res.status(500).json({
+        error: 'Failed to fetch professorat'
+      });
+    }
+    // Send the fetched data as a response
+  res.render("prof_forms", {
+    title: "Edició Professorat",
+    data: results
+  });
+  });
+});
+
+router.post("/profController", (req, res) => {
+  // codi 
+  res.send('Add a profe');
+});
+
+// fi de proves amb forms
 
 router.get('/professorat', (req, res) => {
   // Fetch professorat from the database

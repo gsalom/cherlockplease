@@ -13,29 +13,31 @@
 
 <body>
   <!-- HEADER -->
-  <%- include("partials/navigation") %>
+  <%- include("partials/navigationbackend") %>
     <!-- My Content -->
     <main class="container pt-2 text-center justify-content-center align-items-center vh-100" style="auto">
       <section>
-        <h2 class="display-1">Formulari Alta Professorat</h2>
+        <h2 class="display-1">Formulari Edició Professorat</h2>
         <form action="/profController" method="post">
-          <label for="codi">Codi GestIB:</label>
-          <input type="text" id="codi" name="codi" value="...." required>
-          <label for="nom">Nom:</label>
-          <input type="text" id="nom" name="nom" value="Francesc" required>
-          <label for="llin1">Llinatge 1:</label>
-          <input type="text" id="llin1" name="llin1" value="Moll" required>
-          <label for="llin2">Llinatge 2:</label>
-          <input type="text" id="llin2" name="llin2" value="Domenech" required>
-          <label for="email">Email:</label>
-          <input type="email" id="email" name="email" value="fmoll@cifpfbmoll.eu" required>
-          <label for="departament">Departament:</label>
-          <input type="text" id="departament" name="departament" value="Informàtica" required>
-          <label for="comentaris">Comentaris:</label>
-          <textarea id="comentaris" name="comentaris" rows="10" cols="30"> Comentaris ...</textarea><br>
-          <label for="fname">Crèdit:</label>
-          <input type="text" id="credit" name="credit" value="15" required><br><br>
-          <input type="submit" value="Alta">
+          <ul style="list-style-type:square;">
+          <li><label for="codi">Codi GestIB:</label>
+          <input type="text" id="codi" name="codi" value="<%= data[0].codi %>"required><br></li>
+          <li><label for="nom">Nom:</label>
+          <input type="text" id="nom" name="nom" value="<%= data[0].nom %>" required></li>
+          <li><label for="llin1">Llinatge 1:</label>
+          <input type="text" id="llin1" name="llin1" value="<%= data[0].llin1 %>" required></li>
+          <li><label for="llin2">Llinatge 2:</label>
+          <input type="text" id="llin2" name="llin2" value="<%= data[0].llin2 %>" required></li>
+          <li><label for="email">Email:</label>
+          <input type="email" id="email" name="email" value="<%= data[0].email %>" required></li>
+          <li><label for="departament">Departament:</label>
+          <input type="text" id="departament" name="departament" value="<%= data[0].departament %>" required></li>
+          <li><label for="comentaris">Comentaris:</label>
+          <textarea id="comentaris" name="comentaris"><%= data[0].comentaris %></textarea><br></li>
+          <li><label for="fname">Crèdit:</label>
+          <input type="text" id="credit" name="credit" value="<%= data[0].credit %>" required></li><br><br>
+        </ul>
+          <input type="submit" value="Modificar">
         </form>
       </section>
     </main>
