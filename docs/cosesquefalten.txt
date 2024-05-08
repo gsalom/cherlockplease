@@ -17,5 +17,6 @@ Ficar a taula horaris el nom del grup IFC32A p.e. y ordenar per aquest i dia, ho
 8) Mirar on s'ha de tancar les connexions a la BD amb con.end()
 9) Omplir pàgina about i contacte
 10)Fer el readme de git hub
-11) etc ...
+11) Taula de calendari 
+12) Control de FCT's i DUAL
  

@@ -25,10 +25,13 @@
   <main class="container pt-2 text-center justify-content-center align-items-center vh-100">
     <h2 class="display-1">Càrrega de Revisions</h2></br>
     <div class="d-flex flex-column justify-content-center align-items-center">
-      <textarea id="codi" name="codi" rows="4"
-        cols="50">Carregades revisions desde fitxer: <%=fitxer %> <%= codi %> Resultats i errors:(<%= results %>) -- (<%= errors %>)</textarea>
+      <table class="table table-bordered fons" width="100%" cellspacing="0">
+        <tr><td>Carregades revisions desde fitxer: <%=fitxer %></td></tr>
+        <tr><td><textarea id="codi" name="codi" rows="4" cols="50">Inserts executats: <%= codi %></textarea></td></tr>
+        <tr><td>Resultats i errors: (<%= results %>) -- (<%= errors %>)</td></tr>
+      </table>
+      <br />
       <button id="btnSurt" name="btnSurt" type="button" onclick="window.close()">Tancar</button>
-      <textarea id="demo"></textarea>
     </div>
   </main>
   <!-- FOOTER -->
