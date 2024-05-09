@@ -152,6 +152,13 @@ router.post("/profController", (req, res) => {
   res.send('Add a profe');
 });
 
+
+router.get("/prova", (req, res) => {
+  // codi 
+  res.render("prova", {
+    title: "ccs form"
+  });
+});
 // fi de proves amb forms
 
 router.get('/professorat', (req, res) => {
