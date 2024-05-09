@@ -140,10 +140,10 @@ router.get("/prof_forms", (req, res) => {
       });
     }
     // Send the fetched data as a response
-  res.render("prof_forms", {
-    title: "Edició Professorat",
-    data: results
-  });
+    res.render("prof_forms", {
+      title: "Edició Professorat",
+      data: results
+    });
   });
 });
 
@@ -192,6 +192,22 @@ router.get('/departaments', (req, res) => {
       title: "Departaments",
       data: results
     });
+  });
+});
+
+router.get('/ldepartaments', (req, res) => {
+  // Fetch departaments from the database
+  con.query('SELECT codi,nom FROM departaments', (error, results) => {
+    if (error) {
+      console.error('Error fetching professorat from the database: ' + error.stack);
+      return res.status(500).json({
+        error: 'Failed to fetch professorat'
+      });
+    }
+    // Send the fetched data as a response
+    res.setHeader('Content-Type','application/json');
+    res.send(JSON.stringify(results));
+    //res.json(results);
   });
 });
 

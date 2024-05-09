@@ -31,11 +31,11 @@ tr:nth-child(odd) {
 
 form {
   /* Define el ancho del formulario */
-  width: 100%;
+  width: 50%;
   padding: 20px;
-  /*margin: 20px auto;*
+  margin: 10px auto;
   border: 1px solid #ddd;
-  border-radius: 5px;*/
+  border-radius: 5px;
 }
 
 label {
@@ -46,23 +46,21 @@ label {
 }
 
 input[type="text"],
-input[type="email"],
-textarea {
+input[type="email"] {
   /* Tamaño y estilo de los campos de texto */
-  width: 20%;
+  width: 80%;
   height: 20px;
   padding: 10px;
   /*border: 1px solid #ccc;
   border-radius: 3px;*/
   font-size: 14px;
+  text-align: left;
+  float: right;
 }
 
 #comentaris {
   /* Tamaño y estilo de los campos de texto */
-  width: 30%;
   height: 80px;
-  padding: 10px;
-  font-size: 14px;
 }
 
 input[type="submit"], [type="file"], button {
@@ -70,23 +68,32 @@ input[type="submit"], [type="file"], button {
   background-color: #1970e2;
   /* verde */
   color: white;
-  padding: 10px 20px;
+  padding: 5px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-size: 20px;
 }
 
 textarea {
   width: 100%;
-  height: 450px;
+  height: 500px;
   padding: 12px 20px;
   box-sizing: border-box;
   border: 2px solid #ccc;
   border-radius: 4px;
   background-color: #f8f8f8;
-  font-size: 16px;
+  font-size: 14px;
   resize: none;
   display: inline-block;
   word-break: break-all;
   white-space: pre-line;  
+}
+
+div.bordeoutset{
+  height: 380px;
+  border: 10px outset #cccccc;
+  background-color: rgb(80, 134, 233);
+  padding: 12px 20px;
+  
 }

@@ -7,18 +7,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title><%= title %></title>
   <%- include("partials/head") %>
-   <!-- Custom CSS 
+  <!-- Custom CSS 
    <link rel="stylesheet" href="/css/prova.css" />-->
+  <script>
+    function loadDepts() {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onload = function () {
+        depts = JSON.parse(this.responseText);
+        depts.forEach(function (d) {
+          var dold=document.getElementById("deptold").value
+          if (d.codi==dold) {
+          document.getElementById("lista").innerHTML+=('<option selected value=' + d.codi.toString() + '>' + d.nom + '</option>');
+          }
+          else {
+            document.getElementById("lista").innerHTML+=('<option value=' + d.codi.toString() + '>' + d.nom + '</option>');
+
+          }
+        });
+      };
+      xhttp.open("GET", "./ldepartaments", true);
+      xhttp.send();
+    }
+  </script>
 </head>
 
-<body>
+<body onload="loadDepts()">
   <!-- HEADER -->
   <%- include("partials/navigationbackend") %>
-    <!-- My Content -->
-    <main class="container pt-2 text-center justify-content-center align-items-center vh-100" style="auto">
-      <section>
-        <h2 class="display-1">Formulari Edició Professorat</h2>
-        <form action="/profController" method="post">
+  <!-- My Content -->
+  <main class="container pt-2 text-center justify-content-center align-items-center vh-100" style="auto">
+    <section>
+      <h2 class="display-1">Formulari Edició Professorat</h2>
+      <form action="/profController" method="get">
+        <div class="bordeoutset">
           <div id="codi">
             <label for="codi">Codi GestIB:</label>
             <input type="text" id="codi" name="codi" value="<%= data[0].codi %>" required>
@@ -35,21 +56,28 @@
           <div id="email"><label for="email">Email:</label>
             <input type="email" id="email" name="email" value="<%= data[0].email %>" required>
           </div>
-          <div id="departament"><label for="departament">Departament:</label>
-            <input type="text" id="departament" name="departament" value="<%= data[0].departament %>" required>
+          <div id="llista">
+
           </div>
-          <div id="comentaris"><label for="comentaris">Comentaris:</label>
-            <textarea id="comentaris" name="comentaris"><%= data[0].comentaris %></textarea>
+          <div id="departament"><label for="departament">Departament:</label>
+            <input type="hidden" id="deptold" value="<%= data[0].departament %>" required>
+            <select id="lista" name="departament" required>
+              <option id="opllista" value="">Seleccioni:</option>
+            </select>
           </div>
           <div id="credit"><label for="credit">Crèdit:</label>
             <input type="text" id="credit" name="credit" value="<%= data[0].credit %>" required>
           </div>
-          <div class="button">
-            <input type="submit" value="Modificar">
+          <div id="comentaris"><label for="comentaris">Comentaris:</label>
+            <textarea id="comentaris" name="comentaris"><%= data[0].comentaris %></textarea>
           </div>
-        </form>
-      </section>
-    </main>
+        </div><br>
+        <div class="button">
+          <input type="submit" value="Modificar">
+        </div>
+      </form>
+    </section>
+  </main>
 </body>
 
 </html>

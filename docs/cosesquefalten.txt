@@ -19,4 +19,5 @@ Ficar a taula horaris el nom del grup IFC32A p.e. y ordenar per aquest i dia, ho
 10)Fer el readme de git hub
 11) Taula de calendari 
 12) Control de FCT's i DUAL
+13) No surten menús al mòbil
  
