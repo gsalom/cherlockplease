@@ -71,7 +71,6 @@ router.get("/mail", (req, res) => {
 });
 
 router.get("/load", (req, res) => {
-
   //Insert a record in the "revisions fetes" table:
   var sql = req.query.codi;
   var errors = "e->";
@@ -97,17 +96,15 @@ router.get("/load", (req, res) => {
       //console.log(results);
     })
   }
-
   res.render("carregarrevisions", {
     title: "Carrega de revisions",
     fitxer: req.query.fitxer,
     codi: req.query.codi,
     apply: req.query.accio,
-    errors: errors,
-    results: results
+    errors: errors.array(),
+    results: results.array()
   });
 });
-
 
 router.get("/carretons", (req, res) => {
   // Fetch professorat from the database
@@ -125,9 +122,6 @@ router.get("/carretons", (req, res) => {
     });
   });
 });
-
-
-// proves amb forms 
 
 router.get("/prof_forms", (req, res) => {
   // Fetch professorat from the database
@@ -147,19 +141,29 @@ router.get("/prof_forms", (req, res) => {
   });
 });
 
-router.post("/profController", (req, res) => {
-  // codi 
-  res.send('Add a profe');
-});
+router.get("/prof_Update", (req, res) => {
 
-
-router.get("/prova", (req, res) => {
-  // codi 
-  res.render("prova", {
-    title: "ccs form"
+  //Insert a record in the "revisions fetes" table:
+  var sql = "UPDATE cherlock.professorat p SET p.credit=20 WHERE  p.id_prof=" + req.query.id;
+  var errors = "e->";
+  var results = "r->";
+  if (sql) {
+     //Update  dades professorat amb les modificacions fetes
+    con.query(sql, function (err, result) {
+      errors = errors + ":" + err;
+      
+      if (err) throw err;
+      //console.log("Number of records inserted: " + result.affectedRows);
+      results = results + ":" + result.affectedRows;
+      errors = errors + ":" + err;
+    });
+  }
+  //console.log("errors: "+errors);
+  //console.log("results: "+results);
+  // Send the fetched data as a response
+  res.setHeader('Content-Type','application/json');
+  res.send(JSON.stringify(results)+JSON.stringify(errors));
   });
-});
-// fi de proves amb forms
 
 router.get('/professorat', (req, res) => {
   // Fetch professorat from the database
@@ -177,6 +181,21 @@ router.get('/professorat', (req, res) => {
     });
   });
 });
+
+// proves amb forms 
+
+router.post("/profController", (req, res) => {
+  // codi 
+  res.send('Add a profe');
+});
+
+router.get("/prova", (req, res) => {
+  // codi 
+  res.render("prova", {
+    title: "ccs form"
+  });
+});
+// fi de proves amb forms
 
 router.get('/departaments', (req, res) => {
   // Fetch departaments from the database
@@ -207,7 +226,6 @@ router.get('/ldepartaments', (req, res) => {
     // Send the fetched data as a response
     res.setHeader('Content-Type','application/json');
     res.send(JSON.stringify(results));
-    //res.json(results);
   });
 });
 
