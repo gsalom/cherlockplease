@@ -28,6 +28,11 @@
       xhttp.open("GET", "./ldepartaments", true);
       xhttp.send();
     }
+
+    function tanca() {
+      window.close();
+    }
+
   </script>
 </head>
 
@@ -38,10 +43,11 @@
   <main class="container pt-2 text-center justify-content-center align-items-center vh-100" style="auto">
     <section>
       <h2 class="display-1">Formulari Edició Professorat</h2>
-      <form action="/profController" method="get">
+      <form target="_parent" action="/prof_Update" method="get">
         <div class="bordeoutset">
           <div id="codi">
             <label for="codi">Codi GestIB:</label>
+            <input type="hidden" id="id" name="id" value="<%= data[0].id_prof %>">
             <input type="text" id="codi" name="codi" value="<%= data[0].codi %>" required>
           </div>
           <div id="nom"><label for="nom">Nom:</label>
@@ -55,9 +61,6 @@
           </div>
           <div id="email"><label for="email">Email:</label>
             <input type="email" id="email" name="email" value="<%= data[0].email %>" required>
-          </div>
-          <div id="llista">
-
           </div>
           <div id="departament"><label for="departament">Departament:</label>
             <input type="hidden" id="deptold" value="<%= data[0].departament %>" required>
@@ -74,10 +77,10 @@
         </div><br>
         <div class="button">
           <input type="submit" value="Modificar">
+          <button type="button" onclick="tanca()">Tancar</button>
         </div>
       </form>
     </section>
   </main>
 </body>
-
 </html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <%- include("partials/head") %>
+  <!-- Custom CSS 
+   <link rel="stylesheet" href="/css/prova.css" />-->
+  <script src="funcions.js">
+    
+    // function loadAules() {
+    //   var xhttp = new XMLHttpRequest();
+    //   xhttp.onload = function () {
+    //     depts = JSON.parse(this.responseText);
+    //     depts.forEach(function (d) {
+    //       var aold=document.getElementById("aulaold").value
+    //       if (d.codi==aold) {
+    //       document.getElementById("lista2").innerHTML+=('<option selected value=' + d.codi.toString() + '>' + d.nom + '</option>');
+    //       }
+    //       else {
+    //         document.getElementById("lista2").innerHTML+=('<option value=' + d.codi.toString() + '>' + d.nom + '</option>');
+
+    //       }
+    //     });
+    //   };
+    //   xhttp.open("GET", "./laules", true);
+    //   xhttp.send();
+    // }
+ 
+    // function loadSelects() {
+    //   loadAules();
+    // }
+
+    // function tanca() {
+    //   window.close();
+    // }
+
+    // function activatancar(segons) {
+    //   setTimeout(tanca, segons * 1000);
+    //   return true;
+    // }
+
+  </script>
+</head>
+
+<body onload="loadSelects()">
+  <!-- HEADER -->
+  <%- include("partials/navigationbackend") %>
+  <!-- My Content -->
+  <main class="container pt-2 text-center justify-content-center align-items-center vh-100" style="auto">
+    <section>
+      <h2 class="display-1">Formulari Edició Grups</h2>
+      <form action="/car_Update" method="get" >
+        <div class="bordeoutset">
+          <input type="hidden" id="id" name="id" value="<%= data[0].id_car %>">
+          <div id="nom"><label for="nom">Nom:</label>
+            <input type="text" id="nom" name="nom" readonly value="<%= data[0].nom %>" required>
+          </div>
+          <div id="aula"><label for="aula">Aula:</label>
+            <input type="hidden" id="aulaold" value="<%= data[0].codi_aula %>" required>
+            <select id="lista2" name="aula" required>
+              <option id="opllista" value="">Seleccioni:</option>
+            </select>
+          </div>
+          <div id="estat"><label for="estat">Estat:</label>
+            <input type="text" id="estat" name="estat" value="<%= data[0].estat %>" required>
+          </div>
+          <div id="stock"><label for="stock">Stock:</label>
+            <input type="text" id="stock" name="stock" value="<%= data[0].num_ord %>" required>
+          </div>
+        </div><br>
+        <div class="button">
+          <input type="submit" value="Modificar" onclick="return activatancar(3)">
+          <button type="button" onclick="tanca()">Tancar</button>
+        </div>
+      </form>
+    </section>
+  </main>
+</body>
+</html>

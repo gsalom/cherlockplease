@@ -6,20 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= title %></title>
     <%- include("partials/head") %>
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        th, td {
-            text-align: left;
-            padding: 8px;
-            border: 1px solid #ddd;
-        }
-    </style>
+    <script>
+      function obrir(id){
+          window.open("./car_forms?id="+id, '_blank');
+      }
+  </script>
 </head>
-<body>
+<body onfocus="location.reload()">
     <!-- HEADER -->
     <%- include("partials/navigationbackend") %>
     <!-- My Content -->
@@ -28,19 +21,19 @@
           <h2 class="display-1">Estat Carretons</h2>
           <table class="table table-bordered fons" width="100%" cellspacing="0">
             <tr>
-              <th>Id</th>
               <th>Nom</th>
               <th>Aula</th>
               <th>Estat</th>
               <th>Stock</th>
+              <th>Edició</th>
             </tr>
             <% data.forEach(function(dat){ %>
             <tr>
-              <td><%= dat.id_car %></td>
               <td><%= dat.nom %></td>
               <td><%= dat.nom_aula %></td>
               <td><%= dat.estat %></td>
               <td><%= dat.num_ord %></td>
+              <td><button type="button" onclick="obrir(<%= dat.id_car %>)">Editar</button></td>
               <%  }); %>
             </tr>
           </table>

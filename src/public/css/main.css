@@ -25,6 +25,17 @@ header img {
   color: rgb(233, 233, 152);
 }
 
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+
 tr:nth-child(odd) {
   background-color: rgb(101, 146, 231);
 }

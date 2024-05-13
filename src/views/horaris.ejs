@@ -7,6 +7,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title><%= title %></title>
   <%- include("partials/head") %>
+  <script>
+    function obrir(id){
+        window.open("./hor_forms?id="+id, '_blank');
+    }
+</script>
 </head>
 
 <body>
@@ -23,8 +28,8 @@
           <th>Professor//a</th>
           <th>Dia setmana</th>
           <th>Hora</th>
-          <th>Realitzada</th>
           <th>Tipus</th>
+          <th>Edició</th>
         </tr>
         <% data.forEach(function(dat){ %>
         <tr>
@@ -33,8 +38,8 @@
           <td><%= dat.profe %></td>
           <td><%= dat.dia %></td>
           <td><%= dat.hora %></td>
-          <td><%= dat.realitzada %></td>
           <td><%= dat.tipus %></td>
+          <td><button type="button" onclick="obrir(<%= dat.id_hor %>)">Editar</button></td>
           <%  }); %>
         </tr>
       </table>

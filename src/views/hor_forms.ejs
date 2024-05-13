@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <%- include("partials/head") %>
+  <!-- Custom CSS 
+   <link rel="stylesheet" href="/css/prova.css" />-->
+  <script>
+    function loadGrups() {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onload = function () {
+        depts = JSON.parse(this.responseText);
+        depts.forEach(function (d) {
+          var gold = document.getElementById("grupold").value
+          if (d.codi == gold) {
+            document.getElementById("lista3").innerHTML += ('<option selected value=' + d.codi.toString() + '>' +
+              d.grup + '</option>');
+          } else {
+            document.getElementById("lista3").innerHTML += ('<option  disabled value=' + d.codi.toString() + '>' + d.grup +
+              '</option>');
+          }
+        });
+      };
+      xhttp.open("GET", "./lgrups", true);
+      xhttp.send();
+    }
+
+    function loadProfes() {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onload = function () {
+        depts = JSON.parse(this.responseText);
+        depts.forEach(function (d) {
+          var pold = document.getElementById("profold").value
+          if (d.codi == pold) {
+            document.getElementById("lista1").innerHTML += ('<option selected value=' + d.codi.toString() + '>' +
+              d.profe + '</option>');
+          } else {
+            document.getElementById("lista1").innerHTML += ('<option value=' + d.codi.toString() + '>' + d.profe +
+              '</option>');
+          }
+        });
+      };
+      xhttp.open("GET", "./lprofes", true);
+      xhttp.send();
+    }
+
+    function loadAules() {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onload = function () {
+        depts = JSON.parse(this.responseText);
+        depts.forEach(function (d) {
+          var aold = document.getElementById("aulaold").value
+          if (d.codi == aold) {
+            document.getElementById("lista2").innerHTML += ('<option selected value=' + d.codi.toString() + '>' +
+              d.nom + '</option>');
+          } else {
+            document.getElementById("lista2").innerHTML += ('<option  disabled value=' + d.codi.toString() + '>' + d.nom +
+              '</option>');
+          }
+        });
+      };
+      xhttp.open("GET", "./laules", true);
+      xhttp.send();
+    }
+
+    function loadSelects() {
+      loadProfes();
+      loadAules();
+      loadGrups()
+    }
+
+    function tanca() {
+      window.close();
+    }
+  </script>
+</head>
+
+<body onload="loadSelects()">
+  <!-- HEADER -->
+  <%- include("partials/navigationbackend") %>
+  <!-- My Content -->
+  <main class="container pt-2 text-center justify-content-center align-items-center vh-100" style="auto">
+    <section>
+      <h2 class="display-1">Formulari Edició Horaris</h2>
+      <form target="_parent" action="/hor_Update" method="get">
+        <div class="bordeoutset">
+          <input type="hidden" id="id" name="id" value="<%= data[0].id_hor %>">
+          <div id="grup"><label for="grup">Grup:</label>
+            <input type="hidden" id="grupold" value="<%= data[0].id_grup %>" required>
+            <select id="lista3" name="grup" required>
+              <option id="opllista" value="">Seleccioni:</option>
+            </select>
+          </div>
+            <div id="aula"><label for="aula">Aula:</label>
+              <input type="hidden" id="aulaold" value="<%= data[0].id_aula %>" required>
+              <select id="lista2" name="aula" required>
+                <option id="opllista" value="">Seleccioni:</option>
+              </select>
+            </div>
+            <div id="dia"><label for="dia">Dia setmana:</label>
+              <input type="text" id="dia" name="dia" readonly value="<%= data[0].dia %>" required>
+            </div>
+            <div id="profe"><label for="profe">Professor/a:</label>
+              <input type="hidden" id="profold" value="<%= data[0].id_prof %>" required>
+              <select id="lista1" name="profe" required>
+                <option id="opllista" value="">Seleccioni:</option>
+              </select>
+            </div>
+            <div id="hora"><label for="hora">Hora:</label>
+              <input type="text" id="hora" readonly name="hora" value="<%= data[0].hora %>" required>
+            </div>
+            <div id="tipus"><label for="tipus">Tipus:</label>
+              <input type="text" id="tipus" name="tipus" value="<%= data[0].tipus %>" required>
+            </div>
+          </div><br>
+          <div class="button">
+            <input type="submit" value="Modificar">
+            <button type="button" onclick="tanca()">Tancar</button>
+          </div>
+      </form>
+    </section>
+  </main>
+</body>
+
+</html>

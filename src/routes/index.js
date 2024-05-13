@@ -101,8 +101,8 @@ router.get("/load", (req, res) => {
     fitxer: req.query.fitxer,
     codi: req.query.codi,
     apply: req.query.accio,
-    errors: errors.array(),
-    results: results.array()
+    errors: errors,
+    results: results
   });
 });
 
@@ -122,6 +122,44 @@ router.get("/carretons", (req, res) => {
     });
   });
 });
+
+router.get("/car_forms", (req, res) => {
+  // Fetch carretons from the database
+  var sql = "SELECT * FROM carretons where id_car=" + req.query.id;
+  con.query(sql, (error, results) => {
+    if (error) {
+      console.error('Error fetching carretons from the database: ' + error.stack);
+      return res.status(500).json({
+        error: 'Failed to fetch carretons'
+      });
+    }
+    // Send the fetched data as a response
+    res.render("car_forms", {
+      title: "Edició Carretons",
+      data: results
+    });
+  });
+});
+
+router.get("/car_Update", (req, res) => {
+
+  //Insert a record in the "carretons" table:
+  var sql = "UPDATE cherlock.carretons c SET c.num_ord=" + req.query.stock + ", c.codi_aula='" + req.query.aula + "', c.estat='" + req.query.estat + "' WHERE  c.id_car=" + req.query.id;
+  var errors = "e->";
+  var results = "r->";
+  if (sql) {
+    //Update  dades carretons amb les modificacions fetes
+    con.query(sql, function (err, result) {
+      errors = errors + ":" + err;
+
+      if (err) throw err;
+      //console.log("Number of records inserted: " + result.affectedRows);
+      results = results + ":" + result.affectedRows;
+      errors = errors + ":" + err;
+    });
+  }
+});
+
 
 router.get("/prof_forms", (req, res) => {
   // Fetch professorat from the database
@@ -144,26 +182,21 @@ router.get("/prof_forms", (req, res) => {
 router.get("/prof_Update", (req, res) => {
 
   //Insert a record in the "revisions fetes" table:
-  var sql = "UPDATE cherlock.professorat p SET p.credit=20 WHERE  p.id_prof=" + req.query.id;
+  var sql = "UPDATE cherlock.professorat p SET p.credit=" + req.query.credit + ", p.codi='" + req.query.codi + "', p.nom='" + req.query.nom + "', p.llin1='" + req.query.llin1 + "',p.llin2='" + req.query.llin2 + "', p.email='" + req.query.email + "', p.departament=" + req.query.departament + ",p.comentaris='" + req.query.comentaris + "' WHERE  p.id_prof=" + req.query.id;
   var errors = "e->";
   var results = "r->";
   if (sql) {
-     //Update  dades professorat amb les modificacions fetes
+    //Update  dades professorat amb les modificacions fetes
     con.query(sql, function (err, result) {
       errors = errors + ":" + err;
-      
+
       if (err) throw err;
       //console.log("Number of records inserted: " + result.affectedRows);
       results = results + ":" + result.affectedRows;
       errors = errors + ":" + err;
     });
   }
-  //console.log("errors: "+errors);
-  //console.log("results: "+results);
-  // Send the fetched data as a response
-  res.setHeader('Content-Type','application/json');
-  res.send(JSON.stringify(results)+JSON.stringify(errors));
-  });
+});
 
 router.get('/professorat', (req, res) => {
   // Fetch professorat from the database
@@ -181,6 +214,37 @@ router.get('/professorat', (req, res) => {
     });
   });
 });
+
+router.get('/ltutors', (req, res) => {
+  // Fetch aules from the database
+  con.query('SELECT codi, concat(llin1," ",llin2,", ",nom) as tutor FROM professorat', (error, results) => {
+    if (error) {
+      console.error('Error fetching aules from the database: ' + error.stack);
+      return res.status(500).json({
+        error: 'Failed to fetch aules'
+      });
+    }
+    // Send the fetched data as a response
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(results));
+  });
+});
+
+router.get('/lprofes', (req, res) => {
+  // Fetch aules from the database
+  con.query('SELECT codi, concat(llin1," ",llin2,", ",nom) as profe FROM professorat', (error, results) => {
+    if (error) {
+      console.error('Error fetching aules from the database: ' + error.stack);
+      return res.status(500).json({
+        error: 'Failed to fetch aules'
+      });
+    }
+    // Send the fetched data as a response
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(results));
+  });
+});
+
 
 // proves amb forms 
 
@@ -224,7 +288,7 @@ router.get('/ldepartaments', (req, res) => {
       });
     }
     // Send the fetched data as a response
-    res.setHeader('Content-Type','application/json');
+    res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(results));
   });
 });
@@ -262,6 +326,23 @@ router.get('/aules', (req, res) => {
     });
   });
 });
+
+router.get('/laules', (req, res) => {
+  // Fetch aules from the database
+  con.query('SELECT codi,nom FROM aules', (error, results) => {
+    if (error) {
+      console.error('Error fetching aules from the database: ' + error.stack);
+      return res.status(500).json({
+        error: 'Failed to fetch aules'
+      });
+    }
+    // Send the fetched data as a response
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(results));
+  });
+});
+
+
 router.get('/grups', (req, res) => {
   // Fetch grups from the database
   con.query('SELECT g.*, a.nom as aula, concat(p.llin1," ",p.llin2,", ",p.nom) as tutor1 FROM cherlock.grups g, cherlock.aules a , cherlock.professorat p where g.aula=a.codi and g.id_tutor=p.codi', (error, results) => {
@@ -279,10 +360,61 @@ router.get('/grups', (req, res) => {
   });
 });
 
+router.get("/grup_forms", (req, res) => {
+  // Fetch professorat from the database
+  var sql = "SELECT * FROM grups where id_grup=" + req.query.id;
+  con.query(sql, (error, results) => {
+    if (error) {
+      console.error('Error fetching professorat from the database: ' + error.stack);
+      return res.status(500).json({
+        error: 'Failed to fetch professorat'
+      });
+    }
+    // Send the fetched data as a response
+    res.render("grup_forms", {
+      title: "Edició Grups",
+      data: results
+    });
+  });
+});
+
+router.get("/grup_Update", (req, res) => {
+
+  //Insert a record in the "revisions fetes" table:
+  var sql = "UPDATE cherlock.grups g SET g.id_tutor='" + req.query.tutor + "', g.aula=" + req.query.aula + ", g.estat=" + req.query.estat + " WHERE  g.id_grup=" + req.query.id;
+  var errors = "e->";
+  var results = "r->";
+  if (sql) {
+    //Update  dades professorat amb les modificacions fetes
+    con.query(sql, function (err, result) {
+      errors = errors + ":" + err;
+
+      if (err) throw err;
+      //console.log("Number of records inserted: " + result.affectedRows);
+      results = results + ":" + result.affectedRows;
+      errors = errors + ":" + err;
+    });
+  }
+});
+
+router.get('/lgrups', (req, res) => {
+  // Fetch grups from the database
+  con.query('SELECT codi, nom as grup FROM grups', (error, results) => {
+    if (error) {
+      console.error('Error fetching grups from the database: ' + error.stack);
+      return res.status(500).json({
+        error: 'Failed to fetch grups'
+      });
+    }
+    // Send the fetched data as a response
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(results));
+  });
+});
 
 router.get('/horaris', (req, res) => {
   // Fetch professorat from the database
-  con.query('SELECT g.nom as grup, a.nom as aula, concat(p.llin1," ",p.llin2,", ",p.nom) as profe, h.dia, h.hora, h.realitzada, h.tipus FROM cherlock.horaris h, cherlock.professorat p, cherlock.grups g, cherlock.aules a  where h.id_grup=g.codi and h.id_prof=p.codi and h.id_aula=a.codi order by g.nom, h.dia, h.hora', (error, results) => {
+  con.query('SELECT h.id_hor, g.nom as grup, a.nom as aula, concat(p.llin1," ",p.llin2,", ",p.nom) as profe, h.dia, h.hora, h.realitzada, h.tipus FROM cherlock.horaris h, cherlock.professorat p, cherlock.grups g, cherlock.aules a  where h.id_grup=g.codi and h.id_prof=p.codi and h.id_aula=a.codi order by g.nom, h.dia, h.hora', (error, results) => {
     if (error) {
       console.error('Error fetching horaris from the database: ' + error.stack);
       return res.status(500).json({
@@ -296,6 +428,44 @@ router.get('/horaris', (req, res) => {
     });
   });
 });
+
+router.get("/hor_forms", (req, res) => {
+  // Fetch horaris from the database
+  var sql = "SELECT * FROM horaris where id_hor=" + req.query.id;
+  con.query(sql, (error, results) => {
+    if (error) {
+      console.error('Error fetching horaris from the database: ' + error.stack);
+      return res.status(500).json({
+        error: 'Failed to fetch horaris'
+      });
+    }
+    // Send the fetched data as a response
+    res.render("hor_forms", {
+      title: "Edició Horaris",
+      data: results
+    });
+  });
+});
+
+router.get("/hor_Update", (req, res) => {
+
+  //Insert a record in the "horaris" table:
+  var sql = "UPDATE cherlock.horaris h SET h.id_prof='" + req.query.codi + "', h.tipus=" + req.query.tipus + " WHERE  h.id_hor=" + req.query.id;
+  var errors = "e->";
+  var results = "r->";
+  if (sql) {
+    //Update  dades horaris amb les modificacions fetes
+    con.query(sql, function (err, result) {
+      errors = errors + ":" + err;
+
+      if (err) throw err;
+      //console.log("Number of records inserted: " + result.affectedRows);
+      results = results + ":" + result.affectedRows;
+      errors = errors + ":" + err;
+    });
+  }
+});
+
 
 
 router.get('/revisions', (req, res) => {
