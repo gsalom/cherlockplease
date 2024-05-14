@@ -96,7 +96,7 @@ function loadDepts() {
   xhttp.send();
 }
 
-function loadSelects(taula) {
+function loadSelects() {
   loadAules();
   loadTutors();
   loadProfes();
