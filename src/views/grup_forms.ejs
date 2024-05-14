@@ -7,56 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title><%= title %></title>
   <%- include("partials/head") %>
-  <!-- Custom CSS 
-   <link rel="stylesheet" href="/css/prova.css" />-->
-  <script>
-    function loadTutors() {
-      var xhttp = new XMLHttpRequest();
-      xhttp.onload = function () {
-        depts = JSON.parse(this.responseText);
-        depts.forEach(function (d) {
-          var told=document.getElementById("tutorold").value
-          if (d.codi==told) {
-          document.getElementById("lista1").innerHTML+=('<option selected value=' + d.codi.toString() + '>' + d.tutor + '</option>');
-          }
-          else {
-            document.getElementById("lista1").innerHTML+=('<option value=' + d.codi.toString() + '>' + d.tutor + '</option>');
-
-          }
-        });
-      };
-      xhttp.open("GET", "./ltutors", true);
-      xhttp.send();
-    }
-    function loadAules() {
-      var xhttp = new XMLHttpRequest();
-      xhttp.onload = function () {
-        depts = JSON.parse(this.responseText);
-        depts.forEach(function (d) {
-          var aold=document.getElementById("aulaold").value
-          if (d.codi==aold) {
-          document.getElementById("lista2").innerHTML+=('<option selected value=' + d.codi.toString() + '>' + d.nom + '</option>');
-          }
-          else {
-            document.getElementById("lista2").innerHTML+=('<option value=' + d.codi.toString() + '>' + d.nom + '</option>');
-
-          }
-        });
-      };
-      xhttp.open("GET", "./laules", true);
-      xhttp.send();
-    }
- 
-    function loadSelects() {
-      loadAules();
-      loadTutors();
-    }
-
-    function tanca() {
-      window.close();
-    }
-
-  </script>
+  <script src="funcions.js" >
+  </script>  
 </head>
 
 <body onload="loadSelects()">
@@ -99,7 +51,7 @@
           </div>
         </div><br>
         <div class="button">
-          <input type="submit" value="Modificar">
+          <input type="submit" value="Modificar" onclick="return activatancar(3)">
           <button type="button" onclick="tanca()">Tancar</button>
         </div>
       </form>

@@ -7,76 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title><%= title %></title>
   <%- include("partials/head") %>
-  <!-- Custom CSS 
-   <link rel="stylesheet" href="/css/prova.css" />-->
-  <script>
-    function loadGrups() {
-      var xhttp = new XMLHttpRequest();
-      xhttp.onload = function () {
-        depts = JSON.parse(this.responseText);
-        depts.forEach(function (d) {
-          var gold = document.getElementById("grupold").value
-          if (d.codi == gold) {
-            document.getElementById("lista3").innerHTML += ('<option selected value=' + d.codi.toString() + '>' +
-              d.grup + '</option>');
-          } else {
-            document.getElementById("lista3").innerHTML += ('<option  disabled value=' + d.codi.toString() + '>' + d.grup +
-              '</option>');
-          }
-        });
-      };
-      xhttp.open("GET", "./lgrups", true);
-      xhttp.send();
-    }
-
-    function loadProfes() {
-      var xhttp = new XMLHttpRequest();
-      xhttp.onload = function () {
-        depts = JSON.parse(this.responseText);
-        depts.forEach(function (d) {
-          var pold = document.getElementById("profold").value
-          if (d.codi == pold) {
-            document.getElementById("lista1").innerHTML += ('<option selected value=' + d.codi.toString() + '>' +
-              d.profe + '</option>');
-          } else {
-            document.getElementById("lista1").innerHTML += ('<option value=' + d.codi.toString() + '>' + d.profe +
-              '</option>');
-          }
-        });
-      };
-      xhttp.open("GET", "./lprofes", true);
-      xhttp.send();
-    }
-
-    function loadAules() {
-      var xhttp = new XMLHttpRequest();
-      xhttp.onload = function () {
-        depts = JSON.parse(this.responseText);
-        depts.forEach(function (d) {
-          var aold = document.getElementById("aulaold").value
-          if (d.codi == aold) {
-            document.getElementById("lista2").innerHTML += ('<option selected value=' + d.codi.toString() + '>' +
-              d.nom + '</option>');
-          } else {
-            document.getElementById("lista2").innerHTML += ('<option  disabled value=' + d.codi.toString() + '>' + d.nom +
-              '</option>');
-          }
-        });
-      };
-      xhttp.open("GET", "./laules", true);
-      xhttp.send();
-    }
-
-    function loadSelects() {
-      loadProfes();
-      loadAules();
-      loadGrups()
-    }
-
-    function tanca() {
-      window.close();
-    }
-  </script>
+  <script src="funcions.js">
+  </script>  
 </head>
 
 <body onload="loadSelects()">
@@ -118,7 +50,7 @@
             </div>
           </div><br>
           <div class="button">
-            <input type="submit" value="Modificar">
+            <input type="submit" value="Modificar" onclick="return activatancar(3)">
             <button type="button" onclick="tanca()">Tancar</button>
           </div>
       </form>

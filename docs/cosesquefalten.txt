@@ -6,18 +6,18 @@ a taula grups ficar nom tutors podiem llevar tutor2 de taula grups OK FET
 Repassar els horaris falten tipus 1 pq n'hi ha d'haber 5 per dia-aula OK FET
 Enviar email revisions no fetes OK FET
 Ficar a taula horaris el nom del grup IFC32A p.e. y ordenar per aquest i dia, hora OK FET
+Fer formularis de modificacions als backend OK FET
+Autonatitzar la carrega de revisions per un fitxer *.sql OK FET
 
 1) Crear full google amb l'assignació per ordinador per aula/carreto
 2) Fer carrega db des de GestIB
-3) Fer formularis de modificacions als backend
-4) Autonatitzar la carrega de revisions per un fitxer *.sql 1/2 OK
-5) Crear docker amb es programa 
-6) Crear una pag que surti per carretor amb un semafor
-7) Continuar el panell dashboard
-8) Mirar on s'ha de tancar les connexions a la BD amb con.end()
-9) Omplir pàgina about i contacte
-10)Fer el readme de git hub
-11) Taula de calendari 
-12) Control de FCT's i DUAL
-13) No surten menús al mòbil
+3) Crear docker amb es programa 
+4) Crear una pag que surti per carretor amb un semafor
+5) Continuar el panell dashboard
+6) Mirar on s'ha de tancar les connexions a la BD amb con.end()
+7) Omplir pàgina about i contacte
+8)Fer el readme de git hub
+9) Taula de calendari 
+10) Control de FCT's i DUAL
+11) No surten menús al mòbil
  
