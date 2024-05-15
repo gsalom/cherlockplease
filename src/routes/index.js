@@ -18,7 +18,7 @@ var con = mysql.createConnection({
 
 con.connect(function (err) {
   if (err) throw err;
-  console.log("Connected! Router");
+  console.log("Connected Router!");
 });
 
 const router = Router();
@@ -215,21 +215,6 @@ router.get('/professorat', (req, res) => {
   });
 });
 
-router.get('/ltutors', (req, res) => {
-  // Fetch aules from the database
-  con.query('SELECT codi, concat(llin1," ",llin2,", ",nom) as tutor FROM professorat', (error, results) => {
-    if (error) {
-      console.error('Error fetching aules from the database: ' + error.stack);
-      return res.status(500).json({
-        error: 'Failed to fetch aules'
-      });
-    }
-    // Send the fetched data as a response
-    res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify(results));
-  });
-});
-
 router.get('/lprofes', (req, res) => {
   // Fetch aules from the database
   con.query('SELECT codi, concat(llin1," ",llin2,", ",nom) as profe FROM professorat', (error, results) => {
@@ -244,7 +229,6 @@ router.get('/lprofes', (req, res) => {
     res.send(JSON.stringify(results));
   });
 });
-
 
 // proves amb forms 
 

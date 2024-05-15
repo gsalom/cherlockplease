@@ -11,7 +11,7 @@
   </script>  
 </head>
 
-<body onload="loadSelects()">
+<body onload="loadSelects(2)">
   <!-- HEADER -->
   <%- include("partials/navigationbackend") %>
   <!-- My Content -->
@@ -34,9 +34,9 @@
           <div id="nom"><label for="nom">Nom:</label>
             <input type="text" id="nom" name="nom" readonly value="<%= data[0].nom %>" required>
           </div>
-          <div id="tutor"><label for="tutor">Tutor:</label>
-            <input type="hidden" id="tutorold" value="<%= data[0].id_tutor %>" required>
-            <select id="lista1" name="tutor" required>
+          <div id="tutor"><label for="profe">Tutor:</label>
+            <input type="hidden" id="profold" value="<%= data[0].id_tutor %>" required>
+            <select id="lista1" name="profe" required>
               <option id="opllista" value="">Seleccioni:</option>
             </select>
           </div>

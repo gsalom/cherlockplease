@@ -8,52 +8,13 @@ function loadAules() {
       var aold = document.getElementById("aulaold").value
       if (d.codi == aold) {
         document.getElementById("lista2").innerHTML += ('<option selected value=' + d.codi.toString() + '>' + d.nom + '</option>');
-      }
-      else {
+      } else {
         document.getElementById("lista2").innerHTML += ('<option value=' + d.codi.toString() + '>' + d.nom + '</option>');
 
       }
     });
   };
   xhttp.open("GET", "./laules", true);
-  xhttp.send();
-}
-
-function loadTutors() {
-  var xhttp = new XMLHttpRequest();
-  xhttp.onload = function () {
-    depts = JSON.parse(this.responseText);
-    depts.forEach(function (d) {
-      var told = document.getElementById("tutorold").value
-      if (d.codi == told) {
-        document.getElementById("lista1").innerHTML += ('<option selected value=' + d.codi.toString() + '>' + d.tutor + '</option>');
-      }
-      else {
-        document.getElementById("lista1").innerHTML += ('<option value=' + d.codi.toString() + '>' + d.tutor + '</option>');
-
-      }
-    });
-  };
-  xhttp.open("GET", "./ltutors", true);
-  xhttp.send();
-}
-
-function loadGrups() {
-  var xhttp = new XMLHttpRequest();
-  xhttp.onload = function () {
-    depts = JSON.parse(this.responseText);
-    depts.forEach(function (d) {
-      var gold = document.getElementById("grupold").value
-      if (d.codi == gold) {
-        document.getElementById("lista3").innerHTML += ('<option selected value=' + d.codi.toString() + '>' +
-          d.grup + '</option>');
-      } else {
-        document.getElementById("lista3").innerHTML += ('<option  disabled value=' + d.codi.toString() + '>' + d.grup +
-          '</option>');
-      }
-    });
-  };
-  xhttp.open("GET", "./lgrups", true);
   xhttp.send();
 }
 
@@ -77,6 +38,25 @@ function loadProfes() {
 }
 
 
+function loadGrups() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onload = function () {
+    depts = JSON.parse(this.responseText);
+    depts.forEach(function (d) {
+      var gold = document.getElementById("grupold").value
+      if (d.codi == gold) {
+        document.getElementById("lista3").innerHTML += ('<option selected value=' + d.codi.toString() + '>' +
+          d.grup + '</option>');
+      } else {
+        document.getElementById("lista3").innerHTML += ('<option  disabled value=' + d.codi.toString() + '>' + d.grup +
+          '</option>');
+      }
+    });
+  };
+  xhttp.open("GET", "./lgrups", true);
+  xhttp.send();
+}
+
 function loadDepts() {
   var xhttp = new XMLHttpRequest();
   xhttp.onload = function () {
@@ -85,8 +65,7 @@ function loadDepts() {
       var dold = document.getElementById("deptold").value
       if (d.codi == dold) {
         document.getElementById("lista").innerHTML += ('<option selected value=' + d.codi.toString() + '>' + d.nom + '</option>');
-      }
-      else {
+      } else {
         document.getElementById("lista").innerHTML += ('<option value=' + d.codi.toString() + '>' + d.nom + '</option>');
 
       }
@@ -96,12 +75,30 @@ function loadDepts() {
   xhttp.send();
 }
 
-function loadSelects() {
-  loadAules();
-  loadTutors();
-  loadProfes();
-  loadGrups();
-  loadDepts()
+
+function loadSelects(tipus) {
+  switch (tipus) {
+      // form carretons
+    case 1:
+      loadAules();
+      break;
+    case 2:
+      // form grups
+      loadAules();
+      //loadTutors();
+      loadProfes();
+      break;
+    case 3:
+      // form professorat
+      loadDepts();
+      break;
+      // form horaris
+    case 4:
+      loadAules();
+      loadProfes();
+      loadGrups();
+      break;
+  }
 }
 
 function tanca() {
