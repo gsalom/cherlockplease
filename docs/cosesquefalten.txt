@@ -20,4 +20,4 @@ No surten menús al mòbil OK FET
 8)Fer el readme de git hub
 9) Taula de calendari 
 10) Control de FCT's i DUAL
-11) 
+11) ficar option disable a les funcions de carrega de selects

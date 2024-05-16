@@ -5,38 +5,101 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title><%= title %></title>
+  <title>
+    <%= title %>
+  </title>
   <%- include("partials/head") %>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body onload="pinta()">
   <!-- HEADER -->
   <%- include("partials/navigation") %>
-  <!-- My Content -->
-  <div style="width:800; height:400">
-    <canvas id="RevGrafica"></canvas>
-  </div>
-  <script>
-    function pinta() {
-      let miCanvas = document.getElementById("RevGrafica").getContext("2d");
-      var chart = new Chart(miCanvas, {
-        type: "bar",
-        options: {
-          responsive: false,
-          maintainAspectRatio: true
-        },
-        data: {
-          labels: ["A fer", "Fetes", "OK", "Incidencies"],
-          datasets: [{
-            label: "Gràfica de revisions",
-            backgroundColor: "#1970e2",
-            bordercolor: "#1970e2",
-            data: [<%=dat1 %>,<%=dat2%>, <%=dat3%>, <%=dat4%>]
-          }]
-        }
-      })
-    }
-  </script>
+    <!-- My Content -->
+    <div style="width:80%; height:80%; margin-left: auto;  margin-right: auto;">
+      <table style="fons">
+        <tr>
+          <td><div><canvas id="RevGrafica"></canvas></div></td>
+          <td><div><canvas id="RevGrafica2"></canvas></div></td>
+        </tr>
+        <tr>
+          <td><div><canvas id="RevGrafica3"></div></canvas></td>
+          <td><div><canvas id="RevGrafica4"></div></canvas></td>
+        </tr>
+      </table>
+    </div>
+    <script>
+      function pinta() {
+        let miCanvas = document.getElementById("RevGrafica").getContext("2d");
+        let miCanvas2 = document.getElementById("RevGrafica2").getContext("2d");
+        let miCanvas3 = document.getElementById("RevGrafica3").getContext("2d");
+        let miCanvas4 = document.getElementById("RevGrafica4").getContext("2d");
+        var chart = new Chart(miCanvas, {
+          type: "bar",
+          options: {
+            responsive: false,
+            maintainAspectRatio: true
+          },
+          data: {
+            labels: ["A fer", "Fetes", "OK", "Incidencies"],
+            datasets: [{
+              label: "Gràfica de revisions",
+              backgroundColor: "#1970e2",
+              bordercolor: "#1970e2",
+              data: [<%=dat1 %>,<%=dat2 %>, <%=dat3 %>, <%=dat4 %>]
+            }]
+          }
+        })
+        var chart2 = new Chart(miCanvas2, {
+          type: "doughnut",
+          options: {
+            responsive: false,
+            maintainAspectRatio: true
+          },
+          data: {
+            labels: ["A fer", "Fetes", "OK", "Incidencies"],
+            datasets: [{
+              label: "Gràfica de revisions",
+              backgroundColor: "#1970e2",
+              bordercolor: "#1970e2",
+              data: [<%=dat1 %>,<%=dat2 %>, <%=dat3 %>, <%=dat4 %>]
+            }]
+          }
+        })
+        var chart3 = new Chart(miCanvas3, {
+          type: "polarArea",
+          options: {
+            responsive: false,
+            maintainAspectRatio: true
+          },
+          data: {
+            labels: ["A fer", "Fetes", "OK", "Incidencies"],
+            datasets: [{
+              label: "Gràfica de revisions",
+              backgroundColor: "#1970e2",
+              bordercolor: "#1970e2",
+              data: [<%=dat1 %>,<%=dat2 %>, <%=dat3 %>, <%=dat4 %>]
+            }]
+          }
+        })
+        var chart4 = new Chart(miCanvas4, {
+          type: "line",
+          options: {
+            responsive: false,
+            maintainAspectRatio: true
+          },
+          data: {
+            labels: ["A fer", "Fetes", "OK", "Incidencies"],
+            datasets: [{
+              label: "Gràfica de revisions",
+              backgroundColor: "#1970e2",
+              bordercolor: "#1970e2",
+              data: [<%=dat1 %>,<%=dat2 %>, <%=dat3 %>, <%=dat4 %>]
+            }]
+          }
+        })
+      }
+    </script>
 </body>
+
 </html>
