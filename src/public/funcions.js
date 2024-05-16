@@ -1,6 +1,6 @@
 // -- carretons  -->
 
-function loadAules() {
+function loadAules(disable) {
   var xhttp = new XMLHttpRequest();
   xhttp.onload = function () {
     depts = JSON.parse(this.responseText);
@@ -9,7 +9,8 @@ function loadAules() {
       if (d.codi == aold) {
         document.getElementById("lista2").innerHTML += ('<option selected value=' + d.codi.toString() + '>' + d.nom + '</option>');
       } else {
-        document.getElementById("lista2").innerHTML += ('<option value=' + d.codi.toString() + '>' + d.nom + '</option>');
+        if (disable) document.getElementById("lista2").innerHTML += ('<option disabled value=' + d.codi.toString() + '>' + d.nom + '</option>')
+        else document.getElementById("lista2").innerHTML += ('<option value=' + d.codi.toString() + '>' + d.nom + '</option>')
 
       }
     });
@@ -18,7 +19,7 @@ function loadAules() {
   xhttp.send();
 }
 
-function loadProfes() {
+function loadProfes(disable) {
   var xhttp = new XMLHttpRequest();
   xhttp.onload = function () {
     depts = JSON.parse(this.responseText);
@@ -28,8 +29,10 @@ function loadProfes() {
         document.getElementById("lista1").innerHTML += ('<option selected value=' + d.codi.toString() + '>' +
           d.profe + '</option>');
       } else {
-        document.getElementById("lista1").innerHTML += ('<option value=' + d.codi.toString() + '>' + d.profe +
-          '</option>');
+        if (disable) document.getElementById("lista1").innerHTML += ('<option  disabled value=' + d.codi.toString() + '>' + d.profe +
+          '</option>')
+          else  document.getElementById("lista1").innerHTML += ('<option value=' + d.codi.toString() + '>' + d.profe +
+          '</option>')
       }
     });
   };
@@ -38,7 +41,7 @@ function loadProfes() {
 }
 
 
-function loadGrups() {
+function loadGrups(disable) {
   var xhttp = new XMLHttpRequest();
   xhttp.onload = function () {
     depts = JSON.parse(this.responseText);
@@ -48,8 +51,10 @@ function loadGrups() {
         document.getElementById("lista3").innerHTML += ('<option selected value=' + d.codi.toString() + '>' +
           d.grup + '</option>');
       } else {
-        document.getElementById("lista3").innerHTML += ('<option  disabled value=' + d.codi.toString() + '>' + d.grup +
-          '</option>');
+        if (disable) document.getElementById("lista3").innerHTML += ('<option  disabled value=' + d.codi.toString() + '>' + d.grup +
+          '</option>')
+          else document.getElementById("lista3").innerHTML += ('<option value=' + d.codi.toString() + '>' + d.grup +
+          '</option>')
       }
     });
   };
@@ -57,7 +62,7 @@ function loadGrups() {
   xhttp.send();
 }
 
-function loadDepts() {
+function loadDepts(disable) {
   var xhttp = new XMLHttpRequest();
   xhttp.onload = function () {
     depts = JSON.parse(this.responseText);
@@ -66,7 +71,8 @@ function loadDepts() {
       if (d.codi == dold) {
         document.getElementById("lista").innerHTML += ('<option selected value=' + d.codi.toString() + '>' + d.nom + '</option>');
       } else {
-        document.getElementById("lista").innerHTML += ('<option value=' + d.codi.toString() + '>' + d.nom + '</option>');
+        if (disable) document.getElementById("lista").innerHTML += ('<option disabled value=' + d.codi.toString() + '>' + d.nom + '</option>')
+          else document.getElementById("lista").innerHTML += ('<option value=' + d.codi.toString() + '>' + d.nom + '</option>')
 
       }
     });
@@ -80,23 +86,22 @@ function loadSelects(tipus) {
   switch (tipus) {
       // form carretons
     case 1:
-      loadAules();
+      loadAules(false);
       break;
     case 2:
       // form grups
-      loadAules();
-      //loadTutors();
-      loadProfes();
+      loadAules(false);
+      loadProfes(false);
       break;
     case 3:
       // form professorat
-      loadDepts();
+      loadDepts(false);
       break;
       // form horaris
     case 4:
-      loadAules();
-      loadProfes();
-      loadGrups();
+      loadAules(true);
+      loadProfes(false);
+      loadGrups(true);
       break;
   }
 }

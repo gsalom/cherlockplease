@@ -36,12 +36,22 @@ router.get("/backend", (req, res) => {
 });
 
 router.get("/dashboard", (req, res) => {
+ 
+  // con.query('SELECT id_car,c.nom,a.nom as nom_aula,c.estat, c.num_ord FROM cherlock.carretons c, cherlock.aules a WHERE c.codi_aula=a.codi order by a.nom', (error, results) => {
+  //   if (error) {
+  //     console.error('Error fetching carretons from the database: ' + error.stack);
+  //     return res.status(500).json({
+  //       error: 'Failed to fetch carretons'
+  //     });
+  //
+  // $consulta="SELECT SUM(consumo_combustible.importe) as imp, MONTH(consumo_combustible.fecha) as mes FROM consumo_combustible WHERE YEAR(consumo_combustible.fecha)=2018 GROUP BY consumo_combustible.fecha";
+  //   }
   res.render("dashboard", {
     title: "Panel d'Estat",
-    dat1: 10,
-    dat2: 5,
-    dat3: 4,
-    dat4: 1
+    datagraf1: [10,5,4,1],
+    datagraf2: [10,5,4,1],
+    datagraf3: [10,5,4,1],
+    datagraf4: [10,5,4,1],   
   });
 });
 
@@ -230,20 +240,6 @@ router.get('/lprofes', (req, res) => {
   });
 });
 
-// proves amb forms 
-
-router.post("/profController", (req, res) => {
-  // codi 
-  res.send('Add a profe');
-});
-
-router.get("/prova", (req, res) => {
-  // codi 
-  res.render("prova", {
-    title: "ccs form"
-  });
-});
-// fi de proves amb forms
 
 router.get('/departaments', (req, res) => {
   // Fetch departaments from the database
