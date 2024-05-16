@@ -8,6 +8,7 @@ Enviar email revisions no fetes OK FET
 Ficar a taula horaris el nom del grup IFC32A p.e. y ordenar per aquest i dia, hora OK FET
 Fer formularis de modificacions als backend OK FET
 Autonatitzar la carrega de revisions per un fitxer *.sql OK FET
+No surten menús al mòbil OK FET
 
 1) Crear full google amb l'assignació per ordinador per aula/carreto
 2) Fer carrega db des de GestIB
@@ -19,5 +20,4 @@ Autonatitzar la carrega de revisions per un fitxer *.sql OK FET
 8)Fer el readme de git hub
 9) Taula de calendari 
 10) Control de FCT's i DUAL
-11) No surten menús al mòbil
- 
+11) 
