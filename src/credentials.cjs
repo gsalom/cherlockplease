@@ -10,4 +10,5 @@ module.exports = Object.freeze({
     password: "diouxx",
     database: "cherlock"
   }
+  
 })

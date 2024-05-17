@@ -1,6 +1,9 @@
-div {
+
+div.dbd {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    //background-color: rgb(80, 134, 233);
+    border: 10px outset #cccccc;
 }

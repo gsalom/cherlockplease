@@ -36,23 +36,33 @@ router.get("/backend", (req, res) => {
 });
 
 router.get("/dashboard", (req, res) => {
- 
-  // con.query('SELECT id_car,c.nom,a.nom as nom_aula,c.estat, c.num_ord FROM cherlock.carretons c, cherlock.aules a WHERE c.codi_aula=a.codi order by a.nom', (error, results) => {
-  //   if (error) {
-  //     console.error('Error fetching carretons from the database: ' + error.stack);
-  //     return res.status(500).json({
-  //       error: 'Failed to fetch carretons'
-  //     });
-  //
-  // $consulta="SELECT SUM(consumo_combustible.importe) as imp, MONTH(consumo_combustible.fecha) as mes FROM consumo_combustible WHERE YEAR(consumo_combustible.fecha)=2018 GROUP BY consumo_combustible.fecha";
-  //   }
-  res.render("dashboard", {
-    title: "Panel d'Estat",
-    datagraf1: [10,5,4,1],
-    datagraf2: [10,5,4,1],
-    datagraf3: [10,5,4,1],
-    datagraf4: [10,5,4,1],   
-  });
+      var labels1=[];
+      var data1=[];  
+      var sql = "SELECT cherlock.revisionsnofetes.professorat, COUNT(cherlock.revisionsnofetes.email) as vegades FROM cherlock.revisionsnofetes WHERE YEAR(cherlock.revisionsnofetes.dia)=2024 GROUP BY cherlock.revisionsnofetes.professorat order by vegades;";
+  if (sql) {
+    con.query(sql, function (err, result) {
+      if (err) throw err;
+      console.log(result[0].professorat);
+      console.log(result[0].vegades);
+      
+
+      
+      for (var i=0; i < result.length ; ++i){
+              labels1.push(result[i].professorat+"#");
+              data1.push(result[i].vegades);
+      }
+
+    res.render("dashboard", {
+      title: "Panel d'Estat",
+      labels1: labels1,
+      data1: data1,
+      datagraf2: [10, 5, 4, 1],
+      datagraf3: [10, 5, 4, 1],
+      datagraf4: [10, 5, 4, 1],
+    });
+
+    })
+  }
 });
 
 router.get("/about", (req, res) => {

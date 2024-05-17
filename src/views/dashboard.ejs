@@ -18,21 +18,21 @@
   <%- include("partials/navigation") %>
   <!-- My Content -->
   <div style="width:80%; height:80%; margin-left: auto;  margin-right: auto;">
-    <table style="fons">
+    <table class="fons">
       <tr>
         <td>
-          <div><canvas id="RevGrafica"></canvas></div>
+          <div class="dbd"><canvas id="RevGrafica"></canvas></div>
         </td>
         <td>
-          <div><canvas id="RevGrafica2"></canvas></div>
+          <div class="dbd"><canvas id="RevGrafica2"></canvas></div>
         </td>
       </tr>
       <tr>
         <td>
-          <div><canvas id="RevGrafica3"></div></canvas>
+          <div class="dbd"><canvas id="RevGrafica3"></div></canvas>
         </td>
         <td>
-          <div><canvas id="RevGrafica4"></div></canvas>
+          <div class="dbd"><canvas id="RevGrafica4"></div></canvas>
         </td>
       </tr>
     </table>
@@ -43,6 +43,10 @@
       let miCanvas2 = document.getElementById("RevGrafica2").getContext("2d");
       let miCanvas3 = document.getElementById("RevGrafica3").getContext("2d");
       let miCanvas4 = document.getElementById("RevGrafica4").getContext("2d");
+
+      var labels="<%- labels1 %>".split("#,");
+
+
       var chart = new Chart(miCanvas, {
         type: "bar",
         options: {
@@ -50,12 +54,13 @@
           maintainAspectRatio: true
         },
         data: {
-          labels: ["A fer", "Fetes", "OK", "Incidencies"],
+          labels: labels,
+          // labels:["A fer", "Fetes", "OK", "Incidencies"],
           datasets: [{
-            label: "Gràfica de revisions",
-            backgroundColor:  "#1970e2",
-            bordercolor: "#1970e2",
-            data:[<%= datagraf1 %>],
+            label: "Gràfica de revisions no fetes",
+            backgroundColor:  "#f5e342",
+            bordercolor: "#f5e342",
+            data:[<%= data1 %>],
           }]
         }
       })
@@ -69,8 +74,8 @@
           labels: ["A fer", "Fetes", "OK", "Incidencies"],
           datasets: [{
             label: "Gràfica de revisions",
-            backgroundColor: "#1970e2",
-            bordercolor: "#1970e2",
+            backgroundColor: "#8a42f5",
+            bordercolor: "#8a42f5",
             data: [<%= datagraf2 %>],
           }]
         }
@@ -85,8 +90,8 @@
           labels: ["A fer", "Fetes", "OK", "Incidencies"],
           datasets: [{
             label: "Gràfica de revisions",
-            backgroundColor: "#1970e2",
-            bordercolor: "#1970e2",
+            backgroundColor: "#42f593",
+            bordercolor: "#42f593",
             data: [<%= datagraf3 %>],
           }]
         }
