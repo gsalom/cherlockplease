@@ -55,7 +55,6 @@
         },
         data: {
           labels: labels,
-          // labels:["A fer", "Fetes", "OK", "Incidencies"],
           datasets: [{
             label: "Gràfica de revisions no fetes",
             backgroundColor:  "#f5e342",
@@ -65,18 +64,18 @@
         }
       })
       var chart2 = new Chart(miCanvas2, {
-        type: "doughnut",
+        type: "bar",
         options: {
           responsive: false,
           maintainAspectRatio: true
         },
         data: {
-          labels: ["A fer", "Fetes", "OK", "Incidencies"],
+          labels: ["Incidencies","OK", "Fetes","A fer"],
           datasets: [{
             label: "Gràfica de revisions",
             backgroundColor: "#8a42f5",
             bordercolor: "#8a42f5",
-            data: [<%= datagraf2 %>],
+            data: [<%= data2 %>],
           }]
         }
       })
