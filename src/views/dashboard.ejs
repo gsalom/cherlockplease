@@ -44,8 +44,12 @@
       let miCanvas3 = document.getElementById("RevGrafica3").getContext("2d");
       let miCanvas4 = document.getElementById("RevGrafica4").getContext("2d");
 
-      var labels="<%- labels1 %>".split("#,");
-
+      var labels="<%- labels1 %>".split(",#");
+      var labels3="<%- labels3 %>".split(",");
+      var labels4="<%- labels4 %>".split(",");
+      
+      console.log("<%- labels4 %>")
+      console.log(labels4);
 
       var chart = new Chart(miCanvas, {
         type: "bar",
@@ -80,34 +84,34 @@
         }
       })
       var chart3 = new Chart(miCanvas3, {
-        type: "polarArea",
+        type: "pie",
         options: {
           responsive: false,
           maintainAspectRatio: true
         },
         data: {
-          labels: ["A fer", "Fetes", "OK", "Incidencies"],
+          labels: labels3,
           datasets: [{
-            label: "Gràfica de revisions",
+            label: "Gràfica d'Estat Carretons'",
             backgroundColor: "#42f593",
             bordercolor: "#42f593",
-            data: [<%= datagraf3 %>],
+            data: [<%= data3 %>],
           }]
         }
       })
       var chart4 = new Chart(miCanvas4, {
-        type: "line",
+        type: "bar",
         options: {
           responsive: false,
           maintainAspectRatio: true
         },
         data: {
-          labels: ["A fer", "Fetes", "OK", "Incidencies"],
+          labels: labels4,
           datasets: [{
-            label: "Gràfica de revisions",
+            label: "Gràfica de portàtils per carretons",
             backgroundColor: "#1970e2",
             bordercolor: "#1970e2",
-            data: [<%= datagraf4 %>],
+            data: [<%= data4 %>],
           }]
         }
       })

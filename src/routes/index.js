@@ -44,6 +44,12 @@ router.get("/dashboard", (req, res) => {
       var sql2 = "SELECT cherlock.revisions.estat, COUNT(cherlock.revisions.estat) as total FROM cherlock.revisions  WHERE (cherlock.revisions.data_rev > '2024-04-14' AND cherlock.revisions.data_rev  < '2024-04-18') GROUP BY cherlock.revisions.estat "+
       " UNION SELECT cherlock.revisions.estat, COUNT(cherlock.revisions.estat) FROM cherlock.revisions  WHERE (cherlock.revisions.data_rev > '2024-04-14' AND cherlock.revisions.data_rev  < '2024-04-18')" +
       " UNION SELECT cherlock.horaris.tipus, COUNT(*) FROM cherlock.horaris where tipus=1 GROUP BY cherlock.horaris.tipus;";
+      var labels3=[];
+      var data3=[];  
+      var sql3 = "SELECT cherlock.carretons.estat, COUNT(cherlock.carretons.estat) as total FROM cherlock.carretons;";
+      var labels4=[];
+      var data4=[];  
+      var sql4 = "SELECT cherlock.carretons.nom as nom, cherlock.carretons.num_ord as total FROM cherlock.carretons;";
   
   if (sql) {
     con.query(sql, function (err, result) {
@@ -60,17 +66,37 @@ router.get("/dashboard", (req, res) => {
       // console.log(result[0].estat);
       // console.log(result[0].total);
       for (var i=0; i < result.length ; ++i){
-              labels2.push(result[i].estat+"#");
+              labels2.push(result[i].estat);
               data2.push(result[i].total);
       }
+    })
+    con.query(sql3, function (err, result) {
+      if (err) throw err;
+      // console.log(result[0].estat);
+      // console.log(result[0].total);
+      for (var i=0; i < result.length ; ++i){
+              labels3.push(result[i].estat);
+              data3.push(result[i].total);
+      }
+      con.query(sql4, function (err, result) {
+        if (err) throw err;
+        console.log(result[0].nom);
+        console.log(result[0].total);
+        for (var i=0; i < result.length ; ++i){
+                labels4.push(result[i].nom);
+                data4.push(result[i].total);
+        }
+      })
       res.render("dashboard", {
         title: "Panel d'Estat",
         labels1: labels1,
         data1: data1,
         labels2: labels2,
         data2: data2,
-        datagraf3: [10, 5, 4, 1],
-        datagraf4: [10, 5, 4, 1],
+        labels3: labels3,
+        data3: data3,
+        labels4: labels4,
+        data4: data4
       });
     })   
 }});
