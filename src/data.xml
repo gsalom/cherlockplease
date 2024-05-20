@@ -1,8 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<urlset>
-  <url>
-    <loc>http://www.example.com</loc>
-    <lastmod>2015-10-01</lastmod>
-    <changefreq>monthly</changefreq>
-  </url>
-</urlset>
+<?xml version="1.0" encoding="UTF-8"?>
+<notificacion>
+	<subtitulo>subtitulo de notificacion</subtitulo>
+	<html><h1>titulo</h1><p>parrafo 1</p><p>parrafo 2</p></html>
+	<url>http://www.google.cl</url>
+</notificacion>
