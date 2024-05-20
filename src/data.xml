@@ -4,3 +4,19 @@
 	<html><h1>titulo</h1><p>parrafo 1</p><p>parrafo 2</p></html>
 	<url>http://www.google.cl</url>
 </notificacion>
+<notificacion>
+	<subtitulo>subtitulo de notificacion2</subtitulo>
+	<html><h1>titulo</h1><p>parrafo 1</p><p>parrafo 2</p></html>
+	<url>http://www.google.cl</url>
+</notificacion>
+<notificacion>
+	<subtitulo>subtitulo de notificacion3</subtitulo>
+	<html><h1>titulo</h1><p>parrafo 1</p><p>parrafo 2</p></html>
+	<url>http://www.google.cl</url>
+</notificacion>
+<notificacion>
+	<subtitulo>subtitulo de notificacion4</subtitulo>
+	<html><h1>titulo</h1><p>parrafo 1</p><p>parrafo 2</p></html>
+	<url>http://www.google.cl</url>
+</notificacion>
+</xml>

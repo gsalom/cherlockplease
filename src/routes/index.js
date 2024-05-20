@@ -77,7 +77,7 @@ router.get("/dashboard", (req, res) => {
       for (var i=0; i < result.length ; ++i){
               labels3.push(result[i].estat);
               data3.push(result[i].total);
-      }
+      }})
       con.query(sql4, function (err, result) {
         if (err) throw err;
         console.log(result[0].nom);
@@ -86,7 +86,6 @@ router.get("/dashboard", (req, res) => {
                 labels4.push(result[i].nom);
                 data4.push(result[i].total);
         }
-      })
       res.render("dashboard", {
         title: "Panel d'Estat",
         labels1: labels1,
@@ -97,7 +96,7 @@ router.get("/dashboard", (req, res) => {
         data3: data3,
         labels4: labels4,
         data4: data4
-      });
+      })
     })   
 }});
 
