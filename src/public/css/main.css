@@ -28,6 +28,7 @@ header img {
 table {
   border-collapse: collapse;
   width: 100%;
+  margin: auto;
 }
 
 th, td {
@@ -44,11 +45,16 @@ tr:nth-child(odd) {
 
 form {
   /* Define el ancho del formulario */
-  width: 50%;
+  width:50%;
   padding: 20px;
   margin: 10px auto;
   /* border: 1px solid #ddd; */
   border-radius: 5px;
+}
+
+#configuracio {
+  /* Define el ancho del formulario */
+  width:90%;
 }
 
 label {

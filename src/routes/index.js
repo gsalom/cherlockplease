@@ -575,7 +575,14 @@ router.get('/config', (req, res) => {
   });
 });
 
+router.get('/prova', (req, res) => {
+  // Fetch revisions from the database
 
+  // Send the fetched data as a response
+  res.render("proves", {
+    title: "Menu"
+  });
+});
 
 
 export default router;

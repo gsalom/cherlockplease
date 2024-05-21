@@ -9,69 +9,75 @@
     <%= title %>
   </title>
   <%- include("partials/head") %>
-    <script>
-      function leerFichero(tipus) {
-        const fileInput = document.getElementById('fitxer');
-        const file = fileInput.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = function (e) {
-            const output = document.getElementById('codi');
-            output.textContent = e.target.result;
-          };
-          reader.readAsText(file);
-        } else {
-        if (tipus=='sql') alert('Selecciona un fitxer *.sql')
+  <script>
+    function leerFichero(tipus) {
+      if (tipus == 'sql') idnomfile = 'fitxer'
+      else if (tipus == 'xml1') idnomfile = 'fitxer2'
+      else idnomfile = 'fitxer3'
+      const fileInput = document.getElementById(idnomfile)
+      const file = fileInput.files[0];
+      console.log(file);
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const output = document.getElementById('codi');
+          output.textContent = e.target.result;
+        };
+        reader.readAsText(file);
+      } else {
+        if (tipus == 'sql') alert('Selecciona un fitxer *.sql')
         else alert('Selecciona un fitxer *.xml')
-        }
       }
+    }
 
-      function tanca() {
+    function tanca() {
       window.close();
     }
-    </script>
+  </script>
 </head>
 
 <body>
   <!-- HEADER -->
   <%- include("partials/navigationbackend") %>
-    <!-- My Content -->
-    <main class="container pt-2 text-center justify-content-center align-items-center vh-100" style="auto">   
-        <h2 class="display-1">Configuració Cherlock</h2>
-        <section>
-        <form target="_blank" action="/load" method="get">
-          <table class="table table-bordered fons" width="100%" cellspacing="0">
-            <tr>
-              <th>Acció</th>
-              <th>Consulta</th>
-              <th>Veure</th>
-              <th>Actualitzar</th>
-            </tr>
-            <tr>
-                <th>Carregar noves revisions</th>
-                <th><input type="file" id="fitxer" name="fitxer" accept=".sql"></th>
-                <th><button type="button" onclick="leerFichero('sql')">Veure</button></th>
-                <th><input type="submit" name="accio" value="Carregar"></th>
-            </tr>
-            <tr>
-              <th>Carregar professorat</th>
-              <th><input type="file" id="fitxer" name="fitxer" accept=".xml"></th>
-              <th><button type="button" onclick="leerFichero('xml')">Veure</button></th>
-              <th><input type="submit" name="accio" value="Carregar"></th>
+  <!-- My Content -->
+  <main class="container pt-2 text-center justify-content-center align-items-center vh-100" style="auto">
+    <h2 class="display-1">Configuració Cherlock</h2>
+    <section>
+      <form id="configuracio" target="_blank" action="/load" method="get">
+        <table class="table table-bordered fons" width="100%" cellspacing="3" margin="auto">
+          <tr>
+            <th>Acció</th>
+            <th>Consulta</th>
+            <th>Veure</th>
+            <th>Actualitzar</th>
+          </tr>
+          <tr>
+            <th>Carregar noves revisions</th>
+            <th><input type="file" id="fitxer" name="fitxer" accept=".sql"></th>
+            <th><button type="button" onclick="leerFichero('sql')">Veure</button></th>
+            <th><input type="submit" name="accio" value="Carregar"></th>
+          </tr>
+          <tr>
+            <th>Carregar professorat</th>
+            <th><input type="file" id="fitxer2" name="fitxer2" accept=".xml"></th>
+            <th><button type="button" onclick="leerFichero('xml1')">Veure</button></th>
+            <th><input type="submit" name="accio" value="Carregar"></th>
           </tr>
           <tr>
             <th>Carregar alumnat</th>
-            <th><input type="file" id="fitxer" name="fitxer" accept=".xml"></th>
-            <th><button type="button" onclick="leerFichero('xml')">Veure</button></th>
+            <th><input type="file" id="fitxer3" name="fitxer3" accept=".xml"></th>
+            <th><button type="button" onclick="leerFichero('xml2')">Veure</button></th>
             <th><input type="submit" name="accio" value="Carregar"></th>
-        </tr>
-            <tr>
-              <th COLSPAN=4><h3>Contingut del fitxer:</h3><textarea id="codi" name="codi"></textarea></th>
-            </tr>
+          </tr>
+          <tr>
+            <th COLSPAN=4>
+              <h3>Contingut del fitxer:</h3><textarea id="codi" name="codi"></textarea>
+            </th>
+          </tr>
         </table>
-      </form>    
-     </section>
-    </main>
+      </form>
+    </section>
+  </main>
 </body>
 
 </html>

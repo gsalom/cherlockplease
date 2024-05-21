@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<xml>
 <notificacion>
 	<subtitulo>subtitulo de notificacion1</subtitulo>
 	<html><h1>titulo</h1><p>parrafo 1</p><p>parrafo 2</p></html>
