@@ -10,7 +10,7 @@
   </title>
   <%- include("partials/head") %>
     <script>
-      function leerFichero() {
+      function leerFichero(tipus) {
         const fileInput = document.getElementById('fitxer');
         const file = fileInput.files[0];
         if (file) {
@@ -21,7 +21,8 @@
           };
           reader.readAsText(file);
         } else {
-          alert('Selecciona un fitxer *.sql');
+        if (tipus=='sql') alert('Selecciona un fitxer *.sql')
+        else alert('Selecciona un fitxer *.xml')
         }
       }
 
@@ -35,8 +36,9 @@
   <!-- HEADER -->
   <%- include("partials/navigationbackend") %>
     <!-- My Content -->
-    <main class="container pt-2 text-center justify-content-center align-items-center vh-100">   
+    <main class="container pt-2 text-center justify-content-center align-items-center vh-100" style="auto">   
         <h2 class="display-1">Configuració Cherlock</h2>
+        <section>
         <form target="_blank" action="/load" method="get">
           <table class="table table-bordered fons" width="100%" cellspacing="0">
             <tr>
@@ -48,14 +50,27 @@
             <tr>
                 <th>Carregar noves revisions</th>
                 <th><input type="file" id="fitxer" name="fitxer" accept=".sql"></th>
-                <th><button type="button" onclick="leerFichero()">Veure</button></th>
+                <th><button type="button" onclick="leerFichero('sql')">Veure</button></th>
                 <th><input type="submit" name="accio" value="Carregar"></th>
             </tr>
+            <tr>
+              <th>Carregar professorat</th>
+              <th><input type="file" id="fitxer" name="fitxer" accept=".xml"></th>
+              <th><button type="button" onclick="leerFichero('xml')">Veure</button></th>
+              <th><input type="submit" name="accio" value="Carregar"></th>
+          </tr>
+          <tr>
+            <th>Carregar alumnat</th>
+            <th><input type="file" id="fitxer" name="fitxer" accept=".xml"></th>
+            <th><button type="button" onclick="leerFichero('xml')">Veure</button></th>
+            <th><input type="submit" name="accio" value="Carregar"></th>
+        </tr>
             <tr>
               <th COLSPAN=4><h3>Contingut del fitxer:</h3><textarea id="codi" name="codi"></textarea></th>
             </tr>
         </table>
       </form>    
+     </section>
     </main>
 </body>
 

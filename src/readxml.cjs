@@ -9,9 +9,7 @@ fs.readFile(pathname, function (err, data) {
     console.dir(result);
     console.dir(result.notificacion.subtitulo);
     result.notificacion.subtitulo.forEach((element) => console.log(element));
-
   });
-
 });
 
 

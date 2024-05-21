@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <notificacion>
-	<subtitulo>subtitulo de notificacion</subtitulo>
+	<subtitulo>subtitulo de notificacion1</subtitulo>
 	<html><h1>titulo</h1><p>parrafo 1</p><p>parrafo 2</p></html>
 	<url>http://www.google.cl</url>
 </notificacion>
