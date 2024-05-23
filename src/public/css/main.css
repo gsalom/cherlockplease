@@ -109,10 +109,25 @@ textarea {
   white-space: pre-line;  
 }
 
+#titol {
+white-space: nowrap;
+}
+
+#about {
+  width: 100%;
+  display: block;
+  /* margin: top
+  flex-direction: row; */
+  justify-content: center;
+  align-items: center;
+  /*vertical-align:top;
+  background-color: rgb(80, 134, 233);
+  border: 10px outset #cccccc; */
+}
+
 div.bordeoutset{
   height: 380px;
   border: 10px outset #cccccc;
   background-color: rgb(80, 134, 233);
   padding: 12px 20px;
-  
 }

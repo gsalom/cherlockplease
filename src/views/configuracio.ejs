@@ -16,7 +16,7 @@
       else idnomfile = 'fitxer3'
       const fileInput = document.getElementById(idnomfile)
       const file = fileInput.files[0];
-      console.log(file);
+      //console.log(file);
       if (file) {
         const reader = new FileReader();
         reader.onload = function (e) {
@@ -29,6 +29,10 @@
         else alert('Selecciona un fitxer *.xml')
       }
     }
+
+    function loadXml(tipus) { 
+          window.open("./loadXml?id="+tipus, '_blank');
+    }  
 
     function tanca() {
       window.close();
@@ -43,7 +47,7 @@
   <main class="container pt-2 text-center justify-content-center align-items-center vh-100" style="auto">
     <h2 class="display-1">Configuració Cherlock</h2>
     <section>
-      <!-- <form id="configuracio" target="_blank" action="/load" method="get"> -->
+      <form id="configuracio" target="_blank" action="/load" method="get">
         <table class="table table-bordered fons" width="100%" cellspacing="3" margin="auto">
           <tr>
             <th>Acció</th>
@@ -52,28 +56,22 @@
             <th>Actualitzar</th>
           </tr>
           <tr>
-            <form id="configuracio" target="_blank" action="/load" method="get">
             <th>Carregar noves revisions</th>
             <th><input type="file" id="fitxer" name="fitxer" accept=".sql"></th>
             <th><button type="button" onclick="leerFichero('sql')">Veure</button></th>
-            <th><input type="submit" name="accio" value="Carregar"><input type="hidden" id="tipus" name="tipus1" value="sql"></th>
-            </form>
+            <th><input type="submit" name="accio" value="Carregar"></th>
           </tr>
           <tr>
-            <form id="configuracio" target="_blank" action="/loadxmlprof" method="get">
             <th>Carregar professorat</th>
             <th><input type="file" id="fitxer2" name="fitxer2" accept=".xml"></th>
             <th><button type="button" onclick="leerFichero('xml1')">Veure</button></th>
-            <th><input type="submit" name="accio" value="Carregar"><input type="hidden" id="tipus" name="tipus2" value="prof"></th>
-            </form>
+            <th><button type="button" onclick="loadXml('xml1')">Carregar</button></th>
           </tr>
           <tr>
             <th>Carregar alumnat</th>
-            <form id="configuracio" target="_blank" action="/loadxmldept" method="get">
             <th><input type="file" id="fitxer3" name="fitxer3" accept=".xml"></th>
             <th><button type="button" onclick="leerFichero('xml2')">Veure</button></th>
-            <th><input type="submit" name="accio" value="Carregar"><input type="hidden" id="tipus" name="tipus3" value="dept"></th>
-            </form>
+            <th><button type="button" onclick="loadXml('xml2')">Carregar</button></th>
           </tr>
           <tr>
             <th COLSPAN=4>
@@ -81,7 +79,7 @@
             </th>
           </tr>
         </table>
-      <!-- </form> -->
+      </form>
     </section>
   </main>
 </body>

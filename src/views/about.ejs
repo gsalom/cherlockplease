@@ -1,35 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= title %></title>
-    <%- include("partials/head") %>
-  </head>
-  <body>
-    <!-- HEADER -->
-    <%- include("partials/navigation") %>
-    <!-- My Content -->
-    <main
-      class="container pt-2 text-center d-flex justify-content-center align-items-center vh-100"
-    >
-      <section>
-        <img
-        src="/img/cifpfbmoll.png"
-        class="w-50 m-auto animated bounceIn"
-        alt="Website Logo"
-      />
-        <h1 class="display-1">Benvingut a Cherlock!</h1>
-        <p>      
-Cherlock és una pàgina web creada amb l'objectiu de gestionar els carretons d'ordinadors d'un centre educatiu. Aquí trobaràs les eines necessàries per control.lar les revisions d'aquests carretons per part del professorat del centre.
-Aquesta web ha estat desenvolupada per l'equip de la Coordinació TIC del CIFP Francesc de Borja Moll un grup de professors amb experiència amb les TIC i amb passió per la seguretat i policia. Ens motiva crear una solució al control d'ordinadors a un centre
- i esperem que aquesta pàgina sigui un recurs útil i informatiu pels centres educatius de les Illes Balears. A la pàgina "Contacte" podràs trobar com contactar amb nosaltres.
-Gràcies per la teva visita!
-        </p>
-      </section>
-    </main>
-    <!-- FOOTER -->
-    <%- include("partials/footer") %>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <%- include("partials/head") %>
+</head>
+
+<body>
+  <!-- HEADER -->
+  <%- include("partials/navigation") %>
+  <!-- My Content -->
+  <main class="container pt-2 text-center justify-content-center align-items-center vh-100" style="auto">
+    <section>
+      <h2 class="display-1">Benvingut a Cherlock!</h1></br>
+        <div id="about">
+          Cherlock és una pàgina web creada amb l'objectiu de gestionar els carretons d'ordinadors d'un centre educatiu.
+          Aquí trobaràs les eines necessàries per control.lar les revisions d'aquests carretons per part del professorat
+          del centre.
+          Aquesta web ha estat desenvolupada per l'equip de la Coordinació TIC del CIFP Francesc de Borja Moll un grup
+          de
+          professors amb experiència amb les TIC i amb passió per la seguretat i policia. Ens motiva crear una solució
+          al
+          control d'ordinadors a un centre
+          i esperem que aquesta pàgina sigui un recurs útil i informatiu pels centres educatius de les Illes Balears. A
+          la
+          pàgina "Contacte" podràs trobar com contactar amb nosaltres.
+          Gràcies per la teva visita!
+        </div>
+        <img src="/img/cifpfbmoll.png" class="w-50 m-auto animated bounceIn" alt="Website Logo" />
+        </div>
+    </section>
+  </main>
+  <!-- FOOTER -->
+  <%- include("partials/footer") %>
+</body>
+
 </html>

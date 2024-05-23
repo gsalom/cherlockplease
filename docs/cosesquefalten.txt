@@ -11,6 +11,7 @@ Autonatitzar la carrega de revisions per un fitxer *.sql OK FET
 No surten menús al mòbil OK FET
 ficar option disable a les funcions de carrega de selects OK FET
 Fer el panell dashboard OK FET
+Omplir pàgina about OK FET
 
 1) Crear full google amb l'assignació per ordinador per aula/carreto
 2) Fer carrega db des de GestIB
@@ -18,7 +19,7 @@ Fer el panell dashboard OK FET
 4) Crear una pag que surti per carretor amb un semafor
 5) 
 6) Mirar on s'ha de tancar les connexions a la BD amb con.end()
-7) Omplir pàgina about i contacte
+7) Omplir pàgina contacte
 8) Fer el readme de git hub
 9) Taula de calendari 
 10) Control de FCT's i DUAL

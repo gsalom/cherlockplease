@@ -128,35 +128,35 @@ router.get("/mail", (req, res) => {
 });
 
 
-router.get("/loadxmlprof", (req, res) => {
-  //Insert a record in the "revisions fetes" table:
-  var sql = req.query.codi;
+router.get("/loadXml", (req, res) => {
+  //Insert a record in the "dept, alumnat, professorat, etc"  table des de Gestib:
+  var tipus = req.query.tipus;
   var errors = "e->";
   var results = "r->";
-  console.log(req.query);
-    if (sql) {
-      con.query(sql, function (err, result) {
+  console.log(tipus);
+    if (tipus=="dept") {
         errors = errors + ":" + err;
         //console.log(errors);
         if (err) throw err;
         //console.log("Number of records inserted: " + result.affectedRows);
         results = results + ":" + result.affectedRows;
         //console.log(results);
-      });
+        console.log("Carregant depts ....")
+      };
 
-      //Update el codi de l'aula dins les revisions fetes
-      var sql = "UPDATE cherlock.revisions r INNER JOIN cherlock.aules a on  r.aula=a.nom and r.id_aula is null SET r.id_aula = a.codi";
-      con.query(sql, function (err, result) {
-        errors = errors + ":" + err;
-        //console.log(errors);
-        if (err) throw err;
-        //console.log(result.affectedRows + " record(s) updated");
-        results = results + ":" + result.affectedRows;
-        //console.log(results);
-      })
-    }
-    res.render("carregarrevisions", {
-      title: "Carrega de revisions",
+    //   //Update el codi de l'aula dins les revisions fetes
+    //   var sql = "UPDATE cherlock.revisions r INNER JOIN cherlock.aules a on  r.aula=a.nom and r.id_aula is null SET r.id_aula = a.codi";
+    //   con.query(sql, function (err, result) {
+    //     errors = errors + ":" + err;
+    //     //console.log(errors);
+    //     if (err) throw err;
+    //     //console.log(result.affectedRows + " record(s) updated");
+    //     results = results + ":" + result.affectedRows;
+    //     //console.log(results);
+    //   })
+    // }
+    res.render("carregarXmls", {
+      title: "Carrega d'Xmls",
       fitxer: req.query.fitxer,
       codi: req.query.codi,
       apply: req.query.accio,
