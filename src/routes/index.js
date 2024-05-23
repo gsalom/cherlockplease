@@ -36,56 +36,57 @@ router.get("/backend", (req, res) => {
 });
 
 router.get("/dashboard", (req, res) => {
-      var labels1=[];
-      var data1=[];  
-      var sql = "SELECT cherlock.revisionsnofetes.professorat, COUNT(cherlock.revisionsnofetes.email) as vegades FROM cherlock.revisionsnofetes WHERE YEAR(cherlock.revisionsnofetes.dia)=2024 GROUP BY cherlock.revisionsnofetes.professorat order by vegades;";
-      var labels2=[];
-      var data2=[];  
-      var sql2 = "SELECT cherlock.revisions.estat, COUNT(cherlock.revisions.estat) as total FROM cherlock.revisions  WHERE (cherlock.revisions.data_rev > '2024-04-14' AND cherlock.revisions.data_rev  < '2024-04-18') GROUP BY cherlock.revisions.estat "+
-      " UNION SELECT cherlock.revisions.estat, COUNT(cherlock.revisions.estat) FROM cherlock.revisions  WHERE (cherlock.revisions.data_rev > '2024-04-14' AND cherlock.revisions.data_rev  < '2024-04-18')" +
-      " UNION SELECT cherlock.horaris.tipus, COUNT(*) FROM cherlock.horaris where tipus=1 GROUP BY cherlock.horaris.tipus;";
-      var labels3=[];
-      var data3=[];  
-      var sql3 = "SELECT cherlock.carretons.estat, COUNT(cherlock.carretons.estat) as total FROM cherlock.carretons;";
-      var labels4=[];
-      var data4=[];  
-      var sql4 = "SELECT cherlock.carretons.nom as nom, cherlock.carretons.num_ord as total FROM cherlock.carretons;";
-  
+  var labels1 = [];
+  var data1 = [];
+  var sql = "SELECT cherlock.revisionsnofetes.professorat, COUNT(cherlock.revisionsnofetes.email) as vegades FROM cherlock.revisionsnofetes WHERE YEAR(cherlock.revisionsnofetes.dia)=2024 GROUP BY cherlock.revisionsnofetes.professorat order by vegades;";
+  var labels2 = [];
+  var data2 = [];
+  var sql2 = "SELECT cherlock.revisions.estat, COUNT(cherlock.revisions.estat) as total FROM cherlock.revisions  WHERE (cherlock.revisions.data_rev > '2024-04-14' AND cherlock.revisions.data_rev  < '2024-04-18') GROUP BY cherlock.revisions.estat " +
+    " UNION SELECT cherlock.revisions.estat, COUNT(cherlock.revisions.estat) FROM cherlock.revisions  WHERE (cherlock.revisions.data_rev > '2024-04-14' AND cherlock.revisions.data_rev  < '2024-04-18')" +
+    " UNION SELECT cherlock.horaris.tipus, COUNT(*) FROM cherlock.horaris where tipus=1 GROUP BY cherlock.horaris.tipus;";
+  var labels3 = [];
+  var data3 = [];
+  var sql3 = "SELECT cherlock.carretons.estat, COUNT(cherlock.carretons.estat) as total FROM cherlock.carretons;";
+  var labels4 = [];
+  var data4 = [];
+  var sql4 = "SELECT cherlock.carretons.nom as nom, cherlock.carretons.num_ord as total FROM cherlock.carretons;";
+
   if (sql) {
     con.query(sql, function (err, result) {
       if (err) throw err;
       // console.log(result[0].professorat);
       // console.log(result[0].vegades);
-      for (var i=0; i < result.length ; ++i){
-              labels1.push(result[i].professorat+"#");
-              data1.push(result[i].vegades);
+      for (var i = 0; i < result.length; ++i) {
+        labels1.push(result[i].professorat + "#");
+        data1.push(result[i].vegades);
       }
     })
     con.query(sql2, function (err, result) {
       if (err) throw err;
       // console.log(result[0].estat);
       // console.log(result[0].total);
-      for (var i=0; i < result.length ; ++i){
-              labels2.push(result[i].estat);
-              data2.push(result[i].total);
+      for (var i = 0; i < result.length; ++i) {
+        labels2.push(result[i].estat);
+        data2.push(result[i].total);
       }
     })
     con.query(sql3, function (err, result) {
       if (err) throw err;
       // console.log(result[0].estat);
       // console.log(result[0].total);
-      for (var i=0; i < result.length ; ++i){
-              labels3.push(result[i].estat);
-              data3.push(result[i].total);
-      }})
-      con.query(sql4, function (err, result) {
-        if (err) throw err;
-        console.log(result[0].nom);
-        console.log(result[0].total);
-        for (var i=0; i < result.length ; ++i){
-                labels4.push(result[i].nom);
-                data4.push(result[i].total);
-        }
+      for (var i = 0; i < result.length; ++i) {
+        labels3.push(result[i].estat);
+        data3.push(result[i].total);
+      }
+    })
+    con.query(sql4, function (err, result) {
+      if (err) throw err;
+      console.log(result[0].nom);
+      console.log(result[0].total);
+      for (var i = 0; i < result.length; ++i) {
+        labels4.push(result[i].nom);
+        data4.push(result[i].total);
+      }
       res.render("dashboard", {
         title: "Panel d'Estat",
         labels1: labels1,
@@ -97,8 +98,9 @@ router.get("/dashboard", (req, res) => {
         labels4: labels4,
         data4: data4
       })
-    })   
-}});
+    })
+  }
+});
 
 router.get("/about", (req, res) => {
   res.render("about", {
@@ -125,40 +127,79 @@ router.get("/mail", (req, res) => {
   });
 });
 
+
+router.get("/loadxmlprof", (req, res) => {
+  //Insert a record in the "revisions fetes" table:
+  var sql = req.query.codi;
+  var errors = "e->";
+  var results = "r->";
+  console.log(req.query);
+    if (sql) {
+      con.query(sql, function (err, result) {
+        errors = errors + ":" + err;
+        //console.log(errors);
+        if (err) throw err;
+        //console.log("Number of records inserted: " + result.affectedRows);
+        results = results + ":" + result.affectedRows;
+        //console.log(results);
+      });
+
+      //Update el codi de l'aula dins les revisions fetes
+      var sql = "UPDATE cherlock.revisions r INNER JOIN cherlock.aules a on  r.aula=a.nom and r.id_aula is null SET r.id_aula = a.codi";
+      con.query(sql, function (err, result) {
+        errors = errors + ":" + err;
+        //console.log(errors);
+        if (err) throw err;
+        //console.log(result.affectedRows + " record(s) updated");
+        results = results + ":" + result.affectedRows;
+        //console.log(results);
+      })
+    }
+    res.render("carregarrevisions", {
+      title: "Carrega de revisions",
+      fitxer: req.query.fitxer,
+      codi: req.query.codi,
+      apply: req.query.accio,
+      errors: errors,
+      results: results
+    });  
+});
+
 router.get("/load", (req, res) => {
   //Insert a record in the "revisions fetes" table:
   var sql = req.query.codi;
   var errors = "e->";
   var results = "r->";
-  if (sql) {
-    con.query(sql, function (err, result) {
-      errors = errors + ":" + err;
-      //console.log(errors);
-      if (err) throw err;
-      //console.log("Number of records inserted: " + result.affectedRows);
-      results = results + ":" + result.affectedRows;
-      //console.log(results);
-    });
+  console.log(req.query);
+    if (sql) {
+      con.query(sql, function (err, result) {
+        errors = errors + ":" + err;
+        //console.log(errors);
+        if (err) throw err;
+        //console.log("Number of records inserted: " + result.affectedRows);
+        results = results + ":" + result.affectedRows;
+        //console.log(results);
+      });
 
-    //Update el codi de l'aula dins les revisions fetes
-    var sql = "UPDATE cherlock.revisions r INNER JOIN cherlock.aules a on  r.aula=a.nom and r.id_aula is null SET r.id_aula = a.codi";
-    con.query(sql, function (err, result) {
-      errors = errors + ":" + err;
-      //console.log(errors);
-      if (err) throw err;
-      //console.log(result.affectedRows + " record(s) updated");
-      results = results + ":" + result.affectedRows;
-      //console.log(results);
-    })
-  }
-  res.render("carregarrevisions", {
-    title: "Carrega de revisions",
-    fitxer: req.query.fitxer,
-    codi: req.query.codi,
-    apply: req.query.accio,
-    errors: errors,
-    results: results
-  });
+      //Update el codi de l'aula dins les revisions fetes
+      var sql = "UPDATE cherlock.revisions r INNER JOIN cherlock.aules a on  r.aula=a.nom and r.id_aula is null SET r.id_aula = a.codi";
+      con.query(sql, function (err, result) {
+        errors = errors + ":" + err;
+        //console.log(errors);
+        if (err) throw err;
+        //console.log(result.affectedRows + " record(s) updated");
+        results = results + ":" + result.affectedRows;
+        //console.log(results);
+      })
+    }
+    res.render("carregarrevisions", {
+      title: "Carrega de revisions",
+      fitxer: req.query.fitxer,
+      codi: req.query.codi,
+      apply: req.query.accio,
+      errors: errors,
+      results: results
+    });  
 });
 
 router.get("/carretons", (req, res) => {
