@@ -9,15 +9,19 @@ Ficar a taula horaris el nom del grup IFC32A p.e. y ordenar per aquest i dia, ho
 Fer formularis de modificacions als backend OK FET
 Autonatitzar la carrega de revisions per un fitxer *.sql OK FET
 No surten menús al mòbil OK FET
+ficar option disable a les funcions de carrega de selects OK FET
+Fer el panell dashboard OK FET
 
 1) Crear full google amb l'assignació per ordinador per aula/carreto
 2) Fer carrega db des de GestIB
 3) Crear docker amb es programa 
 4) Crear una pag que surti per carretor amb un semafor
-5) Continuar el panell dashboard
+5) 
 6) Mirar on s'ha de tancar les connexions a la BD amb con.end()
 7) Omplir pàgina about i contacte
-8)Fer el readme de git hub
+8) Fer el readme de git hub
 9) Taula de calendari 
 10) Control de FCT's i DUAL
-11) ficar option disable a les funcions de carrega de selects
+11) 
+12) enviar email de canvi d'stock o moviments d'un carretó
+13) fer etiquetes QR dels carretons

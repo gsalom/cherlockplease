@@ -10,7 +10,7 @@ fs.readFile(pathname, function (err, data) {
     // for(i=0;i<result.xml.notificacion.length;i++)
     //   console.log(result.xml.notificacion[i].subtitulo[0]);
      result.xml.deploylist.forEach(element => {
-      console.log(JSON.stringify(element))
+      //console.log(JSON.stringify(element))
       console.log(element['$'].count)
      });
   }
