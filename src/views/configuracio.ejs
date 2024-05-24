@@ -13,7 +13,8 @@
     function leerFichero(tipus) {
       if (tipus == 'sql') idnomfile = 'fitxer'
       else if (tipus == 'xml1') idnomfile = 'fitxer2'
-      else idnomfile = 'fitxer3'
+      else if (tipus == 'xml2') idnomfile = 'fitxer3'
+      else idnomfile = 'fitxer4';
       const fileInput = document.getElementById(idnomfile)
       const file = fileInput.files[0];
       //console.log(file);
@@ -30,9 +31,9 @@
       }
     }
 
-    function loadXml(tipus) { 
-          window.open("./loadXml?id="+tipus, '_blank');
-    }  
+    function loadXml(tipus) {
+      window.open("./loadXml?id=" + decodeURI(tipus), '_blank');
+    }
 
     function tanca() {
       window.close();
@@ -72,6 +73,12 @@
             <th><input type="file" id="fitxer3" name="fitxer3" accept=".xml"></th>
             <th><button type="button" onclick="leerFichero('xml2')">Veure</button></th>
             <th><button type="button" onclick="loadXml('xml2')">Carregar</button></th>
+          </tr>
+          <tr>
+            <th>Carregar departaments</th>
+            <th><input type="file" id="fitxer4" name="fitxer4" accept=".xml"></th>
+            <th><button type="button" onclick="leerFichero('xml3')">Veure</button></th>
+            <th><button type="button" onclick="loadXml('xml3')">Carregar</button></th>
           </tr>
           <tr>
             <th COLSPAN=4>

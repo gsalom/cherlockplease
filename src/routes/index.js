@@ -127,42 +127,42 @@ router.get("/mail", (req, res) => {
   });
 });
 
+import readDeptGestib from "../readXmlGestib.js";
 
 router.get("/loadXml", (req, res) => {
   //Insert a record in the "dept, alumnat, professorat, etc"  table des de Gestib:
-  var tipus = req.query.tipus;
-  var errors = "e->";
-  var results = "r->";
-  console.log(tipus);
-    if (tipus=="dept") {
-        errors = errors + ":" + err;
-        //console.log(errors);
-        if (err) throw err;
-        //console.log("Number of records inserted: " + result.affectedRows);
-        results = results + ":" + result.affectedRows;
-        //console.log(results);
-        console.log("Carregant depts ....")
-      };
-
-    //   //Update el codi de l'aula dins les revisions fetes
-    //   var sql = "UPDATE cherlock.revisions r INNER JOIN cherlock.aules a on  r.aula=a.nom and r.id_aula is null SET r.id_aula = a.codi";
-    //   con.query(sql, function (err, result) {
-    //     errors = errors + ":" + err;
-    //     //console.log(errors);
-    //     if (err) throw err;
-    //     //console.log(result.affectedRows + " record(s) updated");
-    //     results = results + ":" + result.affectedRows;
-    //     //console.log(results);
-    //   })
-    // }
-    res.render("carregarXmls", {
-      title: "Carrega d'Xmls",
-      fitxer: req.query.fitxer,
-      codi: req.query.codi,
-      apply: req.query.accio,
-      errors: errors,
-      results: results
-    });  
+  var tipus = req.query.id;
+  var results = [];
+  var sql = "";
+  var err = false;
+  var resu = "ok";
+  if (tipus == "xml3") {
+    var pathname = 'departaments.xml';
+    results = readDeptGestib("src/" + pathname);
+    if (results == []) {
+      err = true;
+      resu = "ko";
+    }
+    results.CENTRE_EXPORT.DEPARTAMENTS.forEach(element => {
+      results = "Carregant depts ...." + '\n';
+      element['DEPARTAMENT'].forEach(element => {
+        sql = "INSERT INTO `departaments` (`codi`, `nom`, `email`) VALUES ('" + element['$'].codi + "', '" + element['$'].descripcio + "', '@cifpfbmoll.eu');"
+        results = results + element['$'].codi + ' ' + element['$'].descripcio + '\n';
+        con.query(sql, function (err, result) {
+          if (err) throw err;
+          resu = resu + ":" + result.affectedRows;
+        })
+      })
+    });
+  }
+  res.render("carregarXmls", {
+    title: "Carrega d'Xmls",
+    fitxer: pathname,
+    codi: results,
+    apply: req.query.accio,
+    errors: err,
+    results: resu
+  });
 });
 
 router.get("/load", (req, res) => {
@@ -171,35 +171,39 @@ router.get("/load", (req, res) => {
   var errors = "e->";
   var results = "r->";
   console.log(req.query);
-    if (sql) {
-      con.query(sql, function (err, result) {
-        errors = errors + ":" + err;
-        //console.log(errors);
-        if (err) throw err;
-        //console.log("Number of records inserted: " + result.affectedRows);
-        results = results + ":" + result.affectedRows;
-        //console.log(results);
-      });
+  if ((sql) && sql.includes("INSERT")) {
+    con.query(sql, function (err, result) {
+      errors = errors + ":" + err;
+      //console.log(errors);
+      if (err) throw err;
+      //console.log("Number of records inserted: " + result.affectedRows);
+      results = results + ":" + result.affectedRows;
+      //console.log(results);
+    });
 
-      //Update el codi de l'aula dins les revisions fetes
-      var sql = "UPDATE cherlock.revisions r INNER JOIN cherlock.aules a on  r.aula=a.nom and r.id_aula is null SET r.id_aula = a.codi";
-      con.query(sql, function (err, result) {
-        errors = errors + ":" + err;
-        //console.log(errors);
-        if (err) throw err;
-        //console.log(result.affectedRows + " record(s) updated");
-        results = results + ":" + result.affectedRows;
-        //console.log(results);
-      })
-    }
-    res.render("carregarrevisions", {
-      title: "Carrega de revisions",
-      fitxer: req.query.fitxer,
-      codi: req.query.codi,
-      apply: req.query.accio,
-      errors: errors,
-      results: results
-    });  
+    //Update el codi de l'aula dins les revisions fetes
+    var sql = "UPDATE cherlock.revisions r INNER JOIN cherlock.aules a on  r.aula=a.nom and r.id_aula is null SET r.id_aula = a.codi";
+    con.query(sql, function (err, result) {
+      errors = errors + ":" + err;
+      //console.log(errors);
+      if (err) throw err;
+      //console.log(result.affectedRows + " record(s) updated");
+      results = results + ":" + result.affectedRows;
+      //console.log(results);
+    })
+  }
+  else {
+    errors="fitxer no *.sql"
+    results="ko"
+  }
+  res.render("carregarrevisions", {
+    title: "Carrega de revisions",
+    fitxer: req.query.fitxer,
+    codi: req.query.codi,
+    apply: req.query.accio,
+    errors: errors,
+    results: results
+  });
 });
 
 router.get("/carretons", (req, res) => {
