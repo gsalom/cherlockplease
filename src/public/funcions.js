@@ -110,6 +110,10 @@ function tanca() {
   window.close();
 }
 
+function torna() {
+  window.open("./",'_self');
+}
+
 function activatancar(segons) {
   setTimeout(tanca, segons * 1000);
   return true;

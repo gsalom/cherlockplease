@@ -59,6 +59,7 @@ form {
 
 label {
   /*Aumenta el tamaño de la fuente de las etiquetas */
+  /* color:black; */
   font-size: 16px;
   display: inline-block;
   margin-bottom: 5px;
@@ -80,6 +81,11 @@ input[type="email"] {
 #comentaris {
   /* Tamaño y estilo de los campos de texto */
   height: 80px;
+}
+
+#emails {
+  /* Tamaño y estilo de los campos de texto */
+  height: 200px;
 }
 
 input[type="submit"], [type="file"], button {
