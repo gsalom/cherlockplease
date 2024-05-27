@@ -42,7 +42,7 @@ router.get("/dashboard", (req, res) => {
   var labels2 = [];
   var data2 = [];
   var sql2 = "SELECT cherlock.revisions.estat, COUNT(cherlock.revisions.estat) as total FROM cherlock.revisions  WHERE (cherlock.revisions.data_rev > '2024-04-14' AND cherlock.revisions.data_rev  < '2024-04-18') GROUP BY cherlock.revisions.estat " +
-    " UNION SELECT cherlock.revisions.estat, COUNT(cherlock.revisions.estat) FROM cherlock.revisions  WHERE (cherlock.revisions.data_rev > '2024-04-14' AND cherlock.revisions.data_rev  < '2024-04-18')" +
+    " UNION SELECT cherlock.revisions.estat, COUNT(cherlock.revisions.estat) FROM cherlock.revisions  WHERE (cherlock.revisions.data_rev > '2024-05-19' AND cherlock.revisions.data_rev  < '2024-05-25')" +
     " UNION SELECT cherlock.horaris.tipus, COUNT(*) FROM cherlock.horaris where tipus=1 GROUP BY cherlock.horaris.tipus;";
   var labels3 = [];
   var data3 = [];
@@ -136,8 +136,8 @@ router.get("/loadXml", (req, res) => {
   var sql = "";
   var err = false;
   var resu = "ok";
+  var pathname = 'exportacioDadesCentre.xml';
   if (tipus == "xml3") {
-    var pathname = 'departaments.xml';
     results = readDeptGestib("src/" + pathname);
     if (results == []) {
       err = true;
@@ -147,6 +147,52 @@ router.get("/loadXml", (req, res) => {
       results = "Carregant depts ...." + '\n';
       element['DEPARTAMENT'].forEach(element => {
         sql = "INSERT INTO `departaments` (`codi`, `nom`, `email`) VALUES ('" + element['$'].codi + "', '" + element['$'].descripcio + "', '@cifpfbmoll.eu');"
+        results = results + element['$'].codi + ' ' + element['$'].descripcio + '\n';
+        con.query(sql, function (err, result) {
+          if (err) throw err;
+          resu = resu + ":" + result.affectedRows;
+        })
+      })
+    });
+  }
+  if (tipus == "xml1") {
+    results = readProfGestib("src/" + pathname);
+    if (results == []) {
+      err = true;
+      resu = "ko";
+    }
+    results.CENTRE_EXPORT.PROFESSORS.forEach(element => {
+      results = "Carregant professorat ...." + '\n';
+        // console.log(element['$'].codi)
+        // console.log(element['$'].nom)
+        // console.log(element['$'].ap1)
+        // console.log(element['$'].ap2)
+        // console.log(element['$'].departament)
+      element['PROFESSOR'].forEach(element => {
+        sql = "INSERT INTO `professorat` (`codi`, `nom`, `email`) VALUES ('" + element['$'].codi + "', '" + element['$'].descripcio + "', '@cifpfbmoll.eu');"
+        results = results + element['$'].codi + ' ' + element['$'].descripcio + '\n';
+        con.query(sql, function (err, result) {
+          if (err) throw err;
+          resu = resu + ":" + result.affectedRows;
+        })
+      })
+    });
+  }
+  if (tipus == "xml2") {
+    results = readAlumnGestib("src/" + pathname);
+    if (results == []) {
+      err = true;
+      resu = "ko";
+    }
+    results.CENTRE_EXPORT.ALUMNAES.forEach(element => {
+      results = "Carregant alumnat ...." + '\n';
+        // console.log(element['$'].codi)
+        // console.log(element['$'].nom)
+        // console.log(element['$'].ap1)
+        // console.log(element['$'].ap2)
+        // console.log(element['$'].grup)
+      element['ALUMNE'].forEach(element => {
+        sql = "INSERT INTO `professorat` (`codi`, `nom`, `email`) VALUES ('" + element['$'].codi + "', '" + element['$'].descripcio + "', '@cifpfbmoll.eu');"
         results = results + element['$'].codi + ' ' + element['$'].descripcio + '\n';
         con.query(sql, function (err, result) {
           if (err) throw err;

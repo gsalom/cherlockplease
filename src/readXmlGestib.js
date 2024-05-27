@@ -18,4 +18,31 @@ function readDeptGestib(pathname) {
   return results;
 }
 
-export default readDeptGestib;
+function readProfGestib(pathname) {
+  let results = [];
+  console.log(pathname)
+  const data = fs.readFileSync(pathname, {
+    encoding: 'utf8',
+    flag: 'r'
+  });
+  parseString(data, function (err, result) {
+    results = result;
+  });
+  return results;
+}
+
+
+function readAlumGestib(pathname) {
+  let results = [];
+  console.log(pathname)
+  const data = fs.readFileSync(pathname, {
+    encoding: 'utf8',
+    flag: 'r'
+  });
+  parseString(data, function (err, result) {
+    results = result;
+  });
+  return results;
+}
+
+export default {readDeptGestib,readProfGestib,readAlumGestib} ;

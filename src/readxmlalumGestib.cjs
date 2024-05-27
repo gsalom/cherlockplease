@@ -6,17 +6,16 @@ fs.readFile(pathname, function (err, data) {
   console.log(data)
   parseString(data, function (err, result) {
     console.dir(result);
-    result.CENTRE_EXPORT.HORARIP.forEach(element => {
+    result.CENTRE_EXPORT.ALUMNES.forEach(element => {
       console.log(JSON.stringify(element))
-      element['HORA'].forEach(element => {
-        console.log(element['$'].professor)
-        console.log(element['$'].curs)
+      element['ALUMNE'].forEach(element => {
+        console.log(element['$'].codi)
+        console.log(element['$'].nom)
+        console.log(element['$'].ap1)
+        console.log(element['$'].ap2)
         console.log(element['$'].grup)
-        console.log(element['$'].dia)
-        console.log(element['$'].hora)
-        console.log(element['$'].durada)
-        console.log(element['$'].aula)
       })
     });
-  });
+  }
+  );
 });
