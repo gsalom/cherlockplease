@@ -13,9 +13,11 @@ ficar option disable a les funcions de carrega de selects OK FET
 Fer el panell dashboard OK FET
 Omplir pàgina about OK FET
 Omplir pàgina contacte OK FET
+Afegits taules ordinadors i alumnat OK FET
+Afegit camp ImportGestIB a taules (grup, cicles)-> Alumnat , departament-> Professorat, a taules i forms OK FET
 
 1) Crear full google amb l'assignació per ordinador per aula/carreto
-2) Fer carrega db des de GestIB 1/4 FET
+2) Fer carrega db des de GestIB 1/2 FET
 3) Crear docker amb es programa 
 4) Crear una pag que surti per carretor amb un semafor això al dash board
 5) Fer el readme de git hub
@@ -24,6 +26,6 @@ Omplir pàgina contacte OK FET
 8) Control de FCT's i DUAL
 9) enviar email de canvi d'stock o moviments d'un carretó
 10) fer etiquetes QR dels carretons
-11) 
+11) falla grabació tutor a grup
 12) 
 13) 
