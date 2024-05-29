@@ -17,7 +17,7 @@ Afegits taules ordinadors i alumnat OK FET
 Afegit camp ImportGestIB a taules (grup, cicles)-> Alumnat , departament-> Professorat, a taules i forms OK FET
 
 1) Crear full google amb l'assignació per ordinador per aula/carreto
-2) Fer carrega db des de GestIB 1/2 FET
+2) Fer carrega db des de GestIB 3/4 FET falta mirar si grups, cicles i aules???
 3) Crear docker amb es programa 
 4) Crear una pag que surti per carretor amb un semafor això al dash board
 5) Fer el readme de git hub
