@@ -14,7 +14,8 @@
       if (tipus == 'sql') idnomfile = 'fitxer'
       else if (tipus == 'xml1') idnomfile = 'fitxer2'
       else if (tipus == 'xml2') idnomfile = 'fitxer3'
-      else idnomfile = 'fitxer4';
+      else  if (tipus == 'xml3') idnomfile = 'fitxer4'
+      else idnomfile = 'fitxer5';
       const fileInput = document.getElementById(idnomfile)
       const file = fileInput.files[0];
       //console.log(file);
@@ -45,7 +46,7 @@
   <!-- HEADER -->
   <%- include("partials/navigationbackend") %>
   <!-- My Content -->
-  <main class="container pt-2 text-center justify-content-center align-items-center vh-100" style="auto">
+  <main class="container pt-2 text-center justify-content-center align-items-center vh-100" style="margin:auto">
     <h2 class="display-1">Configuració Cherlock</h2>
     <section>
       <form id="configuracio" target="_blank" action="/load" method="get">
@@ -79,6 +80,12 @@
             <th><input type="file" id="fitxer4" name="fitxer4" accept=".xml"></th>
             <th><button type="button" onclick="leerFichero('xml3')">Veure</button></th>
             <th><button type="button" onclick="loadXml('xml3')">Carregar</button></th>
+          </tr>
+          <tr>
+            <th>Carregar horaris</th>
+            <th><input type="file" id="fitxer5" name="fitxer5" accept=".xml"></th>
+            <th><button type="button" onclick="leerFichero('xml4')">Veure</button></th>
+            <th><button type="button" onclick="loadXml('xml4')">Carregar</button></th>
           </tr>
           <tr>
             <th COLSPAN=4>

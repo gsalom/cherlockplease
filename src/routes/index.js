@@ -127,7 +127,8 @@ router.get("/mail", (req, res) => {
   });
 });
 
-import readDeptGestib from "../readXmlGestib.js";
+import {readProfGestib, readDeptGestib} from '../readXmlGestib.js';
+import {readHorGestib, readAlumGestib} from '../readXmlGestib.js';
 
 router.get("/loadXml", (req, res) => {
   //Insert a record in the "dept, alumnat, professorat, etc"  table des de Gestib:
@@ -136,7 +137,9 @@ router.get("/loadXml", (req, res) => {
   var sql = "";
   var err = false;
   var resu = "ok";
+  var cont=0;
   var pathname = 'exportacioDadesCentre.xml';
+  // var pathname = req.query.fitxer;
   if (tipus == "xml3") {
     results = readDeptGestib("src/" + pathname);
     if (results == []) {
@@ -146,8 +149,9 @@ router.get("/loadXml", (req, res) => {
     results.CENTRE_EXPORT.DEPARTAMENTS.forEach(element => {
       results = "Carregant depts ...." + '\n';
       element['DEPARTAMENT'].forEach(element => {
-        sql = "INSERT INTO `departaments` (`codi`, `nom`, `email`) VALUES ('" + element['$'].codi + "', '" + element['$'].descripcio + "', '@cifpfbmoll.eu');"
-        results = results + element['$'].codi + ' ' + element['$'].descripcio + '\n';
+        cont=cont+1;
+        sql = "INSERT INTO `departaments` (`codi`, `nom`, `email`, `importGestIB` ) VALUES ('" + element['$'].codi + "', '" + element['$'].descripcio + "', '@cifpfbmoll.eu', 1);"
+        results = results + cont +': '+ element['$'].codi + ' ' + element['$'].descripcio + '\n';
         con.query(sql, function (err, result) {
           if (err) throw err;
           resu = resu + ":" + result.affectedRows;
@@ -163,14 +167,10 @@ router.get("/loadXml", (req, res) => {
     }
     results.CENTRE_EXPORT.PROFESSORS.forEach(element => {
       results = "Carregant professorat ...." + '\n';
-        // console.log(element['$'].codi)
-        // console.log(element['$'].nom)
-        // console.log(element['$'].ap1)
-        // console.log(element['$'].ap2)
-        // console.log(element['$'].departament)
       element['PROFESSOR'].forEach(element => {
-        sql = "INSERT INTO `professorat` (`codi`, `nom`, `email`) VALUES ('" + element['$'].codi + "', '" + element['$'].descripcio + "', '@cifpfbmoll.eu');"
-        results = results + element['$'].codi + ' ' + element['$'].descripcio + '\n';
+        cont=cont+1;
+        sql = "INSERT INTO `professorat2` (`codi`, `nom`, `llin1`, `llin2`, `departament`, `credit`, `email`) VALUES ('" + element['$'].codi + "', '" + element['$'].nom +"', '" + element['$'].ap1 +"', '" + element['$'].ap2 + "', '" + element['$'].departament+ "',5" + ", '@cifpfbmoll.eu');"
+        results = results +  cont +': '+ element['$'].codi + ' ' + element['$'].nom + ' ' + element['$'].ap1 + ' ' + element['$'].ap2 + '\n';
         con.query(sql, function (err, result) {
           if (err) throw err;
           resu = resu + ":" + result.affectedRows;
@@ -179,21 +179,37 @@ router.get("/loadXml", (req, res) => {
     });
   }
   if (tipus == "xml2") {
-    results = readAlumnGestib("src/" + pathname);
+    results = readAlumGestib("src/" + pathname);
     if (results == []) {
       err = true;
       resu = "ko";
     }
-    results.CENTRE_EXPORT.ALUMNAES.forEach(element => {
+    results.CENTRE_EXPORT.ALUMNES.forEach(element => {
+      var cont=0;
       results = "Carregant alumnat ...." + '\n';
-        // console.log(element['$'].codi)
-        // console.log(element['$'].nom)
-        // console.log(element['$'].ap1)
-        // console.log(element['$'].ap2)
-        // console.log(element['$'].grup)
       element['ALUMNE'].forEach(element => {
-        sql = "INSERT INTO `professorat` (`codi`, `nom`, `email`) VALUES ('" + element['$'].codi + "', '" + element['$'].descripcio + "', '@cifpfbmoll.eu');"
-        results = results + element['$'].codi + ' ' + element['$'].descripcio + '\n';
+        cont=cont+1;
+        sql = "INSERT INTO `alumnat` (`codi`, `nom`, `llin1`, `llin2`, `grup`, `credit`, `email`) VALUES ('" + element['$'].codi + "', '" + element['$'].nom +"', '" + element['$'].ap1 +"', '" + element['$'].ap2 + "', '" + element['$'].grup+ "',5" + ", '@cifpfbmoll.eu');"
+        results = results + cont +': '+ element['$'].codi + ' ' + element['$'].nom+ ' ' + element['$'].ap1 + ' ' + element['$'].ap2 + '\n';
+        con.query(sql, function (err, result) {
+          if (err) throw err;
+          resu = resu + ":" + result.affectedRows;
+        })
+      })
+    });
+  }
+  if (tipus == "xml4") {
+    results = readHorGestib("src/" + pathname);
+    if (results == []) {
+      err = true;
+      resu = "ko";
+    }
+    results.CENTRE_EXPORT.HORARIP.forEach(element => {
+      results = "Carregant horaris ...." + '\n';
+      element['SESSIO'].forEach(element => {
+        cont=cont+1;
+        sql = "INSERT INTO `horaris2` (`id_prof`, `id_cicle`, `id_grup`,`id_aula`, `dia`, `hora`, `durada`, `tipus`) VALUES ('" + element['$'].professor + "', '" + element['$'].curs +"', '" + element['$'].grup +"', '" + element['$'].aula + "', " + element['$'].dia+",'"+element['$'].hora + "', " + element['$'].durada+", 1);"
+        results = results + cont +': ' + element['$'].professor + ' ' + element['$'].curs+' '+ element['$'].grup + ' ' + element['$'].dia + ' ' + element['$'].hora + '\n';
         con.query(sql, function (err, result) {
           if (err) throw err;
           resu = resu + ":" + result.affectedRows;

@@ -19,12 +19,14 @@
               <th>Codi</th>
               <th>Nom</th>
               <th>Email</th>
+              <th>Import</th>
             </tr>
             <% data.forEach(function(dat){ %>
             <tr>
               <td><%= dat.codi %></td>
               <td><%= dat.nom %></td>
               <td><%= dat.email %></td>
+              <td><%= dat.importGestIB %></td>
               <%  }); %>
             </tr>
           </table>

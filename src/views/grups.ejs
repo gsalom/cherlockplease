@@ -27,6 +27,7 @@
               <th>Nom</th>
               <th>Aula</th>
               <th>Tutor</th>
+              <th>Import</th>
               <th>Edició</th>
             </tr>
             <% data.forEach(function(dat){ %>
@@ -37,6 +38,7 @@
               <td><%= dat.nom %></td>
               <td><%= dat.aula %></td>
               <td><%= dat.tutor1 %></td>
+              <td><%= dat.importGestIB %></td>
               <td><button type="button" onclick="obrir(<%= dat.id_grup %>)">Editar</button></td>
                <%  }); %>
             </tr>

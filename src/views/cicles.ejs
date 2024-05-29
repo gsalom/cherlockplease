@@ -20,6 +20,7 @@
               <th>Nom</th>
               <th>Ensenyament</th>
               <th>Descripció</th>
+              <th>Import</th>
             </tr>
             <% data.forEach(function(dat){ %>
             <tr>
@@ -27,6 +28,7 @@
               <td><%= dat.nom %></td>
               <td><%= dat.ensenyament %></td>
               <td><%= dat.descripcio %></td>
+              <td><%= dat.importGestIB %></td>
               <%  }); %>
             </tr>
           </table>
