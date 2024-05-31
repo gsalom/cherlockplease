@@ -111,7 +111,7 @@ function tanca() {
 }
 
 function torna() {
-  window.open("./",'_self');
+  window.open("./home",'_self');
 }
 
 function activatancar(segons) {

@@ -1,12 +1,18 @@
+
+import express from "express";
 import {
   Router
 } from "express";
 
 import mysql from "mysql";
-
 import go from "../envsmtp.js";
 
 import credentials from "../credentials.cjs";
+
+import session from "express-session";
+import path from "path";
+import { join, dirname } from "path";
+import { fileURLToPath } from "url";
 
 var con = mysql.createConnection({
   host: credentials.basededades.host,
@@ -23,15 +29,40 @@ con.connect(function (err) {
 
 const router = Router();
 
+router.use(session({
+  secret: 'secret',
+  resave: true,
+  saveUninitialized: true
+}));
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+// settings
+// router.set("port", process.env.PORT || 3000);
+// router.set("views", join(__dirname, "views"));
+// router.set("view engine", "ejs");
+
+router.use(express.json());
+router.use(express.urlencoded({ extended: true }));
+router.use(express.static(path.join(__dirname, 'public')));
+
 router.get("/home", (req, res) => {
   res.render("index", {
     title: "CherLock Please"
   });
 });
+// http://localhost:3000/
+router.get('/', function(request, response) {
+	// Render login template
+	//response.send(path.join(__dirname + '/views/login.ejs'));
+	 response.render("login", {
+	 	title: "CherLock login"
+	   });
+});
 
-router.get("/", (req, res) => {
-  res.render("login", {
-    title: "CherLock login"
+router.get("/error", (req, res) => {
+  res.render("error", {
+    title: "CherLock Error"
   });
 });
 
@@ -133,8 +164,14 @@ router.get("/mail", (req, res) => {
   });
 });
 
-import {readProfGestib, readDeptGestib} from '../readXmlGestib.js';
-import {readHorGestib, readAlumGestib} from '../readXmlGestib.js';
+import {
+  readProfGestib,
+  readDeptGestib
+} from '../readXmlGestib.js';
+import {
+  readHorGestib,
+  readAlumGestib
+} from '../readXmlGestib.js';
 
 router.get("/loadXml", (req, res) => {
   //Insert a record in the "dept, alumnat, professorat, etc"  table des de Gestib:
@@ -143,7 +180,7 @@ router.get("/loadXml", (req, res) => {
   var sql = "";
   var err = false;
   var resu = "ok";
-  var cont=0;
+  var cont = 0;
   var pathname = 'exportacioDadesCentre.xml';
   // var pathname = req.query.fitxer;
   if (tipus == "xml3") {
@@ -155,9 +192,9 @@ router.get("/loadXml", (req, res) => {
     results.CENTRE_EXPORT.DEPARTAMENTS.forEach(element => {
       results = "Carregant depts ...." + '\n';
       element['DEPARTAMENT'].forEach(element => {
-        cont=cont+1;
+        cont = cont + 1;
         sql = "INSERT INTO `departaments` (`codi`, `nom`, `email`, `importGestIB` ) VALUES ('" + element['$'].codi + "', '" + element['$'].descripcio + "', '@cifpfbmoll.eu', 1);"
-        results = results + cont +': '+ element['$'].codi + ' ' + element['$'].descripcio + '\n';
+        results = results + cont + ': ' + element['$'].codi + ' ' + element['$'].descripcio + '\n';
         con.query(sql, function (err, result) {
           if (err) throw err;
           resu = resu + ":" + result.affectedRows;
@@ -174,9 +211,9 @@ router.get("/loadXml", (req, res) => {
     results.CENTRE_EXPORT.PROFESSORS.forEach(element => {
       results = "Carregant professorat ...." + '\n';
       element['PROFESSOR'].forEach(element => {
-        cont=cont+1;
-        sql = "INSERT INTO `professorat2` (`codi`, `nom`, `llin1`, `llin2`, `departament`, `credit`, `email`) VALUES ('" + element['$'].codi + "', '" + element['$'].nom +"', '" + element['$'].ap1 +"', '" + element['$'].ap2 + "', '" + element['$'].departament+ "',5" + ", '@cifpfbmoll.eu');"
-        results = results +  cont +': '+ element['$'].codi + ' ' + element['$'].nom + ' ' + element['$'].ap1 + ' ' + element['$'].ap2 + '\n';
+        cont = cont + 1;
+        sql = "INSERT INTO `professorat2` (`codi`, `nom`, `llin1`, `llin2`, `departament`, `credit`, `email`) VALUES ('" + element['$'].codi + "', '" + element['$'].nom + "', '" + element['$'].ap1 + "', '" + element['$'].ap2 + "', '" + element['$'].departament + "',5" + ", '@cifpfbmoll.eu');"
+        results = results + cont + ': ' + element['$'].codi + ' ' + element['$'].nom + ' ' + element['$'].ap1 + ' ' + element['$'].ap2 + '\n';
         con.query(sql, function (err, result) {
           if (err) throw err;
           resu = resu + ":" + result.affectedRows;
@@ -191,12 +228,12 @@ router.get("/loadXml", (req, res) => {
       resu = "ko";
     }
     results.CENTRE_EXPORT.ALUMNES.forEach(element => {
-      var cont=0;
+      var cont = 0;
       results = "Carregant alumnat ...." + '\n';
       element['ALUMNE'].forEach(element => {
-        cont=cont+1;
-        sql = "INSERT INTO `alumnat` (`codi`, `nom`, `llin1`, `llin2`, `grup`, `credit`, `email`) VALUES ('" + element['$'].codi + "', '" + element['$'].nom +"', '" + element['$'].ap1 +"', '" + element['$'].ap2 + "', '" + element['$'].grup+ "',5" + ", '@cifpfbmoll.eu');"
-        results = results + cont +': '+ element['$'].codi + ' ' + element['$'].nom+ ' ' + element['$'].ap1 + ' ' + element['$'].ap2 + '\n';
+        cont = cont + 1;
+        sql = "INSERT INTO `alumnat` (`codi`, `nom`, `llin1`, `llin2`, `grup`, `credit`, `email`) VALUES ('" + element['$'].codi + "', '" + element['$'].nom + "', '" + element['$'].ap1 + "', '" + element['$'].ap2 + "', '" + element['$'].grup + "',5" + ", '@cifpfbmoll.eu');"
+        results = results + cont + ': ' + element['$'].codi + ' ' + element['$'].nom + ' ' + element['$'].ap1 + ' ' + element['$'].ap2 + '\n';
         con.query(sql, function (err, result) {
           if (err) throw err;
           resu = resu + ":" + result.affectedRows;
@@ -213,9 +250,9 @@ router.get("/loadXml", (req, res) => {
     results.CENTRE_EXPORT.HORARIP.forEach(element => {
       results = "Carregant horaris ...." + '\n';
       element['SESSIO'].forEach(element => {
-        cont=cont+1;
-        sql = "INSERT INTO `horaris2` (`id_prof`, `id_cicle`, `id_grup`,`id_aula`, `dia`, `hora`, `durada`, `tipus`) VALUES ('" + element['$'].professor + "', '" + element['$'].curs +"', '" + element['$'].grup +"', '" + element['$'].aula + "', " + element['$'].dia+",'"+element['$'].hora + "', " + element['$'].durada+", 1);"
-        results = results + cont +': ' + element['$'].professor + ' ' + element['$'].curs+' '+ element['$'].grup + ' ' + element['$'].dia + ' ' + element['$'].hora + '\n';
+        cont = cont + 1;
+        sql = "INSERT INTO `horaris2` (`id_prof`, `id_cicle`, `id_grup`,`id_aula`, `dia`, `hora`, `durada`, `tipus`) VALUES ('" + element['$'].professor + "', '" + element['$'].curs + "', '" + element['$'].grup + "', '" + element['$'].aula + "', " + element['$'].dia + ",'" + element['$'].hora + "', " + element['$'].durada + ", 1);"
+        results = results + cont + ': ' + element['$'].professor + ' ' + element['$'].curs + ' ' + element['$'].grup + ' ' + element['$'].dia + ' ' + element['$'].hora + '\n';
         con.query(sql, function (err, result) {
           if (err) throw err;
           resu = resu + ":" + result.affectedRows;
@@ -259,10 +296,9 @@ router.get("/load", (req, res) => {
       results = results + ":" + result.affectedRows;
       //console.log(results);
     })
-  }
-  else {
-    errors="fitxer no *.sql"
-    results="ko"
+  } else {
+    errors = "fitxer no *.sql"
+    results = "ko"
   }
   res.render("carregarrevisions", {
     title: "Carrega de revisions",
@@ -699,33 +735,36 @@ router.get('/prova', (req, res) => {
 
 
 
+
+
 // http://localhost:3000/auth
-router.post('/auth', function(request, response) {
-	// Capture the input fields
-	let username = request.body.username;
-	let password = request.body.password;
-	// Ensure the input fields exists and are not empty
-	if (username && password) {
-		// Execute SQL query that'll select the account from the database based on the specified username and password
-		connection.query('SELECT * FROM usuaris WHERE username = ? AND password = ?', [username, password], function(error, results, fields) {
-			// If there is an issue with the query, output the error
-			if (error) throw error;
-			// If the account exists
-			if (results.length > 0) {
-				// Authenticate the user
-				request.session.loggedin = true;
-				request.session.username = username;
-				// Redirect to home page
-				response.redirect('/home');
-			} else {
-				response.send('Usuario y/o Contraseña Incorrecta');
-			}			
-			response.end();
-		});
-	} else {
-		response.send('Por favor ingresa Usuario y Contraseña!');
-		response.end();
-	}
+router.post('/auth', function (request, response) {
+  // Capture the input fields
+  let username = request.body.username;
+  let password = request.body.password;
+  // Ensure the input fields exists and are not empty
+  if (username && password) {
+    // Execute SQL query that'll select the account from the database based on the specified username and password
+    con.query('SELECT * FROM usuaris WHERE username = ? AND password = ?', [username, password], function (error, results, fields) {
+      // If there is an issue with the query, output the error
+      if (error) throw error;
+      // If the account exists
+      if (results.length > 0) {
+        // Authenticate the user
+        request.session.loggedin = true;
+        request.session.username = username;
+        // Redirect to home page
+        response.redirect('/home');
+      } else {
+        //response.send('Usuario y/o Contraseña Incorrecta');
+        response.redirect('/error');
+      }
+      response.end();
+    });
+  } else {
+    response.send('Por favor ingresa Usuario y Contraseña!');
+    response.end();
+  }
 });
 
 // http://localhost:3000/home
