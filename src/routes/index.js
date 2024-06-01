@@ -311,7 +311,7 @@ router.get("/load", (req, res) => {
 });
 
 router.get("/carretons", (req, res) => {
-  // Fetch professorat from the database
+  // Fetch carretons from the database
   con.query('SELECT id_car,c.nom,a.nom as nom_aula,c.estat, c.num_ord FROM cherlock.carretons c, cherlock.aules a WHERE c.codi_aula=a.codi order by a.nom', (error, results) => {
     if (error) {
       console.error('Error fetching carretons from the database: ' + error.stack);
@@ -323,6 +323,42 @@ router.get("/carretons", (req, res) => {
     res.render("carretons", {
       title: "Carretons",
       data: results
+    });
+  });
+});
+
+router.get("/assignacions", (req, res) => {
+  // Fetch assignacions from the database
+  con.query('SELECT id_car,c.nom,a.nom as nom_aula,c.estat, c.num_ord FROM cherlock.carretons c, cherlock.aules a WHERE c.codi_aula=a.codi order by a.nom', (error, results) => {
+    if (error) {
+      console.error('Error fetching carretons from the database: ' + error.stack);
+      return res.status(500).json({
+        error: 'Failed to fetch carretons'
+      });
+    }
+    // Send the fetched data as a response
+    res.render("assignacions", {
+      title: "Assignacions",
+      data: results
+    });
+  });
+});
+
+router.get("/lassignacions", (req, res) => {
+  // Fetch lassignacions from the database
+  var sql = "SELECT c.nom as carreto, o.nom, concat(a.llin1,' ',a.llin2,', ',a.nom) as assignat, o.estat, o.comentaris FROM cherlock.ordinadors o, cherlock.carretons c, cherlock.alumnat a where o.carreto=c.id_car and o.assignat=a.codi and c.id_car=" + req.query.id;
+  con.query(sql, (error, results) => {
+    if (error) {
+      console.error('Error fetching carretons from the database: ' + error.stack);
+      return res.status(500).json({
+        error: 'Failed to fetch carretons'
+      });
+    }
+    // Send the fetched data as a response
+    res.render("lassignacions", {
+      title: "LListat d'Assignacions",
+      data: results,
+      carreto: req.query.id
     });
   });
 });

@@ -3,21 +3,25 @@
     font-family: -apple-system, BlinkMacSystemFont, "segoe ui", roboto, oxygen, ubuntu, cantarell, "fira sans", "droid sans", "helvetica neue", Arial, sans-serif;
     font-size: 16px;
 }
+
 body {
     background-color: #1291b8;
 }
+
 .login {
     width: 400px;
     background-color: #ffffff;
     box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.3);
     margin: 100px auto;
 }
+
 .login h1 {
     text-align: center;
     color: #5b6574;
     font-size: 24px;
     padding: 20px 0 20px 0;
     border-bottom: 1px solid #dee0e4;
+    width: 100px;
 }
 
 .login a {
@@ -27,12 +31,14 @@ body {
     padding: 20px 0 20px 0;
     border-bottom: 1px solid #dee0e4;
 }
+
 .login form {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     padding-top: 20px;
 }
+
 .login form label {
     display: flex;
     justify-content: center;
@@ -42,17 +48,20 @@ body {
     background-color: #1984bc;
     color: #ffffff;
 }
-.login form input[type="password"], .login form input[type="text"] {
+
+.login form input[type="password"],
+.login form input[type="text"] {
     width: 310px;
     height: 50px;
     border: 1px solid #dee0e4;
     margin-bottom: 20px;
     padding: 0 15px;
 }
+
 .login form input[type="submit"] {
     width: 100%;
     padding: 15px;
-   margin-top: 20px;
+    margin-top: 20px;
     background-color: #1984bc;
     border: 0;
     cursor: pointer;
@@ -60,7 +69,31 @@ body {
     color: #ffffff;
     transition: background-color 0.2s;
 }
+
 .login form input[type="submit"]:hover {
-  background-color: #1984bc;
+    background-color: #1984bc;
     transition: background-color 0.2s;
 }
+
+#contenidor {
+    width: 400px;
+    height: 100px;
+    border: none;
+    overflow: hidden;
+    align-items: center;
+}
+
+#imag1,
+#imag2 {
+    width: 50px;
+    height: 150px;
+  display: inline-block; /* Permite que las imágenes se comporten como elementos en línea */
+  vertical-align: middle; /* Alinea las imágenes verticalmente en el centro */
+}
+
+#imagh1 {
+  display: inline-block; /* Permite que el texto se comporte como un elemento en línea */
+  vertical-align: middle; /* Alinea el texto verticalmente en el centro */
+  margin: 0 10px; /* Añade espacio alrededor del texto */
+}
+
