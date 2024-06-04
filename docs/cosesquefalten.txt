@@ -30,3 +30,4 @@ Crear l'assignació per ordinador per alumnat/carreto OK FET
 11) falla grabació tutor a grup
 12) acabar gestió de sessions
 13) ciber attack
+14) paginacio de taules llargues

@@ -346,7 +346,7 @@ router.get("/assignacions", (req, res) => {
 
 router.get("/lassignacions", (req, res) => {
   // Fetch lassignacions from the database
-  var sql = "SELECT c.nom as carreto, o.nom, concat(a.llin1,' ',a.llin2,', ',a.nom) as assignat, o.estat, o.comentaris FROM cherlock.ordinadors o, cherlock.carretons c, cherlock.alumnat a where o.carreto=c.id_car and o.assignat=a.codi and c.id_car=" + req.query.id;
+  var sql = "SELECT c.nom as carreto, o.nom, concat(a.llin1,' ',a.llin2,', ',a.nom) as assignat, o.estat, o.comentaris FROM cherlock.ordinadors o, cherlock.carretons c, cherlock.alumnat a where o.carreto=c.id_car and o.assignacio=a.codi and c.id_car=" + req.query.id;
   con.query(sql, (error, results) => {
     if (error) {
       console.error('Error fetching carretons from the database: ' + error.stack);
@@ -358,7 +358,8 @@ router.get("/lassignacions", (req, res) => {
     res.render("lassignacions", {
       title: "LListat d'Assignacions",
       data: results,
-      carreto: req.query.id
+      carreto: req.query.id,
+      numreg: results.length
     });
   });
 });
@@ -440,7 +441,8 @@ router.get("/prof_Update", (req, res) => {
 
 router.get('/professorat', (req, res) => {
   // Fetch professorat from the database
-  con.query('SELECT * FROM professorat', (error, results) => {
+  var sql = "SELECT * FROM professorat LIMIT " + (req.query.regini*10)+ ", 10;" ;
+  con.query(sql, (error, results) => {
     if (error) {
       console.error('Error fetching professorat from the database: ' + error.stack);
       return res.status(500).json({
@@ -450,7 +452,8 @@ router.get('/professorat', (req, res) => {
     // Send the fetched data as a response
     res.render("professorat", {
       title: "Professorat",
-      data: results
+      data: results,
+      numreg: results.length
     });
   });
 });
