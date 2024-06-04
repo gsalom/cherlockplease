@@ -1,7 +1,4 @@
-<% 
-   var taula="/professorat";
-   var numreg=37;
-%>
+
 <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-end">
       <li class="page-item">
@@ -9,7 +6,9 @@
           <span aria-hidden="true">&laquo;</span>
         </a>
       </li>
-      <% var fi = Math.ceil(numreg / 10);
+      <% 
+      var fi = Math.ceil(numreg / 10);
+      console.log(numreg);
       for (var i = 0; i < fi; i++) { %>
       <li class="page-item"><a class="page-link" href="<%= taula %>?regini=<%= i %>"><%= i+1 %></a></li>
       <% } %>

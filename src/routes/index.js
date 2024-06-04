@@ -441,6 +441,17 @@ router.get("/prof_Update", (req, res) => {
 
 router.get('/professorat', (req, res) => {
   // Fetch professorat from the database
+  var total=0;
+  var sql="select * from professorat";
+  con.query(sql, (error, results) => {
+    if (error) {
+      console.error('Error fetching professorat from the database: ' + error.stack);
+      return res.status(500).json({
+        error: 'Failed to fetch professorat'
+      });
+    }
+   total=results.length;
+  })
   var sql = "SELECT * FROM professorat LIMIT " + (req.query.regini*10)+ ", 10;" ;
   con.query(sql, (error, results) => {
     if (error) {
@@ -449,11 +460,14 @@ router.get('/professorat', (req, res) => {
         error: 'Failed to fetch professorat'
       });
     }
+    var sql="select count(*) as total from professorat";
     // Send the fetched data as a response
     res.render("professorat", {
       title: "Professorat",
       data: results,
-      numreg: results.length
+      numreg: total,
+      regini: req.query.regini,
+      taula: "/professorat"
     });
   });
 });
@@ -627,7 +641,19 @@ router.get('/lgrups', (req, res) => {
 
 router.get('/horaris', (req, res) => {
   // Fetch professorat from the database
-  con.query('SELECT h.id_hor, g.nom as grup, a.nom as aula, concat(p.llin1," ",p.llin2,", ",p.nom) as profe, h.dia, h.hora, h.realitzada, h.tipus FROM cherlock.horaris h, cherlock.professorat p, cherlock.grups g, cherlock.aules a  where h.id_grup=g.codi and h.id_prof=p.codi and h.id_aula=a.codi order by g.nom, h.dia, h.hora', (error, results) => {
+  var total=0;
+  var sql="select * from horaris";
+  con.query(sql, (error, results) => {
+    if (error) {
+      console.error('Error fetching professorat from the database: ' + error.stack);
+      return res.status(500).json({
+        error: 'Failed to fetch professorat'
+      });
+    }
+   total=results.length;
+  })
+  var sql ="SELECT h.id_hor, g.nom as grup, a.nom as aula, concat(p.llin1,' ',p.llin2,', ',p.nom) as profe, h.dia, h.hora, h.realitzada, h.tipus FROM cherlock.horaris h, cherlock.professorat p, cherlock.grups g, cherlock.aules a  where h.id_grup=g.codi and h.id_prof=p.codi and h.id_aula=a.codi order by g.nom, h.dia, h.hora LIMIT " + (req.query.regini*10)+ ", 10;";
+  con.query(sql,(error, results) => {
     if (error) {
       console.error('Error fetching horaris from the database: ' + error.stack);
       return res.status(500).json({
@@ -637,7 +663,10 @@ router.get('/horaris', (req, res) => {
     // Send the fetched data as a response
     res.render("horaris", {
       title: "Horaris",
-      data: results
+      data: results,
+      numreg: total,
+      regini: req.query.regini,
+      taula: "/horaris"
     });
   });
 });
