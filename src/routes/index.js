@@ -125,8 +125,6 @@ router.get("/dashboard", (req, res) => {
     })
     con.query(sql4, function (err, result) {
       if (err) throw err;
-      console.log(result[0].nom);
-      console.log(result[0].total);
       for (var i = 0; i < result.length; ++i) {
         labels4.push(result[i].nom);
         data4.push(result[i].total);
@@ -282,15 +280,11 @@ router.get("/load", (req, res) => {
   var sql = req.query.codi;
   var errors = "e->";
   var results = "r->";
-  console.log(req.query);
   if ((sql) && sql.includes("INSERT")) {
     con.query(sql, function (err, result) {
       errors = errors + ":" + err;
-      //console.log(errors);
       if (err) throw err;
-      //console.log("Number of records inserted: " + result.affectedRows);
       results = results + ":" + result.affectedRows;
-      //console.log(results);
     });
 
     //Update el codi de l'aula dins les revisions fetes
@@ -361,7 +355,7 @@ router.get("/assignacions", (req, res) => {
     }
     total = results.length;
   })
-  con.query('SELECT id_car,c.nom,a.nom as nom_aula,c.estat, c.num_ord FROM cherlock.carretons c, cherlock.aules a WHERE c.codi_aula=a.codi order by a.nomLIMIT ' + (req.query.regini * 10) + ', 10;', (error, results) => {
+  con.query('SELECT id_car,c.nom,a.nom as nom_aula,c.estat, c.num_ord FROM cherlock.carretons c, cherlock.aules a WHERE c.codi_aula=a.codi order by a.nom LIMIT ' + (req.query.regini * 10) + ', 10;', (error, results) => {
     if (error) {
       console.error('Error fetching assignacions from the database: ' + error.stack);
       return res.status(500).json({
@@ -381,6 +375,17 @@ router.get("/assignacions", (req, res) => {
 
 router.get("/lassignacions", (req, res) => {
   // Fetch lassignacions from the database
+  var total = 0;
+  var sql = "SELECT * FROM cherlock.ordinadors o, cherlock.carretons c where o.carreto=c.id_car and c.id_car=" + req.query.id;
+  con.query(sql, (error, results) => {
+    if (error) {
+      console.error('Error fetching assignacions from the database: ' + error.stack);
+      return res.status(500).json({
+        error: 'Failed to fetch assignacions'
+      });
+    }
+    total = results.length;
+  })
   var sql = "SELECT c.nom as carreto, o.nom, concat(a.llin1,' ',a.llin2,', ',a.nom) as assignat, o.estat, o.comentaris FROM cherlock.ordinadors o, cherlock.carretons c, cherlock.alumnat a where o.carreto=c.id_car and o.assignacio=a.codi and c.id_car=" + req.query.id;
   con.query(sql, (error, results) => {
     if (error) {
@@ -394,7 +399,9 @@ router.get("/lassignacions", (req, res) => {
       title: "LListat d'Assignacions",
       data: results,
       carreto: req.query.id,
-      numreg: results.length
+      numreg: total,
+      regini: req.query.regini,
+      taula: "/lassignacions"
     });
   });
 });
@@ -632,7 +639,7 @@ router.get('/laules', (req, res) => {
 router.get('/grups', (req, res) => {
   // Fetch grups from the database
   var total = 0;
-  var sql = "select * from grups";
+  var sql = "select * from grups where estat=1";
   con.query(sql, (error, results) => {
     if (error) {
       console.error('Error fetching grups from the database: ' + error.stack);
@@ -642,7 +649,7 @@ router.get('/grups', (req, res) => {
     }
     total = results.length;
   })
-  con.query('SELECT g.*, a.nom as aula, concat(p.llin1," ",p.llin2,", ",p.nom) as tutor1 FROM cherlock.grups g, cherlock.aules a , cherlock.professorat p where g.aula=a.codi and g.id_tutor=p.codi LIMIT' + (req.query.regini * 10) + ', 10', (error, results) => {
+  con.query('SELECT g.*, a.nom as aula, concat(p.llin1," ",p.llin2,", ",p.nom) as tutor1 FROM cherlock.grups g, cherlock.aules a , cherlock.professorat p where g.aula=a.codi and g.id_tutor=p.codi LIMIT ' + (req.query.regini * 10) + ', 10;', (error, results) => {
     if (error) {
       console.error('Error fetching grups from the database: ' + error.stack);
       return res.status(500).json({
@@ -713,7 +720,7 @@ router.get('/lgrups', (req, res) => {
 });
 
 router.get('/horaris', (req, res) => {
-  // Fetch professorat from the database
+  // Fetch horaris from the database
   var total = 0;
   var sql = "select * from horaris";
   con.query(sql, (error, results) => {

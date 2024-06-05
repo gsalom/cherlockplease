@@ -26,14 +26,10 @@ app.use(session({
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-console.log("1:"+__dirname);
 // settings
 app.set("port", process.env.PORT || 3000);
 app.set("views", join(__dirname, "views"));
 app.set("view engine", "ejs");
-console.log("2:"+__dirname);
-console.log("3:"+"views");
-
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
