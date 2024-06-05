@@ -1,4 +1,3 @@
-
 import express from "express";
 import {
   Router
@@ -11,8 +10,13 @@ import credentials from "../credentials.cjs";
 
 import session from "express-session";
 import path from "path";
-import { join, dirname } from "path";
-import { fileURLToPath } from "url";
+import {
+  join,
+  dirname
+} from "path";
+import {
+  fileURLToPath
+} from "url";
 
 var con = mysql.createConnection({
   host: credentials.basededades.host,
@@ -35,7 +39,8 @@ router.use(session({
   saveUninitialized: true
 }));
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+const __dirname = dirname(fileURLToPath(
+  import.meta.url));
 
 // settings
 // router.set("port", process.env.PORT || 3000);
@@ -43,7 +48,9 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 // router.set("view engine", "ejs");
 
 router.use(express.json());
-router.use(express.urlencoded({ extended: true }));
+router.use(express.urlencoded({
+  extended: true
+}));
 router.use(express.static(path.join(__dirname, 'public')));
 
 router.get("/home", (req, res) => {
@@ -52,12 +59,12 @@ router.get("/home", (req, res) => {
   });
 });
 // http://localhost:3000/
-router.get('/', function(request, response) {
-	// Render login template
-	//response.send(path.join(__dirname + '/views/login.ejs'));
-	 response.render("login", {
-	 	title: "CherLock login"
-	   });
+router.get('/', function (request, response) {
+  // Render login template
+  //response.send(path.join(__dirname + '/views/login.ejs'));
+  response.render("login", {
+    title: "CherLock login"
+  });
 });
 
 router.get("/error", (req, res) => {
@@ -312,7 +319,18 @@ router.get("/load", (req, res) => {
 
 router.get("/carretons", (req, res) => {
   // Fetch carretons from the database
-  con.query('SELECT id_car,c.nom,a.nom as nom_aula,c.estat, c.num_ord FROM cherlock.carretons c, cherlock.aules a WHERE c.codi_aula=a.codi order by a.nom', (error, results) => {
+  var total = 0;
+  var sql = "select * from carretons";
+  con.query(sql, (error, results) => {
+    if (error) {
+      console.error('Error fetching professorat from the database: ' + error.stack);
+      return res.status(500).json({
+        error: 'Failed to fetch professorat'
+      });
+    }
+    total = results.length;
+  })
+  con.query('SELECT id_car,c.nom,a.nom as nom_aula,c.estat, c.num_ord FROM cherlock.carretons c, cherlock.aules a WHERE c.codi_aula=a.codi order by a.nom LIMIT ' + (req.query.regini * 10) + ', 10;', (error, results) => {
     if (error) {
       console.error('Error fetching carretons from the database: ' + error.stack);
       return res.status(500).json({
@@ -322,24 +340,41 @@ router.get("/carretons", (req, res) => {
     // Send the fetched data as a response
     res.render("carretons", {
       title: "Carretons",
-      data: results
+      data: results,
+      numreg: total,
+      regini: req.query.regini,
+      taula: "/carretons"
     });
   });
 });
 
 router.get("/assignacions", (req, res) => {
   // Fetch assignacions from the database
-  con.query('SELECT id_car,c.nom,a.nom as nom_aula,c.estat, c.num_ord FROM cherlock.carretons c, cherlock.aules a WHERE c.codi_aula=a.codi order by a.nom', (error, results) => {
+  var total = 0;
+  var sql = "select * from carretons";
+  con.query(sql, (error, results) => {
     if (error) {
       console.error('Error fetching carretons from the database: ' + error.stack);
       return res.status(500).json({
         error: 'Failed to fetch carretons'
       });
     }
+    total = results.length;
+  })
+  con.query('SELECT id_car,c.nom,a.nom as nom_aula,c.estat, c.num_ord FROM cherlock.carretons c, cherlock.aules a WHERE c.codi_aula=a.codi order by a.nomLIMIT ' + (req.query.regini * 10) + ', 10;', (error, results) => {
+    if (error) {
+      console.error('Error fetching assignacions from the database: ' + error.stack);
+      return res.status(500).json({
+        error: 'Failed to fetch assignacions'
+      });
+    }
     // Send the fetched data as a response
     res.render("assignacions", {
       title: "Assignacions",
-      data: results
+      data: results,
+      numreg: total,
+      regini: req.query.regini,
+      taula: "/assignacions"
     });
   });
 });
@@ -441,8 +476,8 @@ router.get("/prof_Update", (req, res) => {
 
 router.get('/professorat', (req, res) => {
   // Fetch professorat from the database
-  var total=0;
-  var sql="select * from professorat";
+  var total = 0;
+  var sql = "select * from professorat";
   con.query(sql, (error, results) => {
     if (error) {
       console.error('Error fetching professorat from the database: ' + error.stack);
@@ -450,9 +485,9 @@ router.get('/professorat', (req, res) => {
         error: 'Failed to fetch professorat'
       });
     }
-   total=results.length;
+    total = results.length;
   })
-  var sql = "SELECT * FROM professorat LIMIT " + (req.query.regini*10)+ ", 10;" ;
+  var sql = "SELECT * FROM professorat LIMIT " + (req.query.regini * 10) + ", 10;";
   con.query(sql, (error, results) => {
     if (error) {
       console.error('Error fetching professorat from the database: ' + error.stack);
@@ -460,7 +495,7 @@ router.get('/professorat', (req, res) => {
         error: 'Failed to fetch professorat'
       });
     }
-    var sql="select count(*) as total from professorat";
+    var sql = "select count(*) as total from professorat";
     // Send the fetched data as a response
     res.render("professorat", {
       title: "Professorat",
@@ -490,17 +525,22 @@ router.get('/lprofes', (req, res) => {
 
 router.get('/departaments', (req, res) => {
   // Fetch departaments from the database
-  con.query('SELECT * FROM departaments', (error, results) => {
+  var total = 0;
+  con.query('SELECT * FROM departaments LIMIT ' + (req.query.regini * 10) + ', 10;', (error, results) => {
     if (error) {
       console.error('Error fetching professorat from the database: ' + error.stack);
       return res.status(500).json({
         error: 'Failed to fetch professorat'
       });
     }
+    total = results.length;
     // Send the fetched data as a response
     res.render("departaments", {
       title: "Departaments",
-      data: results
+      data: results,
+      numreg: total,
+      regini: req.query.regini,
+      taula: "/departaments"
     });
   });
 });
@@ -522,24 +562,40 @@ router.get('/ldepartaments', (req, res) => {
 
 router.get('/cicles', (req, res) => {
   // Fetch cicles from the database
-  con.query('SELECT * FROM cicles', (error, results) => {
+  var total = 0;
+  con.query('SELECT * FROM cicles LIMIT ' + (req.query.regini * 10) + ', 10;', (error, results) => {
     if (error) {
       console.error('Error fetching cicles from the database: ' + error.stack);
       return res.status(500).json({
         error: 'Failed to fetch cicles'
       });
     }
+    total = results.length;
     // Send the fetched data as a response
     res.render("cicles", {
       title: "Cicles",
-      data: results
+      data: results,
+      numreg: total,
+      regini: req.query.regini,
+      taula: "/cicles"
     });
   });
 });
 
 router.get('/aules', (req, res) => {
   // Fetch aules from the database
-  con.query('SELECT * FROM aules order by bloc, pis', (error, results) => {
+  var total = 0;
+  var sql = "select * from aules";
+  con.query(sql, (error, results) => {
+    if (error) {
+      console.error('Error fetching aules from the database: ' + error.stack);
+      return res.status(500).json({
+        error: 'Failed to fetch aules'
+      });
+    }
+    total = results.length;
+  })
+  con.query('SELECT * FROM aules order by bloc, pis LIMIT ' + (req.query.regini * 10) + ', 10;', (error, results) => {
     if (error) {
       console.error('Error fetching aules from the database: ' + error.stack);
       return res.status(500).json({
@@ -549,7 +605,10 @@ router.get('/aules', (req, res) => {
     // Send the fetched data as a response
     res.render("aules", {
       title: "Aules",
-      data: results
+      data: results,
+      numreg: total,
+      regini: req.query.regini,
+      taula: "/aules"
     });
   });
 });
@@ -572,7 +631,18 @@ router.get('/laules', (req, res) => {
 
 router.get('/grups', (req, res) => {
   // Fetch grups from the database
-  con.query('SELECT g.*, a.nom as aula, concat(p.llin1," ",p.llin2,", ",p.nom) as tutor1 FROM cherlock.grups g, cherlock.aules a , cherlock.professorat p where g.aula=a.codi and g.id_tutor=p.codi', (error, results) => {
+  var total = 0;
+  var sql = "select * from grups";
+  con.query(sql, (error, results) => {
+    if (error) {
+      console.error('Error fetching grups from the database: ' + error.stack);
+      return res.status(500).json({
+        error: 'Failed to fetch grups'
+      });
+    }
+    total = results.length;
+  })
+  con.query('SELECT g.*, a.nom as aula, concat(p.llin1," ",p.llin2,", ",p.nom) as tutor1 FROM cherlock.grups g, cherlock.aules a , cherlock.professorat p where g.aula=a.codi and g.id_tutor=p.codi LIMIT' + (req.query.regini * 10) + ', 10', (error, results) => {
     if (error) {
       console.error('Error fetching grups from the database: ' + error.stack);
       return res.status(500).json({
@@ -582,7 +652,10 @@ router.get('/grups', (req, res) => {
     // Send the fetched data as a response
     res.render("grups", {
       title: "Grups",
-      data: results
+      data: results,
+      numreg: total,
+      regini: req.query.regini,
+      taula: "/grups"
     });
   });
 });
@@ -641,8 +714,8 @@ router.get('/lgrups', (req, res) => {
 
 router.get('/horaris', (req, res) => {
   // Fetch professorat from the database
-  var total=0;
-  var sql="select * from horaris";
+  var total = 0;
+  var sql = "select * from horaris";
   con.query(sql, (error, results) => {
     if (error) {
       console.error('Error fetching professorat from the database: ' + error.stack);
@@ -650,10 +723,10 @@ router.get('/horaris', (req, res) => {
         error: 'Failed to fetch professorat'
       });
     }
-   total=results.length;
+    total = results.length;
   })
-  var sql ="SELECT h.id_hor, g.nom as grup, a.nom as aula, concat(p.llin1,' ',p.llin2,', ',p.nom) as profe, h.dia, h.hora, h.realitzada, h.tipus FROM cherlock.horaris h, cherlock.professorat p, cherlock.grups g, cherlock.aules a  where h.id_grup=g.codi and h.id_prof=p.codi and h.id_aula=a.codi order by g.nom, h.dia, h.hora LIMIT " + (req.query.regini*10)+ ", 10;";
-  con.query(sql,(error, results) => {
+  var sql = "SELECT h.id_hor, g.nom as grup, a.nom as aula, concat(p.llin1,' ',p.llin2,', ',p.nom) as profe, h.dia, h.hora, h.realitzada, h.tipus FROM cherlock.horaris h, cherlock.professorat p, cherlock.grups g, cherlock.aules a  where h.id_grup=g.codi and h.id_prof=p.codi and h.id_aula=a.codi order by g.nom, h.dia, h.hora LIMIT " + (req.query.regini * 10) + ", 10;";
+  con.query(sql, (error, results) => {
     if (error) {
       console.error('Error fetching horaris from the database: ' + error.stack);
       return res.status(500).json({
