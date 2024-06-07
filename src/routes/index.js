@@ -375,16 +375,16 @@ router.get("/assignacions", (req, res) => {
 
 router.get("/lassignacions", (req, res) => {
   // Fetch lassignacions from the database
-  var total = 0;
+  var nomcarreto="";
   var sql = "SELECT * FROM cherlock.ordinadors o, cherlock.carretons c where o.carreto=c.id_car and c.id_car=" + req.query.id;
-  con.query(sql, (error, results) => {
+  con.query(sql, (error, resu) => {
     if (error) {
       console.error('Error fetching assignacions from the database: ' + error.stack);
       return res.status(500).json({
         error: 'Failed to fetch assignacions'
       });
     }
-    total = results.length;
+    // nomcarreto=resu.recordset[0].nom;
   })
   var sql = "SELECT c.nom as carreto, o.nom, concat(a.llin1,' ',a.llin2,', ',a.nom) as assignat, o.estat, o.comentaris FROM cherlock.ordinadors o, cherlock.carretons c, cherlock.alumnat a where o.carreto=c.id_car and o.assignacio=a.codi and c.id_car=" + req.query.id;
   con.query(sql, (error, results) => {
@@ -398,10 +398,8 @@ router.get("/lassignacions", (req, res) => {
     res.render("lassignacions", {
       title: "LListat d'Assignacions",
       data: results,
-      carreto: req.query.id,
-      numreg: total,
-      regini: req.query.regini,
-      taula: "/lassignacions"
+      numreg: results.length,
+      carreto: "ARMURA03"
     });
   });
 });
