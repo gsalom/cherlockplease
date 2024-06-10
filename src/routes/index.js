@@ -386,7 +386,7 @@ router.get("/lassignacions", (req, res) => {
     }
     nomcarreto=JSON.stringify(resu)
   })
-  var sql = "SELECT c.nom as carreto, o.nom, concat(a.llin1,' ',a.llin2,', ',a.nom) as assignat, o.estat, o.comentaris FROM cherlock.ordinadors o, cherlock.carretons c, cherlock.alumnat a where o.carreto=c.id_car and o.assignacio=a.codi and c.id_car=" + req.query.id;
+  var sql="SELECT c.nom as carreto, o.nom, concat(a.llin1,' ',a.llin2,', ',a.nom) as assignat, o.estat, o.comentaris FROM cherlock.ordinadors o, cherlock.carretons c, (select a.codi, a.llin1, a.llin2, a.nom FROM cherlock.alumnat a UNION ALL select p.codi, p.llin1, p.llin2, p.nom FROM cherlock.professorat p) a where o.carreto=c.id_car and o.assignacio=a.codi and c.id_car=" + req.query.id;
   con.query(sql, (error, results) => {
     if (error) {
       console.error('Error fetching carretons from the database: ' + error.stack);

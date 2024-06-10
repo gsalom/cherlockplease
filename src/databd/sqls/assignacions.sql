@@ -17,7 +17,9 @@ INSERT INTO `cherlock`.`ordinadors` (`nom`,`carreto`,`caracteristiques`,`estat`,
 INSERT INTO `cherlock`.`ordinadors` (`nom`,`carreto`,`caracteristiques`,`estat`,`assignacio`) VALUES ('IO07',6,'adasdasa ',1,'Antonio Catalan');
 
 
-INSERT INTO `cherlock`.`ordinadors` (`nom`,`carreto`,`caracteristiques`,`estat`,`assignacio`,`comentaris`) VALUES ('HIPERION23',2,'adasdasa ',2,null,'RETIRAT');
+INSERT INTO `cherlock`.`ordinadors` (`nom`,`carreto`,`caracteristiques`,`estat`,`assignacio`,`comentaris`) VALUES ('HIPERION23',10,'adasdasa ',2,null,'RETIRAT');
 
 INSERT INTO `cherlock`.`ordinadors` (`nom`,`carreto`,`caracteristiques`,`estat`,`assignacio`) VALUES ('HIPERION01',2,'adasdasa ',1,'JONATHAN ALEJANDRO ALVARRACIN');
 
+INSERT INTO `cherlock`.`ordinadors` (`nom`,`carreto`,`caracteristiques`,`estat`,`assignacio`) VALUES ('OBERON01',11,'adasdasa ',1,'AARON AGÜERA CAÑADAS');
+INSERT INTO `cherlock`.`ordinadors` (`nom`,`carreto`,`caracteristiques`,`estat`,`assignacio`) VALUES ('OBERON06',11,'adasdasa ',1,'ÁNGEL GUIJARRO RICO');
