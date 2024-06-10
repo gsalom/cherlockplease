@@ -12,3 +12,12 @@ INSERT INTO `cherlock`.`alumnat` ( `codi`, `nom`, `llin1`, `llin2`, `grup`) VALU
 
 SELECT c.nom, o.nom, concat(a.llin1," ",a.llin2,", ",a.nom) as assignat, o.estat, o.comentaris FROM cherlock.ordinadors o, cherlock.carretons c, cherlock.alumnat a where o.carreto=c.id_car and c.id_car=2 and o.assignacio=a.codi;
 
+
+INSERT INTO `cherlock`.`ordinadors` (`nom`,`carreto`,`caracteristiques`,`estat`,`assignacio`,`comentaris`) VALUES ('ORION14',7,'adasdasa ',1,null,'REPARACIÓ');
+INSERT INTO `cherlock`.`ordinadors` (`nom`,`carreto`,`caracteristiques`,`estat`,`assignacio`) VALUES ('IO07',6,'adasdasa ',1,'Antonio Catalan');
+
+
+INSERT INTO `cherlock`.`ordinadors` (`nom`,`carreto`,`caracteristiques`,`estat`,`assignacio`,`comentaris`) VALUES ('HIPERION23',2,'adasdasa ',2,null,'RETIRAT');
+
+INSERT INTO `cherlock`.`ordinadors` (`nom`,`carreto`,`caracteristiques`,`estat`,`assignacio`) VALUES ('HIPERION01',2,'adasdasa ',1,'JONATHAN ALEJANDRO ALVARRACIN');
+

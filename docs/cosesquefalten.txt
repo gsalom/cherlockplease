@@ -17,6 +17,7 @@ Afegits taules ordinadors i alumnat OK FET
 Afegit camp ImportGestIB a taules (grup, cicles)-> Alumnat , departament-> Professorat, a taules i forms OK FET
 Crear l'assignació per ordinador per alumnat/carreto OK FET
 Arreglar login ok FET
+paginacio de taules llargues OK FET
 
 1) Fer taula i formularia ordinadors i alumnat 
 2) Fer carrega db des de GestIB 3/4 FET falta mirar si grups, cicles i aules???
@@ -31,4 +32,4 @@ Arreglar login ok FET
 11) falla grabació tutor a grup
 12) acabar gestió de sessions
 13) ciber attack
-14) paginacio de taules llargues (falla a lassignacions pq pass regini i id) OK FET
+14) que passa amb els ordinadors assignats al professorat
