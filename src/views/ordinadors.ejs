@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <%- include("partials/head") %>
+    <script>
+      function obrir(id){
+          window.open("./ord_forms?id="+id, '_blank');
+      }
+  </script>
+</head>
+<body onfocus="location.reload()">
+    <!-- HEADER -->
+    <%- include("partials/navigationbackend") %>
+    <!-- My Content -->
+        <main class="container pt-2 text-center justify-content-center align-items-center vh-100" style="auto">
+        <section>
+          <h2 class="display-1">Ordinadors</h2><%- include("partials/paginacio") %>
+          <table class="table table-bordered fons" width="100%" cellspacing="0">
+            <tr>
+              <th>Nom</th>
+              <th>Assignacio</th>
+              <th>Carreto</th>
+              <th>Estat</th>
+              <th>Edició</th>
+            </tr>
+            <% data.forEach(function(dat){ %>
+            <tr>
+              <td><%= dat.nom %></td>
+              <td><%= dat.assignat %></td>
+              <td><%= dat.carreto %></td>
+              <td><%= dat.estat %></td>
+              <td><button type="button" onclick="obrir(<%= dat.id_ord %>)">Editar</button></td>
+              <%  }); %>
+            </tr>
+          </table>
+        </section>
+      </main>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <%- include("partials/head") %>
+  <script src="funcions.js">
+   </script>  
+</head>
+
+<body onload="loadSelects(5)">
+  <!-- HEADER -->
+  <%- include("partials/navigationbackend") %>
+  <!-- My Content -->
+  <main class="container pt-2 text-center justify-content-center align-items-center vh-100" style="auto">
+    <section>
+      <h2 class="display-1">Formulari Edició Ordinadors</h2>
+      <form action="/ord_Update" method="get" >
+        <div class="bordeoutset">
+          <input type="hidden" id="id" name="id" value="<%= data[0].id_ord %>"/>
+          <div id="nom"><label for="nom">Nom:</label>
+            <input type="text" id="nom" name="nom" readonly value="<%= data[0].nom %>" required/>
+          </div>
+          <div id="carreto"><label for="carreto">Carreto:</label>
+            <input type="hidden" id="carold" value="<%= data[0].carreto %>" required/>
+            <select id="lista5" name="carreto" required>
+              <option id="opllista" value="">Seleccioni:</option>
+            </select>
+          </div>
+          <div id="marca"><label for="marca">Marca/Model:</label>
+            <input type="text" id="marca" name="marca" value="<%= data[0].marca_model %>" required/>
+          </div>
+          <div id="caracteristiques"><label for="caracteristiques">Caracteristiques:</label>
+            <input type="text" id="caracteristiques" name="caracteristiques" value="<%= data[0].caracteristiques %>" required/>
+          </div>
+          <div id="assignacio"><label for="assignacio">Assignació:</label>
+            <input type="hidden" id="asigold" value="<%= data[0].assignacio %>" required/>
+            <select id="lista2" name="assignacio" required>
+              <option id="opllista" value="">Seleccioni:</option>
+            </select>
+          </div>
+          <div id="comentaris"><label for="comentaris">Comentaris:</label>
+            <input type="text" id="comentaris" name="comentaris" value="<%= data[0].comentaris %>" required/>
+          </div>
+        </div><br>
+        <div class="button">
+          <input type="submit" value="Modificar" onclick="return activatancar(3)"/>
+          <button type="button" onclick="tanca()">Tancar</button>
+        </div>
+      </form>
+    </section>
+  </main>
+</body>
+</html>

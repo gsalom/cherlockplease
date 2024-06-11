@@ -31,7 +31,7 @@ function loadProfes(disable) {
       } else {
         if (disable) document.getElementById("lista1").innerHTML += ('<option  disabled value=' + d.codi.toString() + '>' + d.profe +
           '</option>')
-          else  document.getElementById("lista1").innerHTML += ('<option value=' + d.codi.toString() + '>' + d.profe +
+        else document.getElementById("lista1").innerHTML += ('<option value=' + d.codi.toString() + '>' + d.profe +
           '</option>')
       }
     });
@@ -53,7 +53,7 @@ function loadGrups(disable) {
       } else {
         if (disable) document.getElementById("lista3").innerHTML += ('<option  disabled value=' + d.codi.toString() + '>' + d.grup +
           '</option>')
-          else document.getElementById("lista3").innerHTML += ('<option value=' + d.codi.toString() + '>' + d.grup +
+        else document.getElementById("lista3").innerHTML += ('<option value=' + d.codi.toString() + '>' + d.grup +
           '</option>')
       }
     });
@@ -72,7 +72,7 @@ function loadDepts(disable) {
         document.getElementById("lista").innerHTML += ('<option selected value=' + d.codi.toString() + '>' + d.nom + '</option>');
       } else {
         if (disable) document.getElementById("lista").innerHTML += ('<option disabled value=' + d.codi.toString() + '>' + d.nom + '</option>')
-          else document.getElementById("lista").innerHTML += ('<option value=' + d.codi.toString() + '>' + d.nom + '</option>')
+        else document.getElementById("lista").innerHTML += ('<option value=' + d.codi.toString() + '>' + d.nom + '</option>')
 
       }
     });
@@ -81,10 +81,29 @@ function loadDepts(disable) {
   xhttp.send();
 }
 
+function loadCarretons(disable) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onload = function () {
+    cars = JSON.parse(this.responseText);
+    cars.forEach(function (c) {
+      var cold = document.getElementById("carold").value
+      if (c.codi == cold) {
+        document.getElementById("lista2").innerHTML += ('<option selected value=' + c.codi.toString() + '>' + c.nom + '</option>');
+      } else {
+        if (disable) document.getElementById("lista5").innerHTML += ('<option disabled value=' + c.codi.toString() + '>' + c.nom + '</option>')
+        else document.getElementById("lista5").innerHTML += ('<option value=' + c.codi.toString() + '>' + c.nom + '</option>')
+
+      }
+    });
+  };
+  xhttp.open("GET", "./lcarretons", true);
+  xhttp.send();
+}
+
 
 function loadSelects(tipus) {
   switch (tipus) {
-      // form carretons
+    // form carretons
     case 1:
       loadAules(false);
       break;
@@ -103,6 +122,11 @@ function loadSelects(tipus) {
       loadProfes(false);
       loadGrups(true);
       break;
+    case 5:
+      loadCarretons(true);
+      loadProfes(true);
+      loadEstats(true);
+      break;
   }
 }
 
@@ -111,7 +135,7 @@ function tanca() {
 }
 
 function torna() {
-  window.open("./home",'_self');
+  window.open("./home", '_self');
 }
 
 function activatancar(segons) {

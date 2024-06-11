@@ -633,6 +633,20 @@ router.get('/laules', (req, res) => {
   });
 });
 
+router.get('/lcarretons', (req, res) => {
+  // Fetch aules from the database
+  con.query('SELECT codi,nom FROM carretons', (error, results) => {
+    if (error) {
+      console.error('Error fetching aules from the database: ' + error.stack);
+      return res.status(500).json({
+        error: 'Failed to fetch carretons'
+      });
+    }
+    // Send the fetched data as a response
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(results));
+  });
+});
 
 router.get('/grups', (req, res) => {
   // Fetch grups from the database
@@ -849,7 +863,75 @@ router.get('/emails', (req, res) => {
       data: results,
     });
   });
+});
 
+router.get("/ordinadors", (req, res) => {
+  // Fetch carretons from the database
+  var total = 0;
+  var sql = "select * from ordinadors";
+  con.query(sql, (error, results) => {
+    if (error) {
+      console.error('Error fetching ordinadors from the database: ' + error.stack);
+      return res.status(500).json({
+        error: 'Failed to fetch ordinadors'
+      });
+    }
+    total = results.length;
+  })
+  var sql = "SELECT o.id_ord, o.nom, concat(a.llin1,' ',a.llin2,', ',a.nom) as assignat, c.nom as carreto, o.comentaris as estat FROM cherlock.ordinadors o,  cherlock.carretons c, (select a.codi, a.llin1, a.llin2, a.nom FROM cherlock.alumnat a UNION ALL select p.codi, p.llin1, p.llin2, p.nom FROM cherlock.professorat p) a where o.carreto=c.id_car and o.assignacio=a.codi order by o.nom LIMIT " + (req.query.regini * 10) + ", 10;";
+  con.query(sql, (error, results) => {
+    if (error) {
+      console.error('Error fetching ordinadors from the database: ' + error.stack);
+      return res.status(500).json({
+        error: 'Failed to fetch ordinadors'
+      });
+    }
+    // Send the fetched data as a response
+    res.render("ordinadors", {
+      title: "Ordinadors",
+      data: results,
+      numreg: total,
+      regini: req.query.regini,
+      taula: "/ordinadors"
+    });
+  });
+});
+
+router.get("/ord_forms", (req, res) => {
+  // Fetch ordinadors from the database
+  var sql = "SELECT * FROM ordinadors where id_ord=" + req.query.id;
+  con.query(sql, (error, results) => {
+    if (error) {
+      console.error('Error fetching ordinadors from the database: ' + error.stack);
+      return res.status(500).json({
+        error: 'Failed to fetch ordinadors'
+      });
+    }
+    // Send the fetched data as a response
+    res.render("ord_forms", {
+      title: "Edició Ordinadors",
+      data: results
+    });
+  });
+});
+
+router.get("/ord_Update", (req, res) => {
+
+  //Insert a record in the "carretons" table:
+  var sql = "UPDATE cherlock.ordinadors c SET c.num_ord=" + req.query.stock + ", c.codi_aula='" + req.query.aula + "', c.estat='" + req.query.estat + "' WHERE  c.id_car=" + req.query.id;
+  var errors = "e->";
+  var results = "r->";
+  if (sql) {
+    //Update  dades ordinadors amb les modificacions fetes
+    con.query(sql, function (err, result) {
+      errors = errors + ":" + err;
+
+      if (err) throw err;
+      //console.log("Number of records inserted: " + result.affectedRows);
+      results = results + ":" + result.affectedRows;
+      errors = errors + ":" + err;
+    });
+  }
 });
 
 router.get('/consulta', (req, res) => {
