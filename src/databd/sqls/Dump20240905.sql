@@ -4,6 +4,9 @@
 -- ------------------------------------------------------
 -- Server version	5.5.5-10.7.8-MariaDB-1:10.7.8+maria~ubu2004
 
+CREATE DATABASE IF NOT EXISTS `cherlock` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
+USE `cherlock`;
+
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
