@@ -12,3 +12,5 @@ select g.codi, g.descripcio, h.id_grup, g.estat from cherlock.grups g where h.id
 
 SELECT g.*, a.nom as aula, concat(p.llin1," ",p.llin2,", ",p.nom) as tutor1 FROM cherlock.grups g, cherlock.aules a , cherlock.professorat p where g.aula=a.codi and g.id_tutor=p.codi;
 
+-- tutors dels grups
+SELECT * FROM cherlock.grups as g, cherlock.professorat as p where g.id_tutor=p.codi;

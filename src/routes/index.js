@@ -5,6 +5,7 @@ import {
 
 import mysql from "mysql";
 import go from "../envsmtp.js";
+import recgo from "../recenvsmtp.js";
 
 import credentials from "../credentials.cjs";
 
@@ -156,6 +157,20 @@ router.get("/contact", (req, res) => {
   });
 });
 
+
+router.get("/recordmail", (req, res) => {
+  recgo(req.query.email, req.query.data, req.query.hora, req.query.aula, req.query.grup, decodeURI(req.query.profe));
+  res.render("emailenviat", {
+    title: "Email Enviat",
+    datemail: req.query.email,
+    datdata: req.query.data,
+    dathora: req.query.hora,
+    dataula: req.query.aula,
+    datgrup: req.query.grup,
+    datprofe: req.query.profe
+  });
+});
+
 router.get("/mail", (req, res) => {
   go(req.query.email, req.query.data, req.query.hora, req.query.aula, req.query.grup, decodeURI(req.query.profe));
   res.render("emailenviat", {
@@ -217,7 +232,7 @@ router.get("/loadXml", (req, res) => {
       results = "Carregant professorat ...." + '\n';
       element['PROFESSOR'].forEach(element => {
         cont = cont + 1;
-        sql = "INSERT INTO `professorat2` (`codi`, `nom`, `llin1`, `llin2`, `departament`, `credit`, `email`) VALUES ('" + element['$'].codi + "', '" + element['$'].nom + "', '" + element['$'].ap1 + "', '" + element['$'].ap2 + "', '" + element['$'].departament + "',5" + ", '@cifpfbmoll.eu');"
+        sql = "INSERT INTO `professoratNou` (`codi`, `nom`, `llin1`, `llin2`, `departament`, `credit`, `email`) VALUES ('" + element['$'].codi + "', '" + element['$'].nom + "', '" + element['$'].ap1 + "', '" + element['$'].ap2 + "', '" + element['$'].departament + "',5" + ", '@cifpfbmoll.eu');"
         results = results + cont + ': ' + element['$'].codi + ' ' + element['$'].nom + ' ' + element['$'].ap1 + ' ' + element['$'].ap2 + '\n';
         con.query(sql, function (err, result) {
           if (err) throw err;
@@ -842,14 +857,34 @@ router.get('/incidencies', (req, res) => {
   });
 });
 
+
+router.get('/recordatoris', (req, res) => {
+  // Fetch revisions from the database
+
+  con.query('select pnc.*, (select IF(count(*)>0, 1, 0) from recordatoris rec where rec.email=pnc.email and pnc.data_rev=date_format(rec.dia, "%d/%m/%y") and pnc.hora=rec.hora) as hies from (WITH recursive Date_Ranges AS  (select "' + req.query.dataini + '" as dia union all select dia + interval 1 day from Date_Ranges where dia < "' + req.query.datafin + '") select date_format(d.dia, "%d/%m/%y") as data_rev, p.* from Date_Ranges d, (select p.email, concat(p.llin1," ",p.llin2,", ",p.nom) as profe, h.dia, h.hora, g.nom as grup, a.nom, p.credit as credit from cherlock.professorat p, cherlock.horaris h, cherlock.aules a, cherlock.grups g where h.id_grup=g.codi and h.tipus=1 and h.email=p.email and h.id_aula=a.codi) p where dayofweek(d.dia)-1 = p.dia) pnc', (error, results) => {
+     if (error) {
+     console.error('Error fetching recordatoris from the database: ' + error.stack);
+     return res.status(500).json({
+       error: 'Failed to fetch recordatoris'
+     });
+   }
+    // Send the fetched data as a response
+    res.render("recordatoris", {
+      title: "Recordatoris",
+      dataini: new Date(req.query.dataini),
+      datafi: new Date(req.query.datafin),
+      data: results
+    });
+  });
+});
+
+
 router.get('/emails', (req, res) => {
 
   // Fetch revisions from the database
   //con.query('WITH recursive Date_Ranges AS (select "' + req.query.dataini + '" as dia union all select dia + interval 1 day from Date_Ranges where dia < "' + req.query.datafin + '") select date_format(d.dia, "%d/%m/%y") as data_rev, p.* from Date_Ranges d, (select p.email, concat(p.llin1," ",p.llin2,", ",p.nom) as profe, h.dia, h.hora, g.nom as grup, a.nom from cherlock.professorat p, cherlock.horaris h, cherlock.aules a, cherlock.grups g where h.id_grup=g.codi and h.tipus=1 and h.email=p.email and h.id_aula=a.codi and not exists (select 1 from cherlock.revisions r where r.email=h.email and DAYOFWEEK(r.data_rev)-1=h.dia)) p where dayofweek(d.dia)-1 = p.dia', (error, results) => {
-
-  con.query('select pnc.*, (select IF(count(*)>0, 1, 0) from revisionsnofetes rnf where rnf.email=pnc.email and pnc.data_rev=date_format(rnf.dia, "%d/%m/%y") and pnc.hora=rnf.hora) as hies from (WITH recursive Date_Ranges AS (select "' + req.query.dataini + '" as dia union all select dia + interval 1 day from Date_Ranges where dia < "' + req.query.datafin + '") select date_format(d.dia, "%d/%m/%y") as data_rev, p.* from Date_Ranges d, (select p.email, concat(p.llin1," ",p.llin2,", ",p.nom) as profe, h.dia, h.hora, g.nom as grup, a.nom from cherlock.professorat p, cherlock.horaris h, cherlock.aules a, cherlock.grups g where h.id_grup=g.codi and h.tipus=1 and h.email=p.email and h.id_aula=a.codi and not exists (select 1 from cherlock.revisions r where r.email=h.email and DAYOFWEEK(r.data_rev)-1=h.dia)) p where dayofweek(d.dia)-1 = p.dia) pnc', (error, results) => {
-
-    if (error) {
+    con.query('select pnc.*, (select IF(count(*)>0, 1, 0) from revisionsnofetes rnf where rnf.email=pnc.email and pnc.data_rev=date_format(rnf.dia, "%d/%m/%y") and pnc.hora=rnf.hora) as hies from (WITH recursive Date_Ranges AS (select "' + req.query.dataini + '" as dia union all select dia + interval 1 day from Date_Ranges where dia < "' + req.query.datafin + '") select date_format(d.dia, "%d/%m/%y") as data_rev, p.* from Date_Ranges d, (select p.email, concat(p.llin1," ",p.llin2,", ",p.nom) as profe, h.dia, h.hora, g.nom as grup, a.nom from cherlock.professorat p, cherlock.horaris h, cherlock.aules a, cherlock.grups g where h.id_grup=g.codi and h.tipus=1 and h.email=p.email and h.id_aula=a.codi) p where dayofweek(d.dia)-1 = p.dia and not exists (select 1 from cherlock.revisions r where r.email=p.email and d.dia=r.data_rev and DAYOFWEEK(r.data_rev)-1=p.dia)) pnc', (error, results) => {
+     if (error) {
       console.error('Error fetching revisions from the database: ' + error.stack);
       return res.status(500).json({
         error: 'Failed to fetch revisions'
