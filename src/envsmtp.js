@@ -26,6 +26,9 @@ async function go(email, data, hora, aula, grup, profe) {
   //console.log(credentials.sendgrid.user+', '+credentials.sendgrid.password);
   try {
     
+console.log(credentials.sendgrid.user);
+console.log(credentials.sendgrid.password);
+
     const result = await mailTransport.sendMail({
       from: 'cherlock@cifpfbmoll.eu',
       //to: 'gsalom@cifpfbmoll.eu',

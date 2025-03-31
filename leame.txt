@@ -1,0 +1,10 @@
+Pasos para ejecutar
+Guarda el contenido del archivo docker-compose.yml en el directorio de tu proyecto.
+Si decides usar el Dockerfile personalizado, colócalo en el mismo directorio.
+Ejecuta el siguiente comando en la terminal para iniciar los servicios:
+bash
+Copia
+docker-compose up -d
+Esto creará y levantará los contenedores necesarios. Para acceder a la interfaz de Cherlock, abre tu navegador y ve a http://localhost:8089. Para phpMyAdmin, ve a http://localhost:8099.
+
+¡Listo! Ahora tienes un entorno completo con MariaDB, Cherlock y phpMyAdmin ejecutándose en contenedores Docker.

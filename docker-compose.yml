@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  mariadb:
+    image: mariadb:10.7
+    container_name: mariadb2
+    environment:
+      MARIADB_ROOT_PASSWORD: diouxx
+      MARIADB_DATABASE: cherlock
+      MARIADB_USER: cher_user
+      MARIADB_PASSWORD: lock
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - cherlock_network
+    ports:
+      - "3306:3306"
+
+  cherlock:
+    image: cherlock
+    container_name: cherlock
+    hostname: cherlock
+    environment:
+      TIMEZONE: Europe/Brussels
+    networks:
+      - cherlock_network
+    depends_on:
+      - mariadb
+    ports:
+      - "8089:80"
+
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: myadmin2
+    environment:
+      PMA_HOST: mariadb
+    networks:
+      - cherlock_network
+    depends_on:
+      - mariadb
+    ports:
+      - "8099:80"
+
+  cherlock_db:
+    image: mariadb:10.7
+    container_name: cherlock_db
+    environment:
+      MARIADB_ROOT_PASSWORD: diouxx
+      MARIADB_DATABASE: cherlock
+      MARIADB_USER: cher_user
+      MARIADB_PASSWORD: lock
+    networks:
+      - cherlock_network
+    ports:
+      - "3307:3306"
+
+networks:
+  cherlock_network:
+    driver: bridge
+
+volumes:
+  mariadb_data:
+    driver: local

@@ -1,48 +1,87 @@
-SELECT * FROM cherlock.revisions;
-
--- Despres de fer els inserts s'ha de fer això 
-
-UPDATE professorat cherlock.revisions r INNER JOIN cherlock.aules a on  r.aula=a.nom SET r.id_aula = a.codi;
-
-
--- canvis d'un professors a horaris
-UPDATE cherlock.horaris h SET h.email="njuaristi@cifpfbmoll.eu" WHERE h.id_prof="9425F635D0F0D472E040D70A590548FB";
-UPDATE cherlock.horaris h SET h.id_prof="HR1HIGW07YQ8IK9XZ3UX6XNY559VCONX" WHERE h.email="njuaristi@cifpfbmoll.eu";
-
-
-
-UPDATE cherlock.revisions r SET r.id_aula="133747" WHERE r.aula="C401 CIBER";
-
-SELECT date_format(r.data_rev, "%d/%m/%y") as dia, r.hora_rev, concat(p.llin2," ",p.llin1,", ",p.nom) as profe, r.aula, c.nom as carreto, r.estat, r.comentaris 
-FROM cherlock.revisions r, cherlock.professorat p, cherlock.carretons c where r.email=p.email and r.id_aula=c.codi_aula;
-
-select email, dayofweek(data_rev)-1, data_rev, hora_rev from cherlock.revisions where id_aula=133753;
- 
-select email from cherlock.revisions where email in (SELECT id_prof FROM cherlock.horaris where id_aula="133753" order by dia, hora);
-
-select email from cherlock.revisions where email in (SELECT id_prof FROM cherlock.horaris where id_aula="133753" order by dia, hora);
-
-
--- Revisions no fetes entre dues dates
-
-WITH recursive Date_Ranges AS (
-select '2024-12-02' as dia
-   union all
-   select dia + interval 1 day
-   from Date_Ranges
-   where dia < '2024-12-06')
-select 
-	d.dia as data_rev,
-    p.*
-	from 
-		Date_Ranges d, 
-		(select p.email, concat(p.llin1," ",p.llin2,", ",p.nom) as profe, h.dia, h.hora, a.nom from cherlock.professorat p, cherlock.horaris h, cherlock.aules a where h.tipus=1 and h.email=p.email and h.id_aula=a.codi
-			) p
-	where 
-		dayofweek(d.dia)-1 = p.dia
-        and not exists (select 1 from cherlock.revisions r where r.email=p.email and d.dia=r.data_rev and DAYOFWEEK(r.data_rev)-1=p.dia);
-        
-  
-   
-   
-    select pnc.*, (select IF(count(*)>0, 1, 0) from revisionsnofetes rnf where rnf.email=pnc.email and pnc.data_rev=date_format(rnf.dia, "%d/%m/%y") and pnc.hora=rnf.hora) as hies from (WITH recursive Date_Ranges AS (select "' + req.query.dataini + '" as dia union all select dia + interval 1 day from Date_Ranges where dia < "' + req.query.datafin + '") select date_format(d.dia, "%d/%m/%y") as data_rev, p.* from Date_Ranges d, (select p.email, concat(p.llin1," ",p.llin2,", ",p.nom) as profe, h.dia, h.hora, g.nom as grup, a.nom from cherlock.professorat p, cherlock.horaris h, cherlock.aules a, cherlock.grups g where h.id_grup=g.codi and h.tipus=1 and h.email=p.email and h.id_aula=a.codi) p where dayofweek(d.dia)-1 = p.dia and not exists (select 1 from cherlock.revisions r where r.email=p.email and d.dia=r.data_rev and DAYOFWEEK(r.data_rev)-1=p.dia)) pnc;
+SELECT * FROM cherlock.alumnat;
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-4','18:9:44','jllado@cifpfbmoll.eu','C300','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-4','20:48:7','mruizrivera@cifpfbmoll.eu','A107','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-4','20:52:16','mbujosa@cifpfbmoll.eu','A105','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-4','20:59:57','bseguraduran@cifpfbmoll.eu','A208','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-4','21:10:5','tserna@cifpfbmoll.eu','A200','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-4','21:11:31','ccolloliver@cifpfbmoll.eu','A207','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-4','21:19:23','apetitverd@cifpfbmoll.eu','A206','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-4','21:21:29','aacuna@cifpfbmoll.eu','C101','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-5','14:24:20','xordinasribas@cifpfbmoll.eu','C201','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-5','14:30:30','cnoguera@cifpfbmoll.eu','C401','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-5','15:30:47','mruizrivera@cifpfbmoll.eu','A208','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-5','18:34:26','apetitverd@cifpfbmoll.eu','C300','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-5','20:36:6','jbarcelo@cifpfbmoll.eu','A105','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-5','20:58:3','bseguraduran@cifpfbmoll.eu','C201','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-5','20:58:26','apetitverd@cifpfbmoll.eu','A107','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-5','21:7:56','tserna@cifpfbmoll.eu','C401 CIBER','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-5','21:10:34','mrebasabujosa@cifpfbmoll.eu','C101','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-5','21:11:57','mruizrivera@cifpfbmoll.eu','A208','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-5','21:19:51','tribot@cifpfbmoll.eu','A206','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-5','23:54:39','aacuna@cifpfbmoll.eu','A207','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-6','13:45:38','aamengual@cifpfbmoll.eu','C201','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-6','14:19:41','afonolleres@cifpfbmoll.eu','C401','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-6','20:22:5','jladariasanchez@cifpfbmoll.eu','C402','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-6','20:44:43','mrebasabujosa@cifpfbmoll.eu','A207','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-6','20:55:54','tserna@cifpfbmoll.eu','A107','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-6','22:17:4','aacuna@cifpfbmoll.eu','C101','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-7','10:20:39','cnoguera@cifpfbmoll.eu','C201','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-7','14:26:26','pgonzalezmaya@cifpfbmoll.eu','C401','OK','Llista d’assignacio actualitzada');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-7','14:35:0','xordinasribas@cifpfbmoll.eu','C201','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-7','18:10:54','dpueyosoler@cifpfbmoll.eu','C300','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-7','18:46:32','mruizrivera@cifpfbmoll.eu','A208','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-7','20:23:14','nburguerag@cifpfbmoll.eu','C402','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-7','20:38:57','tgaya@cifpfbmoll.eu','A209','OK','7');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-7','20:42:44','mtaberner@cifpfbmoll.eu','A200','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-7','20:54:35','apetitverd@cifpfbmoll.eu','A107','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-7','20:57:16','restarellasmatas@cifpfbmoll.eu','A105','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-7','21:15:12','aacuna@cifpfbmoll.eu','A207','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-7','21:16:45','jllado@cifpfbmoll.eu','A206','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-10','8:33:35','cnoguera@cifpfbmoll.eu','C401','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-10','14:2:8','aamengual@cifpfbmoll.eu','C201','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-10','14:16:22','xordinasribas@cifpfbmoll.eu','C401','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-10','18:16:34','apetitverd@cifpfbmoll.eu','C300','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-10','20:43:13','aribas@cifpfbmoll.eu','A207','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-10','21:0:40','jbarcelo@cifpfbmoll.eu','A200','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-10','21:18:21','nburguerag@cifpfbmoll.eu','A206','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-10','21:19:58','cramiscrespi@cifpfbmoll.eu','A107','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-10','21:21:51','restarellasmatas@cifpfbmoll.eu','A208','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-11','8:33:31','cnoguera@cifpfbmoll.eu','C201','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-11','14:28:48','afonolleres@cifpfbmoll.eu','C201','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-11','14:35:58','xordinasribas@cifpfbmoll.eu','C401','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-11','15:30:55','mruizrivera@cifpfbmoll.eu','A208','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-11','19:49:59','mbujosa@cifpfbmoll.eu','A105','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-11','20:56:28','tserna@cifpfbmoll.eu','A200','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-11','20:59:2','mruizrivera@cifpfbmoll.eu','A107','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-11','21:7:27','apetitverd@cifpfbmoll.eu','A206','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-11','21:10:0','aacuna@cifpfbmoll.eu','C101','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-11','21:12:1','bseguraduran@cifpfbmoll.eu','A208','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-11','21:14:0','ccolloliver@cifpfbmoll.eu','A207','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-12','12:53:56','cnoguera@cifpfbmoll.eu','C401','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-12','14:9:0','xordinasribas@cifpfbmoll.eu','C201','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-12','15:32:55','mruizrivera@cifpfbmoll.eu','A208','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-12','18:24:3','apetitverd@cifpfbmoll.eu','C300','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-12','20:42:30','apetitverd@cifpfbmoll.eu','A107','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-12','20:51:28','jbarcelo@cifpfbmoll.eu','A105','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-12','21:7:59','tserna@cifpfbmoll.eu','C401 CIBER','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-12','21:8:13','mrebasabujosa@cifpfbmoll.eu','C101','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-12','21:15:1','mtaberner@cifpfbmoll.eu','A200','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-12','21:17:2','aacuna@cifpfbmoll.eu','A207','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-12','21:17:33','tribot@cifpfbmoll.eu','A206','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-13','13:31:18','xordinasribas@cifpfbmoll.eu','C401','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-13','14:11:34','aamengual@cifpfbmoll.eu','C201','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-13','14:29:12','afonolleres@cifpfbmoll.eu','C401','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-13','17:33:11','restarellasmatas@cifpfbmoll.eu','C300','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-13','21:19:56','aacuna@cifpfbmoll.eu','C101','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-14','13:12:4','xordinasribas@cifpfbmoll.eu','C201','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-14','13:15:15','pgonzalezmaya@cifpfbmoll.eu','C401','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-14','20:47:0','mruizrivera@cifpfbmoll.eu','A208','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-14','20:47:47','mtaberner@cifpfbmoll.eu','A200','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-14','21:0:12','jllado@cifpfbmoll.eu','A206','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-14','21:2:58','mtabernerferrer@cifpfbmoll.eu','C101','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-14','21:18:53','aacuna@cifpfbmoll.eu','A207','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-17','9:23:25','xordinasribas@cifpfbmoll.eu','C201','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-17','10:55:4','cnoguera@cifpfbmoll.eu','C401','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-17','14:16:51','aamengual@cifpfbmoll.eu','C201','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-17','14:20:48','xordinasribas@cifpfbmoll.eu','C401','OK','');
+INSERT INTO `revisions`(`data_rev`, `hora_rev`, `email`, `aula`, `estat`, `comentaris`) VALUES ('2025-3-17','15:24:30','mruizrivera@cifpfbmoll.eu','A208','OK','');

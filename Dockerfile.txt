@@ -1,0 +1,14 @@
+# Usa una imagen base de Ubuntu o Alpine, según tus necesidades
+FROM gfsalom/cherlock:latest
+
+# Opcional: si deseas personalizar el contenedor, por ejemplo, añadiendo dependencias
+# RUN apt-get update && apt-get install -y <paquete>
+
+# Definir el directorio de trabajo
+WORKDIR /app
+
+# Exponer puertos (si es necesario)
+EXPOSE 8089
+
+# Comando para ejecutar Cherlock
+CMD ["./start.sh"]
